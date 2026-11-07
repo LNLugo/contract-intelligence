@@ -5,7 +5,10 @@ $RG   = "rg-ci-dev"
 $LOC  = "canadacentral"      # ADR-0003: allowed by policy and offers the models
 $AOAI = "aoai-ci-dev-2416"   # Azure OpenAI (one per region on this subscription)
 $SA   = "stcidev2416"        # ADLS Gen2 data lake for contracts (globally unique name)
-$DI   = "di-ci-dev-2416"     # Document Intelligence
+$DI   = "di-ci-dev-2416"     # Document Intelligence (S0, ADR-0015)
+$SRCH = "srch-ci-dev-2416"   # AI Search (Free, ADR-0016)
+$INDEX = "contracts-v1"      # chunk index for the evaluation set
+$EMBED_DIMS = 1024           # ADR-0016
 
 $ErrorActionPreference = "Stop"
 

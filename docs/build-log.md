@@ -58,3 +58,10 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** My own first proposal (50 median-length contracts) was the wrong sample: it would have excluded the long contracts where context overflow and missed clauses occur, making the evaluation look better than reality. A cheap sample is not a valid sample.
 **Decision impact:** ADR-0015 Accepted: S0, stratified 50-contract evaluation set, about $15.50, extracted once.
 **Spend so far:** $0
+
+### 2026-11-07 · Phase 2 · Tier upgrade and evaluation set selected
+**Did:** Moved `di-ci-dev-2416` from F0 to S0 (`infra/02b-document-intelligence-s0.ps1`); keys still disabled after the change. Ran `eval/select_eval_set.py` to pick the fixed evaluation set.
+**Result:** 50 contracts, 1,526 pages, $15.26 projected extraction cost, 27 contract types. Typical 30 (335 pages, 26 types), long 15 (607 pages), very long 5 (584 pages). Written to `eval/eval_set.csv`.
+**Learned:** A tier change on Cognitive Services keeps the identity settings (custom subdomain, keys disabled); worth verifying after every change rather than assuming.
+**Decision impact:** ADR-0015 evidence complete. Opened ADR-0016 (search tier and vector size).
+**Spend so far:** $0 (no pages analyzed yet)

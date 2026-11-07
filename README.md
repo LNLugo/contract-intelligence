@@ -34,6 +34,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0012](docs/adr/0012-evaluation-method.md) | Clause-level evaluation against labeled ground truth, with a calibrated LLM judge | Proposed |
 | [0013](docs/adr/0013-identity-and-security-trimming.md) | Entra identities everywhere, no keys, results filtered by the user's groups | Accepted |
 | [0014](docs/adr/0014-model-deployment-type-and-model-roles.md) | GlobalStandard deployments, with a model chosen per role | Accepted (roles pending measurement) |
+| [0015](docs/adr/0015-document-intelligence-tier.md) | Document Intelligence tier for a corpus of long contracts | Proposed |
 
 **Proposed** means the decision waits for evidence from the phase where it applies. An ADR moves to Accepted only once there is a measurement or a test result behind it.
 
@@ -42,8 +43,8 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Subscription constraints, resource group, tooling | Done |
-| 1 | ADLS Gen2 storage | In progress |
-| 2 | Document Intelligence extraction | |
+| 1 | ADLS Gen2 storage | Done |
+| 2 | Document Intelligence extraction | Done |
 | 3 | Embedding and chat model deployments | Done |
 | 4 | AI Search index | |
 | 5 | Ingestion Function (Event Grid, extract, chunk, embed, push) | |

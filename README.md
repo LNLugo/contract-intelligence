@@ -42,9 +42,9 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Subscription constraints, resource group, tooling | Done |
-| 1 | ADLS Gen2 storage | |
+| 1 | ADLS Gen2 storage | In progress |
 | 2 | Document Intelligence extraction | |
-| 3 | Embedding and chat model deployments | In progress |
+| 3 | Embedding and chat model deployments | Done |
 | 4 | AI Search index | |
 | 5 | Ingestion Function (Event Grid, extract, chunk, embed, push) | |
 | 6 | Clause taxonomy | |

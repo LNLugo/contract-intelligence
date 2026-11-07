@@ -31,3 +31,12 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** A cloud service list is not one list. The policy, the service and the deployment type each narrow the region choice separately.
 **Decision impact:** ADR-0003 Accepted. ADR-0014 created.
 **Spend so far:** $0
+
+### 2026-11-07 · Phase 3 · Model deployments, keyless
+**Goal:** Deploy the embedding and generation models and call them with an Entra token, with API keys disabled.
+**Did:** Deployed `text-embedding-3-large` and `gpt-5.4-mini` (GlobalStandard, 50K TPM each), set the custom subdomain, assigned `Cognitive Services OpenAI User` to myself, disabled local auth, ran `infra/03-models.ps1` from a fresh clone in Cloud Shell.
+**Result:** Embedding returned 3072 dimensions. Chat answered in 49 tokens. Both calls used a bearer token; keys are off.
+**Broke:** Cloud Shell was in bash, which cannot execute a `.ps1` directly ("Permission denied"). Fixed by running `pwsh ./infra/03-models.ps1`. A stale folder from an earlier session blocked `git clone`; deleted and re-cloned.
+**Learned:** Entra token auth on Azure OpenAI needs a custom subdomain; key auth works without one, which is why teams drift back to keys. Script re-runs confirmed state without duplicating anything.
+**Decision impact:** ADR-0013 and ADR-0014 now have working evidence. The 3072-dimension vector size feeds the phase 4 index-size decision.
+**Spend so far:** $0 (49 tokens)

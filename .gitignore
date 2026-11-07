@@ -1,0 +1,26 @@
+# Contracts and local data
+data/
+*.pdf
+
+# Secrets and local settings
+.env
+local.settings.json
+*.publishsettings
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Azure Functions
+.python_packages/
+bin/
+obj/
+
+# Editors and OS
+.vscode/
+.DS_Store
+
+# Eval artifacts that are large; keep summary results
+eval/runs/

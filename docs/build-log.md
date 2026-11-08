@@ -72,3 +72,11 @@ One entry per working session. The entries where something broke are the most va
 **Actual cause:** PowerShell variable names are case-insensitive. `config.ps1` defines `$INDEX` (the name); the script then built the index definition in `$index`, which overwrote the name with a hashtable. The URL was sent as `/indexes/System.Collections.Hashtable`.
 **Fix:** renamed the definition to `$indexDef`; checked every script for other names that collide with `config.ps1` ignoring case.
 **Learned:** In PowerShell, shared config variables and local variables live in one case-insensitive namespace. Read the request actually sent, not the variable you think you sent.
+
+### 2026-11-08 · Phase 4 · Search index live, security trimming proven
+**Did:** Ran `infra/04-search.ps1` after the variable fix: index `contracts-v1` created, 3 synthetic chunks embedded at 1,024 dimensions, uploaded with two security groups, queried, deleted.
+**Result:** Query "cap on damages" as `grp-legal` returned the liability clause first (neither word is in it). The same query as `grp-procurement` returned only the procurement chunk: the legal chunks never came back. Semantic ranker available on Free. 1 of 3 indexes used.
+**Broke:** One run failed with `DeploymentNotFound` on the embedding call although both deployments were `Succeeded`. An isolated test of the same call (single, 1,024 dimensions, batch) passed three times, and the re-run passed. Transient.
+**Learned:** (1) Model endpoints return short-lived 404s, not only 429s; the phase 5 Function needs retry with backoff on 404, 429 and 5xx from the start. (2) RRF fused scores are rank-based and tiny (0.0167 vs 0.0164), so they are not a confidence signal; abstention needs reranker or evaluator scores. (3) `servicestats` reported the vector index quota as 0 MB on Free; to verify against real usage in phase 5.
+**Decision impact:** ADR-0006 first stage Accepted; semantic ranker added as a no-cost comparison option. ADR-0013 trimming has its first evidence.
+**Spend so far:** $0

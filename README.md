@@ -25,7 +25,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0003](docs/adr/0003-model-hosting-under-subscription-constraints.md) | Host the models on the student subscription, in Canada Central | Accepted |
 | [0004](docs/adr/0004-push-ingestion-over-indexer.md) | Event-driven push ingestion instead of an AI Search indexer | Accepted |
 | [0005](docs/adr/0005-fixed-size-chunking-v1.md) | Fixed-size overlapping chunks in v1; clause-aware chunking as a measured experiment | Accepted |
-| [0006](docs/adr/0006-hybrid-retrieval-and-reranking.md) | Hybrid retrieval with RRF, then a cross-encoder rerank from top 20 to top 5 | Proposed |
+| [0006](docs/adr/0006-hybrid-retrieval-and-reranking.md) | Hybrid retrieval with RRF, then a cross-encoder rerank from top 20 to top 5 | First stage Accepted; reranker pending |
 | [0007](docs/adr/0007-langgraph-orchestration.md) | LangGraph for orchestration instead of a managed agent service | Accepted |
 | [0008](docs/adr/0008-review-history-as-retrieval.md) | Review history retrieved from its own index, not appended to the prompt | Proposed |
 | [0009](docs/adr/0009-deterministic-rules-and-abstention.md) | Business rules and risk routing run outside the LLM; abstain when evidence fails | Accepted |
@@ -47,7 +47,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | 1 | ADLS Gen2 storage | Done |
 | 2 | Document Intelligence extraction | Done |
 | 3 | Embedding and chat model deployments | Done |
-| 4 | AI Search index | In progress |
+| 4 | AI Search index | Done |
 | 5 | Ingestion Function (Event Grid, extract, chunk, embed, push) | |
 | 6 | Clause taxonomy | |
 | 7 | Vendor system of record behind APIM | |

@@ -1,6 +1,6 @@
 # ADR-0006: Hybrid retrieval with RRF, then a cross-encoder rerank from top 20 to top 5
 
-- **Status:** Proposed (reranker choice waits for phase 4 tier check and phase 12 measurement)
+- **Status:** First stage Accepted; reranker choice waits for the phase 12 measurement
 - **Date:** 2026-11-07
 - **Phase:** 4, 8 and 12
 
@@ -29,7 +29,10 @@ First stage: hybrid with RRF, top 20, filtered by the user's groups. Reranker: p
 - Recall at 20 caps what reranking can achieve, so it is measured separately from precision at 5.
 
 ## Evidence
-Phase 12: recall@20, and precision@5 per reranker, with p95 latency for each.
+- 2026-11-08, phase 4 smoke test: hybrid query "cap on damages" returned the liability clause first although neither word appears in it (vector side matching on meaning), with the group filter applied.
+- 2026-11-08: semantic ranker **is available on the Free tier** (first 1,000 requests per month free). Both reranker options can therefore be compared at no cost; the comparison is no longer limited by tier.
+- Observed fused scores were 0.0167 and 0.0164. RRF scores reflect rank positions, not relevance, so **they cannot be used as a confidence threshold for abstention** (ADR-0009). Abstention must use the reranker's score or the Evaluation Agent's confidence.
+- Phase 12: recall@20, and precision@5 per reranker (semantic ranker vs self-hosted cross-encoder), with p95 latency for each.
 
 ## Revisit when
 If recall@20 is low, fix retrieval (k, chunking) before touching the reranker.

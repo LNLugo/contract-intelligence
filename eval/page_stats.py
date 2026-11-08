@@ -20,7 +20,7 @@ def main() -> None:
     root = Path(sys.argv[1])
     price = float(sys.argv[2]) if len(sys.argv) > 2 else None
 
-    pdfs = sorted(root.rglob("*.pdf")) + sorted(root.rglob("*.PDF"))
+    pdfs = sorted(set(root.rglob("*.pdf")) | set(root.rglob("*.PDF")), key=lambda x: x.as_posix())  # Windows globs ignore case
     if not pdfs:
         sys.exit(f"No PDFs found under {root}")
 

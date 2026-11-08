@@ -32,9 +32,11 @@ def main() -> None:
     price = float(sys.argv[2]) if len(sys.argv) > 2 else 10.0
 
     rows = []
-    for p in sorted(set(root.rglob("*.pdf")) | set(root.rglob("*.PDF"))):
+    # Sort on the relative POSIX path so Windows and Linux pick the identical set
+    found = set(root.rglob("*.pdf")) | set(root.rglob("*.PDF"))
+    for p in sorted(found, key=lambda x: x.relative_to(root).as_posix()):
         try:
-            rows.append({"file": p.name, "path": str(p.relative_to(root)),
+            rows.append({"file": p.name, "path": p.relative_to(root).as_posix(),
                          "type": p.parent.name, "pages": len(PdfReader(p).pages)})
         except Exception:
             continue

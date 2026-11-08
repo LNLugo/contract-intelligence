@@ -28,7 +28,7 @@ $sep = "https://$SRCH.search.windows.net"
 
 # 3. Index definition: every field traces to an ADR
 Write-Host "`n== Index $INDEX" -ForegroundColor Cyan
-$index = @{
+$indexDef = @{
     name   = $INDEX
     fields = @(
         @{ name = "id";               type = "Edm.String"; key = $true; filterable = $true }
@@ -60,7 +60,7 @@ $index = @{
     }
 }
 # Search role assignments can take 5 to 10 minutes to apply, so retry on 403 instead of failing
-$indexJson = $index | ConvertTo-Json -Depth 10
+$indexJson = $indexDef | ConvertTo-Json -Depth 10
 for ($attempt = 1; $attempt -le 20; $attempt++) {
     try {
         Invoke-RestMethod -Method Put -Uri "$sep/indexes/$($INDEX)?api-version=$SearchApi" -Headers $sh `

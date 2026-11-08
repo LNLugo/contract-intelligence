@@ -65,3 +65,10 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** A tier change on Cognitive Services keeps the identity settings (custom subdomain, keys disabled); worth verifying after every change rather than assuming.
 **Decision impact:** ADR-0015 evidence complete. Opened ADR-0016 (search tier and vector size).
 **Spend so far:** $0 (no pages analyzed yet)
+
+### 2026-11-08 · Phase 4 · Index creation failed on a valid name
+**Broke:** `PUT /indexes/...` returned `InvalidName` although the configured name `contracts-v1` is valid.
+**First thought:** a naming rule I had missed.
+**Actual cause:** PowerShell variable names are case-insensitive. `config.ps1` defines `$INDEX` (the name); the script then built the index definition in `$index`, which overwrote the name with a hashtable. The URL was sent as `/indexes/System.Collections.Hashtable`.
+**Fix:** renamed the definition to `$indexDef`; checked every script for other names that collide with `config.ps1` ignoring case.
+**Learned:** In PowerShell, shared config variables and local variables live in one case-insensitive namespace. Read the request actually sent, not the variable you think you sent.

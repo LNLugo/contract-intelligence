@@ -153,6 +153,7 @@ def main() -> None:
         print(f"  clause absent:  median {statistics.median(absn):.2f}, p90 {sorted(absn)[int(len(absn)*0.9)]:.2f}  (n={len(absn)})")
 
     out = REPO / "eval" / "results" / f"retrieval-{time.strftime('%Y%m%d-%H%M%S')}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"categories": CATEGORIES, "seconds": round(time.time() - t0, 1),
                                "unmatched": unmatched, "results": results}, indent=2))
     print(f"\n{len(results)} queries in {time.time() - t0:.0f} s. Results: {out}")

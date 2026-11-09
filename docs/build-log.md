@@ -132,3 +132,12 @@ One entry per working session. The entries where something broke are the most va
 **Added:** `eval/check_ingestion.ps1`, a one-command hop-by-hop health check: Event Grid metrics, queue contents with the file each message refers to, dead letter, function run counts with p50 and p95 duration, and distinct failure reasons.
 **Decision impact:** ADR-0013 (trimming at ingestion), ADR-0017 (one code path) and ADR-0018 (queue) all have live evidence. Phase 5 complete.
 **Spend so far:** about $15.30 extraction, under $0.20 embeddings; Function and Event Grid within free grants.
+
+### 2026-11-09 · Slice 1 · First cited answers; retrieval baseline against lawyer labels
+**Did:** Built the answering slice (ADR-0019): retrieval agent with an enforced, injection-checked access filter; generation with verbatim quotes; deterministic citation check (ADR-0020); code-based routing. Ran `eval/retrieval_eval.py`: 50 contracts × 10 CUAD categories, 500 queries.
+**First answers:** "What law governs this agreement?" → ANSWERED, Delaware, 2 valid citations (pp. 30-31), 5.3 s, 4,248 tokens. "Can either party terminate for convenience?" → NOT_FOUND: the model read strong evidence and reported only termination for cause, which is the intended distinction between an absent clause and an abstention.
+**Retrieval baseline** (`eval/results/baseline-slice1-retrieval.md`): reranked recall@5 95%, @1 75% (hybrid alone: 92%, 66%). By length @5: typical 99%, long 91%, very long 84%. Weakest: Exclusivity 79%, Non-Compete 80%. The reranker lowered Cap On Liability @5 from 92% to 86%.
+**Broke:** the results JSON was not written (`eval/results` did not exist); fixed with `mkdir`. Printed figures saved by hand as the baseline, to avoid spending another 500 semantic-ranker queries from the free monthly 1,000.
+**Learned:** (1) Recall drops with contract length; the stratified sample (ADR-0015) is what exposed it. (2) The reranker is not uniformly better. (3) Reranker scores for present and absent clauses overlap almost completely (present median 2.30, absent 1.96, absent p90 2.35), so a score threshold cannot decide whether a clause exists; absence is decided by the model reading evidence (ADR-0009 revision).
+**Next:** `eval/answer_eval.py` measures the answers themselves on 20 contracts: missed clauses, false claims, grounding against the labelled text.
+**Spend so far:** about $15.30 extraction; tokens under $0.30; semantic ranker about 530 of 1,000 free queries this month.

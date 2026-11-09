@@ -1,6 +1,6 @@
 # Contract Intelligence on Azure
 
-A multi-agent contract review system on Azure, built end to end and measured against lawyer-labelled ground truth. It reads contracts, finds the clauses that matter, answers questions with verbatim citations checked in code, and says "not found" or abstains instead of guessing.
+A contract review system on Azure, measured against lawyer-labelled ground truth. The ingestion pipeline and a first answering path run end to end today: it reads contracts, finds the clauses that matter, answers with verbatim citations checked in code, and says "not found" or abstains instead of guessing. The multi-agent orchestration (intent, memory and policy agents in LangGraph) is being added next, one measured component at a time.
 
 This is my own reconstruction of an enterprise architecture pattern, built on a $100 student subscription. Every tradeoff is an [architecture decision record](docs/adr/), every failure is in the [build log](docs/build-log.md), and every claim below is a measurement.
 
@@ -13,7 +13,7 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
 | **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
-| **Answers** | Clauses found **97%**; quote matches the lawyers' text **95%**; fabricated quotes reaching a reviewer: **0** | 200 questions ([baseline](eval/results/baseline-slice1-answers.md)) |
+| **Answers** (best run so far) | Clauses found **97%**; quote matches the lawyers' text **95%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions, first configuration ([baseline](eval/results/baseline-slice1-answers.md)) |
 | **Known weakness** | Precision vs recall on absent clauses: fixing the output format cut false claims 23 → 16 but a stricter prompt raised missed clauses 3 → 12. Prompt variants now measured one at a time, weighting missed clauses higher | [ADR-0021](docs/adr/0021-determination-separate-from-evidence.md), [run](eval/results/run-v2-strict.md) |
 | **Spend to date** | about $16 of $100 | [Cost log](docs/cost-log.md) |
 

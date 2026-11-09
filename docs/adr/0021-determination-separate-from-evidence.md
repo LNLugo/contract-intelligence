@@ -1,6 +1,6 @@
 # ADR-0021: The model returns its determination separately from the evidence it cites
 
-- **Status:** Accepted (effect to be measured against the slice 1 answer baseline)
+- **Status:** Format accepted; prompt wording under experiment (see revision)
 - **Date:** 2026-11-09
 - **Phase:** Slice 1
 
@@ -22,5 +22,14 @@ Code routes: `present` + at least one valid citation → ANSWERED; `present` wit
 ## Evaluation discipline
 Retrieval is cached from the first run and reused, so this change is measured with retrieval held fixed: one variable at a time, and no further semantic-ranker quota spent.
 
+## Revision 2026-11-09: measured, and a bundled-variable mistake
+**Evidence** (`eval/results/run-v2-strict.md`, same 200 questions, retrieval cached): false claims 23 → 16 (Termination For Convenience 8 → 2), absent reported correctly 70% → 79%, but **missed clauses 3 → 12** and detection 97% → 90%, concentrated in categories CUAD defines broadly (Cap On Liability, Exclusivity, Anti-Assignment, Audit Rights).
+
+**Mistake:** this change bundled two variables: the output format and a prompt rule that related-but-not-matching provisions mean "absent". The rule generalized into strictness everywhere, including where the labels are broad. The run cannot separate their effects.
+
+**Decision:** keep the format and code routing (they are correct regardless, and unit-tested). Treat the prompt wording as its own experiment: prompts are now named and versioned (`agents/prompts.py`), every result records which prompt produced it, and the next run (`v3-neutral`) removes only the rule.
+
+**Weighting rule for this domain:** a missed clause costs more than a false claim. A false claim arrives with a citation a reviewer can reject in seconds; a missed clause is silent. Detection recall is the primary metric; false claims are secondary.
+
 ## Interview angle
-"My first evaluation showed 23 false claims. Reading them, most weren't hallucinations: the model said 'No' and cited the for-cause clauses to explain why, and my routing treated any valid citation as 'the clause exists'. The bug was in the output contract, not the model. I separated the determination from the evidence, routed on the determination in code, and re-measured with retrieval frozen so the change was the only variable."
+"My first evaluation showed 23 false claims. Reading them, most weren't hallucinations: the model said 'No' and cited the for-cause clauses to explain why, and my routing treated any valid citation as 'the clause exists'. The bug was in the output contract, not the model. I separated the determination from the evidence, routed on the determination in code, and re-measured with retrieval frozen. The first re-measurement taught me something too: I had also tightened the prompt in the same change, missed clauses went from 3 to 12, and I couldn't tell which change did what. Since then prompts are versioned and every experiment changes exactly one thing, and I weight a missed clause above a false claim because only one of them comes with a citation a reviewer can check."

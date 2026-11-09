@@ -1,20 +1,64 @@
 # Contract Intelligence on Azure
 
-A reference build of a multi-agent contract review system on Azure. It reads a contract, finds the clauses that matter, checks them against a vendor system of record, and returns findings that each cite their source clause. When the evidence is missing, contradictory or unavailable, it abstains and flags the finding instead of guessing.
+A multi-agent contract review system on Azure, built end to end and measured against lawyer-labelled ground truth. It reads contracts, finds the clauses that matter, answers questions with verbatim citations checked in code, and says "not found" or abstains instead of guessing.
 
-This is a personal learning build on my own Azure subscription. It reconstructs an enterprise architecture pattern on a constrained budget, and it records every place where the constraints forced a different choice from the enterprise version.
+This is my own reconstruction of an enterprise architecture pattern, built on a $100 student subscription. Every tradeoff is an [architecture decision record](docs/adr/), every failure is in the [build log](docs/build-log.md), and every claim below is a measurement.
+
+## Results so far
+
+| | Measured | How |
+|---|---|---|
+| **Corpus** | 50 contracts, 1,526 pages, 1,238 chunks, 27 contract types | [CUAD](docs/adr/0002-cuad-as-corpus-and-ground-truth.md), stratified by length ([ADR-0015](docs/adr/0015-document-intelligence-tier.md)) |
+| **Extraction cost** | $15.26, matching the projection to the cent | Corpus measured before choosing a tier |
+| **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
+| **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
+| **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
+| **Answers** | Clauses found **97%**; quote matches the lawyers' text **95%**; fabricated quotes reaching a reviewer: **0** | 200 questions ([baseline](eval/results/baseline-slice1-answers.md)) |
+| **Known weakness** | Precision vs recall on absent clauses: fixing the output format cut false claims 23 → 16 but a stricter prompt raised missed clauses 3 → 12. Prompt variants now measured one at a time, weighting missed clauses higher | [ADR-0021](docs/adr/0021-determination-separate-from-evidence.md), [run](eval/results/run-v2-strict.md) |
+| **Spend to date** | about $16 of $100 | [Cost log](docs/cost-log.md) |
 
 ![Reference architecture](docs/architecture/reference-architecture.png)
+
+## What runs today
+
+**Ingestion.** A PDF uploaded to the data lake's `inbox/` raises an Event Grid event, which is written to a storage queue and processed by a Flex Consumption Function: Document Intelligence layout extraction (cached), cleaning, paragraph-filled 800-token chunks with page numbers, 1,024-dimension embeddings, and a push to AI Search with access groups on every chunk. Failures retry, then park in a poison queue. No keys anywhere: every hop uses a managed identity.
+
+**Answering (slice 1, [ADR-0019](docs/adr/0019-vertical-slice-before-components.md)).** Hybrid search (BM25 + vector, RRF) reranked by the semantic ranker, filtered by the caller's groups. The model returns a determination and verbatim quotes; code drops any finding whose quote is not in the clause it cites ([ADR-0020](docs/adr/0020-deterministic-citation-check-first.md)) and routes the result: answered, not found, or abstain.
+
+```powershell
+python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
+# [ANSWERED]  Delaware ... [C1 valid] DigitalCinemaDestinations... p.30-31: "governed by the internal laws of the State of Delaware..."
+```
+
+## Lessons the measurements taught
+
+- **A retrieval score cannot tell you a clause is missing.** Reranker scores for present and absent clauses overlap almost completely, so absence is judged by the model reading the evidence, not by a threshold ([ADR-0009](docs/adr/0009-deterministic-rules-and-abstention.md)).
+- **Change one variable at a time, and weight errors by their cost.** Bundling a format fix with a prompt tweak cut false claims but quadrupled missed clauses, and the run could not say which change did which. A missed clause is silent; a false claim comes with a citation a reviewer can reject ([run](eval/results/run-v2-strict.md)).
+- **Read the errors before fixing them.** The 23 "false claims" were mostly the model saying "No" and citing evidence for it, which my routing counted as "yes". The fix was the output contract, not an extra model call ([ADR-0021](docs/adr/0021-determination-separate-from-evidence.md)).
+- **A cheap sample is not a valid sample.** A median-length evaluation set would have reported 99% retrieval and hidden the drop to 84% on very long contracts ([ADR-0015](docs/adr/0015-document-intelligence-tier.md)).
+- **Pace under rate limits, do not retry into them.** One guardrail for every deployment broke the batch; limits are now set per workload ([ADR-0014](docs/adr/0014-model-deployment-type-and-model-roles.md)).
+- **Measure the platform's limits before designing around them.** Event Grid waits 30 seconds; 31 of 48 contracts took longer, so a queue sits between them ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)).
+
+## Roadmap
+
+| Step | Scope | Status |
+|---|---|---|
+| Foundation | Subscription constraints, data lake, Document Intelligence, models, search index | Done |
+| Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
+| Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
+| Next, each with a before and after number | Clause definitions (taxonomy), definitions lookup across chunks, LLM judge for entailment, reranker comparison | |
+| Then | System-of-record tool behind APIM; LangGraph orchestrator with intent, memory and policy; review history | |
+| Then | API and review app with Entra sign-in; hardening with private endpoints; Bicep for everything | |
 
 ## How to read this repo
 
 | If you want | Go to |
 |---|---|
-| Why each part is built the way it is | [`docs/adr/`](docs/adr/) — one architecture decision record per tradeoff |
+| Why each part is built the way it is | [`docs/adr/`](docs/adr/): one decision record per tradeoff, with the evidence |
+| What broke and how it was diagnosed | [`docs/build-log.md`](docs/build-log.md) |
+| The measured baselines | [`eval/results/`](eval/results/) |
 | How the pieces connect | [`docs/architecture/overview.md`](docs/architecture/overview.md) |
-| What broke and what I learned | [`docs/build-log.md`](docs/build-log.md) |
-| What it costs to run | [`docs/cost-log.md`](docs/cost-log.md) |
-| How decisions map to interview questions | [`docs/interview/talking-points.md`](docs/interview/talking-points.md) |
+| What it costs | [`docs/cost-log.md`](docs/cost-log.md) |
 
 ## Decision index
 
@@ -24,55 +68,45 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0002](docs/adr/0002-cuad-as-corpus-and-ground-truth.md) | Use CUAD as the contract corpus and evaluation ground truth | Accepted |
 | [0003](docs/adr/0003-model-hosting-under-subscription-constraints.md) | Host the models on the student subscription, in Canada Central | Accepted |
 | [0004](docs/adr/0004-push-ingestion-over-indexer.md) | Event-driven push ingestion instead of an AI Search indexer | Accepted |
-| [0005](docs/adr/0005-fixed-size-chunking-v1.md) | Fixed-size overlapping chunks in v1; clause-aware chunking as a measured experiment | Accepted |
-| [0006](docs/adr/0006-hybrid-retrieval-and-reranking.md) | Hybrid retrieval with RRF, then a cross-encoder rerank from top 20 to top 5 | First stage Accepted; reranker pending |
+| [0005](docs/adr/0005-fixed-size-chunking-v1.md) | Paragraph-filled 800-token chunks in v1; clause-aware chunking as a measured experiment | Accepted |
+| [0006](docs/adr/0006-hybrid-retrieval-and-reranking.md) | Hybrid retrieval with RRF, then rerank from top 20 to top 5 | First stage Accepted; reranker comparison pending |
 | [0007](docs/adr/0007-langgraph-orchestration.md) | LangGraph for orchestration instead of a managed agent service | Accepted |
 | [0008](docs/adr/0008-review-history-as-retrieval.md) | Review history retrieved from its own index, not appended to the prompt | Proposed |
-| [0009](docs/adr/0009-deterministic-rules-and-abstention.md) | Business rules and risk routing run outside the LLM; abstain when evidence fails | Accepted |
+| [0009](docs/adr/0009-deterministic-rules-and-abstention.md) | Rules and routing in code; a retrieval score cannot decide absence | Accepted, revised |
 | [0010](docs/adr/0010-system-of-record-as-typed-tool.md) | Vendor system of record reached through APIM as a typed, read-only tool | Accepted |
 | [0011](docs/adr/0011-clause-taxonomy-store.md) | Where the governed clause taxonomy lives | Proposed |
-| [0012](docs/adr/0012-evaluation-method.md) | Clause-level evaluation against labeled ground truth, with a calibrated LLM judge | Proposed |
+| [0012](docs/adr/0012-evaluation-method.md) | Clause-level evaluation against labelled ground truth, with a calibrated LLM judge | Proposed |
 | [0013](docs/adr/0013-identity-and-security-trimming.md) | Entra identities everywhere, no keys, results filtered by the user's groups | Accepted |
-| [0014](docs/adr/0014-model-deployment-type-and-model-roles.md) | GlobalStandard deployments, with a model chosen per role | Accepted (roles pending measurement) |
-| [0015](docs/adr/0015-document-intelligence-tier.md) | Paid Document Intelligence tier, stratified 50-contract evaluation set extracted once | Accepted |
-| [0016](docs/adr/0016-search-tier-and-vector-size.md) | AI Search Free tier, 1024-dimension vectors, vectors not stored | Accepted |
-| [0017](docs/adr/0017-pipeline-as-library.md) | Ingestion pipeline as a library with two thin callers (batch, Function) | Accepted |
-| [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function (30-second delivery window) | Accepted |
+| [0014](docs/adr/0014-model-deployment-type-and-model-roles.md) | GlobalStandard deployments; capacity set per workload | Accepted, revised |
+| [0015](docs/adr/0015-document-intelligence-tier.md) | Paid extraction tier, stratified 50-contract evaluation set extracted once | Accepted |
+| [0016](docs/adr/0016-search-tier-and-vector-size.md) | AI Search Free tier, 1,024-dimension vectors, vectors not stored | Accepted |
+| [0017](docs/adr/0017-pipeline-as-library.md) | Ingestion pipeline as a library with two thin callers | Accepted |
+| [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function | Accepted, revised |
 | [0019](docs/adr/0019-vertical-slice-before-components.md) | Thin answering slice end to end before the remaining components | Accepted |
 | [0020](docs/adr/0020-deterministic-citation-check-first.md) | Deterministic citation check first; LLM judge only for entailment | Accepted |
-| [0021](docs/adr/0021-determination-separate-from-evidence.md) | Model returns its determination separately from cited evidence; code routes on it | Accepted |
+| [0021](docs/adr/0021-determination-separate-from-evidence.md) | Determination separate from cited evidence; code routes on it | Accepted, being measured |
 
-**Proposed** means the decision waits for evidence from the phase where it applies. An ADR moves to Accepted only once there is a measurement or a test result behind it.
-
-## Build phases
-
-| Phase | Scope | Status |
-|---|---|---|
-| 0 | Subscription constraints, resource group, tooling | Done |
-| 1 | ADLS Gen2 storage | Done |
-| 2 | Document Intelligence extraction | Done |
-| 3 | Embedding and chat model deployments | Done |
-| 4 | AI Search index | Done |
-| 5 | Ingestion: library, batch over eval set (50 contracts, 1,238 chunks), Event Grid → queue → Function (23 s upload to searchable; fails closed without access metadata) | Done |
-| 6 | **Slice 1** (ADR-0019): retrieval, generation, citation check, routing, retrieval eval vs CUAD labels | In progress |
-| 6b | Then, one at a time with before/after numbers: abstention calibration, clause taxonomy, definitions lookup | |
-| 7 | Vendor system of record behind APIM | |
-| 8 | Agents: orchestrator, intent, memory, policy, plan, retrieval | |
-| 9 | Agents: generation, citation validator, evaluation, risk router | |
-| 10 | Review history index | |
-| 11 | API and review app on Container Apps, Entra sign-in | |
-| 12 | Evaluation harness | |
-| 13 | Hardening: private endpoints, Defender, diagnostics, delete sweep | |
-| 14 | Infrastructure as code (Bicep) | |
+**Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 
 ## Repo layout
 
 ```
-infra/       Bicep and az CLI scripts, one file per phase
-ingestion/   Azure Function: Event Grid trigger, extraction, chunking, embedding, index push
-agents/      LangGraph graph and agent nodes
-api/         FastAPI service and review app
-eval/        Evaluation harness and results
-data/        Local contracts (git ignored)
-docs/        ADRs, architecture, build log, cost log, interview notes
+infra/       az CLI and ARM scripts, one per phase (Bicep in a later step)
+ingestion/   pipeline library, batch script, queue-triggered Function, unit tests
+agents/      retrieval agent, answering and routing, ask CLI, unit tests
+eval/        evaluation set, retrieval and answer evaluations, baselines in eval/results/
+docs/        ADRs, architecture overview, build log, cost log, interview notes
+```
+
+## Run it
+
+Requires Python 3.12, the Azure CLI signed in (`az login`), and the resources from `infra/`. Contracts are not in the repo: download [CUAD v1](https://zenodo.org/records/4595826) separately.
+
+```powershell
+python -m venv .venv; .\.venv\Scripts\Activate.ps1
+pip install -r ingestion\requirements-dev.txt
+python -m pytest -q agents\tests ingestion\tests
+python ingestion\batch_ingest.py --cuad-root <folder containing CUAD_v1> --limit 1
+python -m agents.ask "What law governs this agreement?" --doc <doc_id>
+python eval\answer_eval.py --cuad-root <folder containing CUAD_v1>
 ```

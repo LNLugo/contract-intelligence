@@ -21,21 +21,7 @@ CHAT_MODEL = "gpt-5.4-mini"
 TOP_N = 5                       # chunks the model sees (ADR-0006: top 20 -> top 5)
 MIN_RERANKER_SCORE = 1.5        # floor against irrelevant retrieval only (ADR-0009 revision)
 
-SYSTEM = """You review commercial contracts. Use ONLY the numbered clauses provided.
-Return JSON with exactly these keys:
-{"determination": "present" | "absent" | "unclear",
- "answer": "one or two sentence answer",
- "findings": [{"statement": "what the contract says",
-               "citations": [{"clause": "C1", "quote": "words copied exactly from that clause"}]}]}
-
-determination answers ONE thing: does the contract contain what the question asks about, as the
-question defines it?
-- "present": the clauses contain it. Cite the clauses that establish it.
-- "absent": the clauses do not contain it. Related provisions that do not meet the question's
-  definition (for example, termination for cause when the question asks about termination without
-  cause) mean "absent". You may cite them in findings to explain the answer.
-- "unclear": the clauses are ambiguous or you cannot tell from them.
-Every statement needs at least one citation; quotes must be copied verbatim, 8 to 40 words."""
+from .prompts import DEFAULT as DEFAULT_PROMPT, PROMPTS
 
 
 @dataclass
@@ -99,10 +85,10 @@ def _context(hits: list[Hit]) -> str:
                        for i, h in enumerate(hits, 1))
 
 
-def generate(question: str, hits: list[Hit]) -> tuple[dict, int]:
+def generate(question: str, hits: list[Hit], prompt: str = DEFAULT_PROMPT) -> tuple[dict, int]:
     body = {"model": CHAT_MODEL, "response_format": {"type": "json_object"},
             "max_completion_tokens": 2000,
-            "messages": [{"role": "system", "content": SYSTEM},
+            "messages": [{"role": "system", "content": PROMPTS[prompt]},
                          {"role": "user", "content": f"Question: {question}\n\nClauses:\n{_context(hits)}"}]}
     resp = http.request("POST", f"{S.aoai_endpoint}/chat/completions", http.COGNITIVE_SCOPE, json=body).json()
     text = resp["choices"][0]["message"]["content"] or "{}"
@@ -140,7 +126,7 @@ def route(determination: str, findings: list[Finding], dropped: int) -> tuple[st
 
 
 def answer(question: str, groups: list[str], doc_id: str | None = None,
-           hits: list[Hit] | None = None) -> Answer:
+           hits: list[Hit] | None = None, prompt: str = DEFAULT_PROMPT) -> Answer:
     """hits: pass pre-retrieved chunks to hold retrieval fixed (evaluation experiments)."""
     t0 = time.time()
     if hits is None:
@@ -153,7 +139,7 @@ def answer(question: str, groups: list[str], doc_id: str | None = None,
         return Answer("ABSTAIN", "", "", [], f"irrelevant retrieval (top reranker score {top:.2f} < {MIN_RERANKER_SCORE})",
                       top, 0, 0, round(time.time() - t0, 1))
 
-    raw, tokens = generate(question, hits)
+    raw, tokens = generate(question, hits, prompt)
     determination = str(raw.get("determination", "unclear")).lower()
     findings, dropped = validate(raw, hits)
     status, reason = route(determination, findings, dropped)

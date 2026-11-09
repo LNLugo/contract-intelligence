@@ -154,3 +154,10 @@ One entry per working session. The entries where something broke are the most va
 **Broke:** the first `determination-field` run reported 150 errors of 200 (the laptop lost power and connectivity mid-run), yet still printed a full metrics table from the 50 survivors. The table also showed grounding above 100%.
 **Fix:** (1) The evaluation now refuses to report metrics when more than 5% of questions error, prints the top error reasons, and keeps the retrieval cache so a re-run continues instead of starting over. (2) Grounding counted quotes from NOT_FOUND answers, which under ADR-0021 can cite explanatory evidence; it now counts only ANSWERED results.
 **Learned:** an evaluation harness needs its own validity checks. A partial run that prints a confident table is worse than one that prints nothing.
+
+### 2026-11-09 · Slice 1 · Re-measured ADR-0021: fewer false claims, four times the missed clauses
+**Did:** Re-ran the answer evaluation with the determination field (`eval/results/run-v2-strict.md`), same 200 questions, retrieval cached (no semantic-ranker quota used beyond completing the cache).
+**Result:** false claims 23 → 16 (Termination For Convenience 8 → 2); absent reported correctly 70% → 79%; **missed clauses 3 → 12**, detection 97% → 90%, concentrated in broadly defined categories (Cap On Liability, Exclusivity, Anti-Assignment, Audit Rights).
+**Broke (my experiment design):** the change bundled two variables, the output format and a prompt rule that "related provisions that do not meet the definition mean absent". The rule made the model strict everywhere. The run cannot attribute gain and loss separately.
+**Fix:** prompts are now named and versioned in `agents/prompts.py`, selectable with `--prompt`, and recorded in every result file. Next run: `v3-neutral` (same format, rule removed).
+**Learned:** (1) One variable per experiment, including prompt wording. (2) Weight errors by cost in the domain: a missed clause is silent, a false claim carries a checkable citation. Detection recall is the primary metric.

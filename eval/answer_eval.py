@@ -49,6 +49,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="contracts to use (default: the 20-contract subset)")
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--tag", default="", help="label for this run, e.g. baseline or determination-field")
+    ap.add_argument("--prompt", default=None, help="named prompt from agents/prompts.py (default: the current default)")
     args = ap.parse_args()
 
     # Retrieval cache: generation experiments hold retrieval fixed (one variable at a time)
@@ -69,7 +70,11 @@ def main() -> None:
             continue
         doc = document_id((args.cuad_root / r["path"]).read_bytes())
         tasks += [(r, doc, c, lab[c]) for c in CATEGORIES if c in lab]
-    print(f"{len(rows)} contracts, {len(tasks)} questions\n")
+    from agents.prompts import DEFAULT, PROMPTS
+    prompt = args.prompt or DEFAULT
+    if prompt not in PROMPTS:
+        sys.exit(f"Unknown prompt {prompt!r}; choose from {sorted(PROMPTS)}")
+    print(f"{len(rows)} contracts, {len(tasks)} questions, prompt {prompt}\n")
 
     def run(t):
         r, doc, cat, lab = t
@@ -78,7 +83,7 @@ def main() -> None:
             if ck not in cache:
                 cache[ck] = [vars(h) for h in search(lab["question"], ["grp-legal"], doc_id=doc, k=20, rerank=True)[:5]]
             hits = [Hit(**h) for h in cache[ck]]
-            a = answer(lab["question"], ["grp-legal"], doc, hits=hits)
+            a = answer(lab["question"], ["grp-legal"], doc, hits=hits, prompt=prompt)
         except Exception as exc:  # one failed call should not lose the run
             return {"file": r["file"], "group": r["group"], "category": cat, "present": bool(lab["answers"]),
                     "status": "ERROR", "error": str(exc)[:300]}
@@ -152,7 +157,7 @@ def main() -> None:
     tag = f"-{args.tag}" if args.tag else ""
     out = REPO / "eval" / "results" / f"answers{tag}-{time.strftime('%Y%m%d-%H%M%S')}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"tag": args.tag, "results": res, "seconds": round(time.time() - t0, 1)}, indent=2))
+    out.write_text(json.dumps({"tag": args.tag, "prompt": prompt, "results": res, "seconds": round(time.time() - t0, 1)}, indent=2))
     print(f"\n{len(res)} questions in {time.time() - t0:.0f} s. Results: {out}")
 
 

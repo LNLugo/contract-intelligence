@@ -16,9 +16,11 @@ def main() -> None:
     ap.add_argument("--groups", default="grp-legal", help="comma-separated groups of the caller")
     ap.add_argument("--doc", default=None, help="restrict to one document id")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--prompt", default=None, help="named prompt from agents/prompts.py")
     args = ap.parse_args()
 
-    a = answer(args.question, [g.strip() for g in args.groups.split(",") if g.strip()], args.doc)
+    kwargs = {"prompt": args.prompt} if args.prompt else {}
+    a = answer(args.question, [g.strip() for g in args.groups.split(",") if g.strip()], args.doc, **kwargs)
     if args.json:
         print(json.dumps(as_dict(a), indent=2))
         return

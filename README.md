@@ -13,8 +13,8 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
 | **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
-| **Answers** (best run so far) | Clauses found **97%**; quote matches the lawyers' text **95%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions, first configuration ([baseline](eval/results/baseline-slice1-answers.md)) |
-| **Known weakness** | Precision vs recall on absent clauses: fixing the output format cut false claims 23 → 16 but a stricter prompt raised missed clauses 3 → 12. Prompt variants now measured one at a time, weighting missed clauses higher | [ADR-0021](docs/adr/0021-determination-separate-from-evidence.md), [run](eval/results/run-v2-strict.md) |
+| **Answers** (current configuration) | Clauses found **91%**; quote matches the lawyers' text **96%**; absent clauses reported correctly **80%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions ([run](eval/results/run-v3-neutral.md)); first configuration found 97% but reported only 70% of absent clauses correctly ([baseline](eval/results/baseline-slice1-answers.md)) |
+| **Known weakness** | One prompt wording cannot serve every clause type: strict reading fixed Termination for Convenience (false claims 8 → 2) but missed partial forms the lawyers count, such as limited exclusivity (missed 3 → 10). Next: per-category definitions from the clause taxonomy | [ADR-0021](docs/adr/0021-determination-separate-from-evidence.md), [analysis](eval/results/run-v3-neutral.md) |
 | **Spend to date** | about $16 of $100 | [Cost log](docs/cost-log.md) |
 
 ![Reference architecture](docs/architecture/reference-architecture.png)
@@ -33,6 +33,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 ## Lessons the measurements taught
 
 - **A retrieval score cannot tell you a clause is missing.** Reranker scores for present and absent clauses overlap almost completely, so absence is judged by the model reading the evidence, not by a threshold ([ADR-0009](docs/adr/0009-deterministic-rules-and-abstention.md)).
+- **Test your own hypotheses, including the flattering ones.** I suspected the first configuration's 97% was inflated by a bug; checking each answer showed it was real, and that strict wording had cost 8 correct detections ([analysis](eval/results/run-v3-neutral.md)).
 - **Change one variable at a time, and weight errors by their cost.** Bundling a format fix with a prompt tweak cut false claims but quadrupled missed clauses, and the run could not say which change did which. A missed clause is silent; a false claim comes with a citation a reviewer can reject ([run](eval/results/run-v2-strict.md)).
 - **Read the errors before fixing them.** The 23 "false claims" were mostly the model saying "No" and citing evidence for it, which my routing counted as "yes". The fix was the output contract, not an extra model call ([ADR-0021](docs/adr/0021-determination-separate-from-evidence.md)).
 - **A cheap sample is not a valid sample.** A median-length evaluation set would have reported 99% retrieval and hidden the drop to 84% on very long contracts ([ADR-0015](docs/adr/0015-document-intelligence-tier.md)).

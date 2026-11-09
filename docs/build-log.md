@@ -161,3 +161,11 @@ One entry per working session. The entries where something broke are the most va
 **Broke (my experiment design):** the change bundled two variables, the output format and a prompt rule that "related provisions that do not meet the definition mean absent". The rule made the model strict everywhere. The run cannot attribute gain and loss separately.
 **Fix:** prompts are now named and versioned in `agents/prompts.py`, selectable with `--prompt`, and recorded in every result file. Next run: `v3-neutral` (same format, rule removed).
 **Learned:** (1) One variable per experiment, including prompt wording. (2) Weight errors by cost in the domain: a missed clause is silent, a false claim carries a checkable citation. Detection recall is the primary metric.
+
+### 2026-11-09 · Slice 1 · v3-neutral: two hypotheses tested, both rejected
+**Did:** Ran `v3-neutral` (determination field, strictness rule removed), same cached retrieval (`eval/results/run-v3-neutral.md`). Then compared each v3 miss with the baseline's answer to the same question.
+**Result:** found 91%, missed 10, false claims 15, absent correct 80%; nearly the same as v2-strict.
+**Hypothesis 1 (rule caused the misses): rejected.** Removing the rule moved the numbers by 1 or 2.
+**Hypothesis 2 (baseline 97% inflated by the routing bug): rejected.** 8 of the 10 misses were correct "Yes." answers in the baseline, all partial or limited forms the lawyers labelled present. My first comparison script also read the wrong baseline file (the 2-contract quick run) and failed on missing entries; fixed by naming the file.
+**Learned:** the baseline prompt said "address" (lenient), the determination says "contains" (strict). Narrow categories need strictness, broad ones need breadth; a global wording cannot serve both. Definitions belong per category, sourced outside the evaluation set to avoid tuning on the test. Before comparing further, measure run-to-run variance of an identical prompt.
+**Decision impact:** ADR-0021 revision 2. Default prompt set to `v3-neutral` (interim). README answers row now reports the current configuration, not the best historic number.

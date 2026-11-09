@@ -31,5 +31,10 @@ Retrieval is cached from the first run and reused, so this change is measured wi
 
 **Weighting rule for this domain:** a missed clause costs more than a false claim. A false claim arrives with a citation a reviewer can reject in seconds; a missed clause is silent. Detection recall is the primary metric; false claims are secondary.
 
+## Revision 2 (2026-11-09): the trade is in the definition, not the format
+`v3-neutral` (format kept, rule removed): missed 10, false claims 15, found 91% (`eval/results/run-v3-neutral.md`). Removing the rule barely moved the numbers, so the rule was not the cause. Comparing each v3 miss with the baseline answer showed 8 of 10 were correct "Yes" answers in the baseline: partial or limited forms (limited exclusivity, non-compete-style restrictions, a time limit as a cap) that CUAD counts as present. The baseline prompt asked whether clauses "address" the question; the determination asks whether the contract "contains" it.
+
+**Conclusion:** narrow categories need strict reading, broad categories need broad reading; one global wording cannot do both. The format and routing stay. Category definitions move to the clause taxonomy (ADR-0011), derived from CUAD's descriptions and from labelled examples outside the evaluation set, so the evaluation stays a test set. `v3-neutral` is the interim default.
+
 ## Interview angle
 "My first evaluation showed 23 false claims. Reading them, most weren't hallucinations: the model said 'No' and cited the for-cause clauses to explain why, and my routing treated any valid citation as 'the clause exists'. The bug was in the output contract, not the model. I separated the determination from the evidence, routed on the determination in code, and re-measured with retrieval frozen. The first re-measurement taught me something too: I had also tightened the prompt in the same change, missed clauses went from 3 to 12, and I couldn't tell which change did what. Since then prompts are versioned and every experiment changes exactly one thing, and I weight a missed clause above a false claim because only one of them comes with a citation a reviewer can check."

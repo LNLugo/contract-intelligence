@@ -35,4 +35,4 @@ determination answers ONE thing: does the contract contain what the question ask
 - "unclear": the clauses are ambiguous or you cannot tell from them.""",
 }
 
-DEFAULT = "v2-strict"
+DEFAULT = "v3-neutral"   # interim: best measured so far with the determination field; taxonomy next

@@ -141,3 +141,11 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** (1) Recall drops with contract length; the stratified sample (ADR-0015) is what exposed it. (2) The reranker is not uniformly better. (3) Reranker scores for present and absent clauses overlap almost completely (present median 2.30, absent 1.96, absent p90 2.35), so a score threshold cannot decide whether a clause exists; absence is decided by the model reading evidence (ADR-0009 revision).
 **Next:** `eval/answer_eval.py` measures the answers themselves on 20 contracts: missed clauses, false claims, grounding against the labelled text.
 **Spend so far:** about $15.30 extraction; tokens under $0.30; semantic ranker about 530 of 1,000 free queries this month.
+
+### 2026-11-09 · Slice 1 · Answer baseline; the "false claims" were my output format
+**Did:** Ran `eval/answer_eval.py`: 20 contracts × 10 categories, 200 questions (`eval/results/baseline-slice1-answers.md`).
+**Result:** found 97% of present clauses (3 missed), 95% grounded on the lawyers' labelled text, 2 bad quotes dropped by the citation check, but only 70% of absent clauses reported correctly: 23 false claims, 8 in Termination For Convenience.
+**First thought:** the model reads clauses too generously and needs an LLM judge.
+**Actual cause (after reading the answers):** several "false claims" began "No." The model cited for-cause termination clauses to explain why the answer was no, and my routing read any valid citation as "the clause exists". The defect was the output contract, and the metric inherited it.
+**Fix:** ADR-0021: explicit `determination` (present, absent, unclear) separate from evidence; code routes on it; four routing unit tests including this bug. Evaluation now caches retrieval and reuses it, so the fix is measured with retrieval held fixed and without spending more semantic-ranker quota.
+**Learned:** read the errors before fixing them. The obvious fix (add an LLM judge) would have spent a model call per finding to patch a schema bug.

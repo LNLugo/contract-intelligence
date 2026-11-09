@@ -7,8 +7,29 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 pytest.importorskip("azure.identity")
-from agents.answer import quote_in_clause  # noqa: E402
+from agents.answer import Citation, Finding, quote_in_clause, route  # noqa: E402
 from agents.retrieve import AccessError, access_filter  # noqa: E402
+
+
+def _finding():
+    return Finding("Liability is capped at fees paid.", [Citation("C1", "q", True)])
+
+
+def test_route_present_with_valid_evidence_is_answered():
+    assert route("present", [_finding()], 0)[0] == "ANSWERED"
+
+
+def test_route_absent_with_explanatory_evidence_is_not_found():
+    # The baseline bug: evidence cited to explain a "no" was routed as ANSWERED
+    assert route("absent", [_finding()], 0)[0] == "NOT_FOUND"
+
+
+def test_route_present_without_valid_citations_abstains():
+    assert route("present", [], 2)[0] == "ABSTAIN"
+
+
+def test_route_unclear_abstains():
+    assert route("unclear", [_finding()], 0)[0] == "ABSTAIN"
 
 CLAUSE = ("12.1 Neither party's aggregate liability under this Agreement shall exceed the total "
           "fees paid by Customer in the twelve (12) months preceding the claim.")

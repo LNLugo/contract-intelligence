@@ -23,7 +23,7 @@ def main() -> None:
         print(json.dumps(as_dict(a), indent=2))
         return
     top = f"{a.top_reranker_score:.2f}" if a.top_reranker_score is not None else "n/a"
-    print(f"\n[{a.status}]  top reranker score {top}  |  {a.tokens} tokens  |  {a.seconds} s")
+    print(f"\n[{a.status}]  determination: {a.determination or 'n/a'}  |  top reranker score {top}  |  {a.tokens} tokens  |  {a.seconds} s")
     if a.reason:
         print(f"Reason: {a.reason}")
     if a.answer:

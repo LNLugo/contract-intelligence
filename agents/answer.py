@@ -1,9 +1,11 @@
-"""Slice 1 answering: generate cited findings, validate citations in code, route the result.
+"""Slice 1 answering: generate a determination with cited evidence, validate citations
+in code, and route the result in code (ADR-0009, ADR-0020, ADR-0021).
 
-Routing (ADR-0009), decided by code, not the model:
-  ANSWERED   findings survived citation validation
-  NOT_FOUND  strong evidence was retrieved and the model reports the clause is absent
-  ABSTAIN    weak retrieval, or every citation failed validation
+The model returns a `determination` (present / absent / unclear) separately from the
+evidence it cites. Routing is decided by code from both:
+  ANSWERED   determination present, and at least one finding survived citation validation
+  NOT_FOUND  determination absent (evidence may still be cited to explain why)
+  ABSTAIN    determination unclear, weak retrieval, or a "present" whose citations all failed
 """
 import json
 import re
@@ -17,16 +19,23 @@ from pipeline.config import SETTINGS as S
 
 CHAT_MODEL = "gpt-5.4-mini"
 TOP_N = 5                       # chunks the model sees (ADR-0006: top 20 -> top 5)
-MIN_RERANKER_SCORE = 1.5        # semantic ranker scale 0-4; provisional, to be calibrated by eval
+MIN_RERANKER_SCORE = 1.5        # floor against irrelevant retrieval only (ADR-0009 revision)
 
-SYSTEM = """You review commercial contracts. Answer ONLY from the numbered clauses provided.
+SYSTEM = """You review commercial contracts. Use ONLY the numbered clauses provided.
 Return JSON with exactly these keys:
-{"found": true|false,
+{"determination": "present" | "absent" | "unclear",
  "answer": "one or two sentence answer",
  "findings": [{"statement": "what the contract says",
                "citations": [{"clause": "C1", "quote": "words copied exactly from that clause"}]}]}
-Rules: every statement needs at least one citation; quotes must be copied verbatim, 8 to 40 words;
-if the clauses do not address the question, return found=false and an empty findings list."""
+
+determination answers ONE thing: does the contract contain what the question asks about, as the
+question defines it?
+- "present": the clauses contain it. Cite the clauses that establish it.
+- "absent": the clauses do not contain it. Related provisions that do not meet the question's
+  definition (for example, termination for cause when the question asks about termination without
+  cause) mean "absent". You may cite them in findings to explain the answer.
+- "unclear": the clauses are ambiguous or you cannot tell from them.
+Every statement needs at least one citation; quotes must be copied verbatim, 8 to 40 words."""
 
 
 @dataclass
@@ -51,6 +60,7 @@ class Finding:
 @dataclass
 class Answer:
     status: str
+    determination: str
     answer: str
     findings: list[Finding]
     reason: str
@@ -99,24 +109,15 @@ def generate(question: str, hits: list[Hit]) -> tuple[dict, int]:
     return json.loads(text), resp.get("usage", {}).get("total_tokens", 0)
 
 
-def answer(question: str, groups: list[str], doc_id: str | None = None) -> Answer:
-    t0 = time.time()
-    hits = search(question, groups, doc_id=doc_id, k=20, rerank=True)[:TOP_N]
-    top = hits[0].reranker_score if hits else None
-    if not hits:
-        return Answer("ABSTAIN", "", [], "no evidence retrieved", None, 0, 0, round(time.time() - t0, 1))
-    if top is not None and top < MIN_RERANKER_SCORE:
-        return Answer("ABSTAIN", "", [], f"weak evidence (top reranker score {top:.2f} < {MIN_RERANKER_SCORE})",
-                      top, 0, 0, round(time.time() - t0, 1))
-
-    raw, tokens = generate(question, hits)
+def validate(raw: dict, hits: list[Hit]) -> tuple[list[Finding], int]:
+    """Keep findings with at least one citation whose quote is really in the cited clause."""
     findings, dropped = [], 0
-    for f in raw.get("findings", []):
+    for f in raw.get("findings", []) or []:
         cites = []
-        for c in f.get("citations", []):
-            idx = c.get("clause", "").lstrip("Cc")
+        for c in f.get("citations", []) or []:
+            idx = str(c.get("clause", "")).lstrip("Cc")
             hit = hits[int(idx) - 1] if idx.isdigit() and 1 <= int(idx) <= len(hits) else None
-            cites.append(Citation(c.get("clause", ""), c.get("quote", ""),
+            cites.append(Citation(str(c.get("clause", "")), c.get("quote", ""),
                                   bool(hit) and quote_in_clause(c.get("quote", ""), hit.content),
                                   hit.file_name if hit else "", f"{hit.page_start}-{hit.page_end}" if hit else ""))
         finding = Finding(f.get("statement", ""), cites)
@@ -124,15 +125,41 @@ def answer(question: str, groups: list[str], doc_id: str | None = None) -> Answe
             findings.append(finding)
         else:
             dropped += 1
+    return findings, dropped
 
-    seconds = round(time.time() - t0, 1)
-    if findings:
-        return Answer("ANSWERED", raw.get("answer", ""), findings, "", top, dropped, tokens, seconds)
-    if not raw.get("found", False) and dropped == 0:
-        return Answer("NOT_FOUND", raw.get("answer", ""), [], "model reports the clause is not present", top, 0, tokens, seconds)
-    return Answer("ABSTAIN", "", [], f"all {dropped} finding(s) failed citation validation", top, dropped, tokens, seconds)
+
+def route(determination: str, findings: list[Finding], dropped: int) -> tuple[str, str]:
+    """Code decides the outcome (ADR-0009, ADR-0021). Returns (status, reason)."""
+    if determination == "present":
+        if findings:
+            return "ANSWERED", ""
+        return "ABSTAIN", f"determination present but all {dropped} finding(s) failed citation validation"
+    if determination == "absent":
+        return "NOT_FOUND", "determination absent"
+    return "ABSTAIN", "model could not determine from the evidence (unclear): route to a reviewer"
+
+
+def answer(question: str, groups: list[str], doc_id: str | None = None,
+           hits: list[Hit] | None = None) -> Answer:
+    """hits: pass pre-retrieved chunks to hold retrieval fixed (evaluation experiments)."""
+    t0 = time.time()
+    if hits is None:
+        hits = search(question, groups, doc_id=doc_id, k=20, rerank=True)
+    hits = hits[:TOP_N]
+    top = hits[0].reranker_score if hits else None
+    if not hits:
+        return Answer("ABSTAIN", "", "", [], "no evidence retrieved", None, 0, 0, round(time.time() - t0, 1))
+    if top is not None and top < MIN_RERANKER_SCORE:
+        return Answer("ABSTAIN", "", "", [], f"irrelevant retrieval (top reranker score {top:.2f} < {MIN_RERANKER_SCORE})",
+                      top, 0, 0, round(time.time() - t0, 1))
+
+    raw, tokens = generate(question, hits)
+    determination = str(raw.get("determination", "unclear")).lower()
+    findings, dropped = validate(raw, hits)
+    status, reason = route(determination, findings, dropped)
+    return Answer(status, determination, raw.get("answer", ""), findings, reason, top, dropped, tokens,
+                  round(time.time() - t0, 1))
 
 
 def as_dict(a: Answer) -> dict:
-    d = asdict(a)
-    return d
+    return asdict(a)

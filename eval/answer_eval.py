@@ -29,6 +29,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "eval"))
 from agents.answer import answer  # noqa: E402
+from agents.retrieve import Hit, search  # noqa: E402
 from pipeline.process import document_id  # noqa: E402
 from retrieval_eval import CATEGORIES, contains, key, load_labels  # noqa: E402
 
@@ -47,7 +48,15 @@ def main() -> None:
     ap.add_argument("--cuad-root", required=True, type=Path)
     ap.add_argument("--limit", type=int, default=0, help="contracts to use (default: the 20-contract subset)")
     ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--tag", default="", help="label for this run, e.g. baseline or determination-field")
     args = ap.parse_args()
+
+    # Retrieval cache: generation experiments hold retrieval fixed (one variable at a time)
+    # and do not spend semantic-ranker quota again. Delete the file to re-retrieve.
+    cache_path = REPO / "eval" / "runs" / "retrieval-cache.json"
+    cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
+    cache_hits = sum(1 for _ in cache)
+    print(f"Retrieval cache: {cache_hits} entries ({'reusing' if cache_hits else 'will be created'})")
 
     labels = load_labels(args.cuad_root)
     rows = pick(list(csv.DictReader((REPO / "eval" / "eval_set.csv").open())))
@@ -64,8 +73,12 @@ def main() -> None:
 
     def run(t):
         r, doc, cat, lab = t
+        ck = f"{doc}|{cat}"
         try:
-            a = answer(lab["question"], ["grp-legal"], doc)
+            if ck not in cache:
+                cache[ck] = [vars(h) for h in search(lab["question"], ["grp-legal"], doc_id=doc, k=20, rerank=True)[:5]]
+            hits = [Hit(**h) for h in cache[ck]]
+            a = answer(lab["question"], ["grp-legal"], doc, hits=hits)
         except Exception as exc:  # one failed call should not lose the run
             return {"file": r["file"], "group": r["group"], "category": cat, "present": bool(lab["answers"]),
                     "status": "ERROR", "error": str(exc)[:300]}
@@ -74,7 +87,7 @@ def main() -> None:
         grounded = present and any(contains(q, ans, window=6) or contains(ans, q, window=6)
                                    for q in quotes for ans in lab["answers"])
         return {"file": r["file"], "group": r["group"], "category": cat, "present": present,
-                "status": a.status, "grounded_on_label": grounded, "dropped_findings": a.dropped_findings,
+                "status": a.status, "determination": a.determination, "grounded_on_label": grounded, "dropped_findings": a.dropped_findings,
                 "top_reranker_score": a.top_reranker_score, "tokens": a.tokens, "seconds": a.seconds,
                 "answer": a.answer[:300], "reason": a.reason}
 
@@ -121,9 +134,12 @@ def main() -> None:
         if p:
             print(f"  {g:10s} {sum(outcome(x) == 'correct' for x in p) / len(p):5.0%}  missed {sum(outcome(x) == 'MISSED' for x in p)}")
 
-    out = REPO / "eval" / "results" / f"answers-{time.strftime('%Y%m%d-%H%M%S')}.json"
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(json.dumps(cache))
+    tag = f"-{args.tag}" if args.tag else ""
+    out = REPO / "eval" / "results" / f"answers{tag}-{time.strftime('%Y%m%d-%H%M%S')}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"results": res, "seconds": round(time.time() - t0, 1)}, indent=2))
+    out.write_text(json.dumps({"tag": args.tag, "results": res, "seconds": round(time.time() - t0, 1)}, indent=2))
     print(f"\n{len(res)} questions in {time.time() - t0:.0f} s. Results: {out}")
 
 

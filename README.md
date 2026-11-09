@@ -40,6 +40,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function (30-second delivery window) | Accepted |
 | [0019](docs/adr/0019-vertical-slice-before-components.md) | Thin answering slice end to end before the remaining components | Accepted |
 | [0020](docs/adr/0020-deterministic-citation-check-first.md) | Deterministic citation check first; LLM judge only for entailment | Accepted |
+| [0021](docs/adr/0021-determination-separate-from-evidence.md) | Model returns its determination separately from cited evidence; code routes on it | Accepted |
 
 **Proposed** means the decision waits for evidence from the phase where it applies. An ADR moves to Accepted only once there is a measurement or a test result behind it.
 

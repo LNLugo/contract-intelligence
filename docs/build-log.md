@@ -149,3 +149,8 @@ One entry per working session. The entries where something broke are the most va
 **Actual cause (after reading the answers):** several "false claims" began "No." The model cited for-cause termination clauses to explain why the answer was no, and my routing read any valid citation as "the clause exists". The defect was the output contract, and the metric inherited it.
 **Fix:** ADR-0021: explicit `determination` (present, absent, unclear) separate from evidence; code routes on it; four routing unit tests including this bug. Evaluation now caches retrieval and reuses it, so the fix is measured with retrieval held fixed and without spending more semantic-ranker quota.
 **Learned:** read the errors before fixing them. The obvious fix (add an LLM judge) would have spent a model call per finding to patch a schema bug.
+
+### 2026-11-09 · Slice 1 · Evaluation run lost to a power outage; two evaluation fixes
+**Broke:** the first `determination-field` run reported 150 errors of 200 (the laptop lost power and connectivity mid-run), yet still printed a full metrics table from the 50 survivors. The table also showed grounding above 100%.
+**Fix:** (1) The evaluation now refuses to report metrics when more than 5% of questions error, prints the top error reasons, and keeps the retrieval cache so a re-run continues instead of starting over. (2) Grounding counted quotes from NOT_FOUND answers, which under ADR-0021 can cite explanatory evidence; it now counts only ANSWERED results.
+**Learned:** an evaluation harness needs its own validity checks. A partial run that prints a confident table is worse than one that prints nothing.

@@ -1,0 +1,1956 @@
+{
+  "tag": "determination-field",
+  "results": [
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ABSTAIN",
+      "determination": "present",
+      "grounded_on_label": false,
+      "dropped_findings": 1,
+      "top_reranker_score": 2.0157737731933594,
+      "tokens": 4365,
+      "seconds": 1.2,
+      "answer": "The contract states that Delaware law governs its interpretation. The governing-law clause says the agreement \"shall be governed by the laws of the State of Delaware.\"",
+      "reason": "determination present but all 1 finding(s) failed citation validation"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.6965744495391846,
+      "tokens": 4334,
+      "seconds": 2.2,
+      "answer": "No. The provided clauses impose transfer restrictions and set conditions for reissuance and disclosure obligations, but they do not give either party a right to terminate the agreement on notice after a waiting period. The agreement states it is the complete agreement, yet no clause provides for ter",
+      "reason": "determination absent"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.5519510507583618,
+      "tokens": 4327,
+      "seconds": 1.7,
+      "answer": "The cited clauses do not include a cap on liability for breach, such as a damages ceiling or a deadline for bringing breach claims. They only address transfer restrictions and related securities-law reporting obligations.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.0256104469299316,
+      "tokens": 4263,
+      "seconds": 2.9,
+      "answer": "The cited clauses do not require a party\u2019s consent or notice before the contract itself is assigned to a third party. They only require notice for other matters, such as notices under the agreement and transfer-related procedures for stock.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.5576225519180298,
+      "tokens": 4350,
+      "seconds": 2.9,
+      "answer": "The provided clauses impose resale and transfer restrictions on PSS stock, but they do not require exclusive dealing or prohibit dealing with third parties in technology, goods, or services. I do not see any commitment to source requirements exclusively from one party or any non-compete/collaboratio",
+      "reason": "determination absent"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ABSTAIN",
+      "determination": "",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.4881465435028076,
+      "tokens": 0,
+      "seconds": 0.0,
+      "answer": "",
+      "reason": "irrelevant retrieval (top reranker score 1.49 < 1.5)"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "ABSTAIN",
+      "determination": "",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.3803879022598267,
+      "tokens": 0,
+      "seconds": 0.0,
+      "answer": "",
+      "reason": "irrelevant retrieval (top reranker score 1.38 < 1.5)"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "ABSTAIN",
+      "determination": "",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.3789700269699097,
+      "tokens": 0,
+      "seconds": 0.0,
+      "answer": "",
+      "reason": "irrelevant retrieval (top reranker score 1.38 < 1.5)"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ABSTAIN",
+      "determination": "",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.3690448999404907,
+      "tokens": 0,
+      "seconds": 0.0,
+      "answer": "",
+      "reason": "irrelevant retrieval (top reranker score 1.37 < 1.5)"
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.8085867166519165,
+      "tokens": 4110,
+      "seconds": 2.4,
+      "answer": "The provided clauses do not contain a license grant from one party to its counterparty. They address merger-related stock transfer restrictions and acknowledgments, not permission to use intellectual property or other licensed rights.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.101511001586914,
+      "tokens": 3839,
+      "seconds": 1.9,
+      "answer": "The contract states that the law of the Federal Republic of Germany governs interpretation of the agreement. It also specifies Cologne, Germany as the place of jurisdiction for claims arising from the business relationship.",
+      "reason": ""
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.506004810333252,
+      "tokens": 3907,
+      "seconds": 1.5,
+      "answer": "Yes. The agreement allows either party to cancel/terminate at any time by written notice or equivalent action, without needing to state a cause, and no waiting period is required by the quoted clauses.",
+      "reason": ""
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.2428557872772217,
+      "tokens": 3978,
+      "seconds": 2.3,
+      "answer": "Yes. The contract includes liability limits for breach-related claims, including a limitation of liability for slightly negligent breaches and a damages cap for violations of an essential obligation, though it does not give a general claim time limit.",
+      "reason": ""
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.199831962585449,
+      "tokens": 3926,
+      "seconds": 2.0,
+      "answer": "The clauses do not state that consent or notice is required before assignment to a third party. They address notice for changes, termination, and certain internal permissions, but not assignment of the contract itself.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.812131404876709,
+      "tokens": 3996,
+      "seconds": 1.6,
+      "answer": "The clauses do not impose an exclusive dealing commitment. They say the Affiliate operates independently and may choose further software products, including from other Software Publishers, which is inconsistent with exclusivity.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.7894452810287476,
+      "tokens": 3976,
+      "seconds": 1.6,
+      "answer": "The provided clauses do not contain a non-compete or geographic/business/technology-sector restriction. They describe affiliate participation, independent operation, and termination rights, but not a ban on competing or operating in a specified market area or sector.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.7107532024383545,
+      "tokens": 3932,
+      "seconds": 1.5,
+      "answer": "The clauses do not give either party a right to audit the other party\u2019s books, records, or physical locations. They discuss control panels, sales data access, and termination, but not an audit right for compliance monitoring.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.7270587682724,
+      "tokens": 3929,
+      "seconds": 1.8,
+      "answer": "The clauses do not impose an insurance-maintenance requirement for one party\u2019s benefit. They address indemnity, liability limits, and termination, but do not require either party to maintain insurance for the counterparty.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ABSTAIN",
+      "determination": "",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.3839325904846191,
+      "tokens": 0,
+      "seconds": 0.0,
+      "answer": "",
+      "reason": "irrelevant retrieval (top reranker score 1.38 < 1.5)"
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.2913737297058105,
+      "tokens": 3906,
+      "seconds": 1.3,
+      "answer": "Yes. The agreement grants the Affiliate a non-exclusive, revocable right to use provided advertising material, and it also addresses use of links and related web site materials. It is a license granted by one party to its counterparty.",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.4081711769104004,
+      "tokens": 4029,
+      "seconds": 2.3,
+      "answer": "The contract says it is governed by the laws of the Commonwealth of Massachusetts. It also states that Massachusetts courts have nonexclusive jurisdiction over disputes.",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.789757251739502,
+      "tokens": 4422,
+      "seconds": 23.3,
+      "answer": "Yes. The contract expressly allows either party to terminate without cause by giving at least ninety days' prior written notice, after January 31, 1999. It also separately allows termination without penalty by written notice in the severability clause, though that is contingent on invalidity/unenfor",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.070007562637329,
+      "tokens": 4474,
+      "seconds": 23.4,
+      "answer": "The clauses do not include an overall cap on liability or a general time limit for bringing breach claims. They do contain limits on certain remedies and claims, such as a ten-business-day deadline for shortage claims and exclusions of incidental, consequential, special, or punitive damages.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.395233154296875,
+      "tokens": 4285,
+      "seconds": 24.1,
+      "answer": "Yes. The assignment clause says neither party may assign or transfer rights or obligations without the other party\u2019s express prior written consent, so consent is required for assignment to a third party.",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.783064842224121,
+      "tokens": 4548,
+      "seconds": 3.1,
+      "answer": "The clauses do not contain an exclusive-dealing commitment requiring either party to source all requirements from the other, nor a prohibition on dealing with third parties or collaborating with others. The closest provisions restrict use of trademarks and confidential information, which are narrowe",
+      "reason": "determination absent"
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.7575430870056152,
+      "tokens": 4237,
+      "seconds": 2.3,
+      "answer": "Yes. The agreement restricts the Agent\u2019s activity to a defined Territory and limits compensation to that geographic area, which operates as a territorial restriction. It does not contain a general non-compete, but it does restrict operations by geography.",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.8536041975021362,
+      "tokens": 4473,
+      "seconds": 2.3,
+      "answer": "The clauses do not give either party a general audit right over the counterparty\u2019s books, records, or physical locations for compliance verification. The only related rights shown concern confidentiality, claims assistance, and contract performance obligations, not auditing.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.1580045223236084,
+      "tokens": 4261,
+      "seconds": 1.9,
+      "answer": "Yes. The agreement requires both parties to maintain insurance at their own expense, and each party\u2019s relevant policy must name the other as an additional insured, so the insurance is maintained for the counterparty\u2019s benefit.",
+      "reason": ""
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.690194010734558,
+      "tokens": 4444,
+      "seconds": 32.1,
+      "answer": "The agreement does not provide any renewal or extension term after the initial term expires. It states only that the agreement continues until terminated, with no automatic renewal or unilateral extension provision.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.1074042320251465,
+      "tokens": 4064,
+      "seconds": 2.0,
+      "answer": "Yes. The agreement gives the Agent express rights to use the Company\u2019s trademarks in connection with promoting and selling the Products, which is a license granted by one party to its counterparty.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.3528740406036377,
+      "tokens": 4567,
+      "seconds": 31.6,
+      "answer": "The contract says it is governed by the laws of the State of California. It also provides for personal jurisdiction in California and venue in Orange County, California.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.7181544303894043,
+      "tokens": 4629,
+      "seconds": 33.5,
+      "answer": "The contract does not contain a general without-cause termination right based solely on notice and a waiting period. It allows termination only in specified situations, such as failure to agree on an SOW, launch delay, breach, change in company structure, or bankruptcy.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.1822025775909424,
+      "tokens": 4513,
+      "seconds": 1.7,
+      "answer": "The clauses do not include a general cap on liability for breach of a party\u2019s obligations or a claims-recovery time limit. They do include a limitation excluding special, incidental, consequential damages and lost profits, but that is not a cap on liability amount or filing period.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.3040459156036377,
+      "tokens": 4560,
+      "seconds": 2.5,
+      "answer": "Yes. The agreement states that it is not transferable or assignable, so assignment to a third party is not permitted absent further agreement; because assignment is prohibited, the contract does not provide a consent or notice process for such an assignment.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.0023927688598633,
+      "tokens": 4616,
+      "seconds": 3.0,
+      "answer": "The clauses do not contain an exclusive dealing commitment or a requirement that either party source all requirements from the other. They also do not prohibit either party from licensing or selling technology, goods, or services to third parties, except for a narrow ban on banner ads for 2TheMart c",
+      "reason": "determination absent"
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.9287517070770264,
+      "tokens": 4681,
+      "seconds": 32.3,
+      "answer": "Yes. The agreement restricts i-Escrow from running banner advertisements on 2TheMart\u2019s site for 2TheMart\u2019s competitors, which is a restriction tied to competing with the counterparty. It does not appear to impose a broader geography, business, or technology-sector noncompete.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.3339099884033203,
+      "tokens": 4678,
+      "seconds": 1.6,
+      "answer": "Yes. The agreement gives 2TheMart a limited audit right to inspect and audit i-Escrow\u2019s records and books of account to verify reports, but it does not grant a general right to audit physical locations.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.1166646480560303,
+      "tokens": 4461,
+      "seconds": 32.1,
+      "answer": "The provided clauses do not contain a requirement that one party maintain insurance for the benefit of the counterparty. They include indemnity, termination, and general provisions, but no insurance obligation.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.163687229156494,
+      "tokens": 4489,
+      "seconds": 32.1,
+      "answer": "The initial term is one year after the Launch Date, and it renews for successive one-year terms. Renewal is automatic for another one-year term unless a party gives notice at least 30 days before expiration.",
+      "reason": ""
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.198547124862671,
+      "tokens": 4470,
+      "seconds": 1.5,
+      "answer": "Yes. The agreement expressly grants each party a non-exclusive, nontransferable right to use the other party\u2019s marks, which is a license to the counterparty.",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.630246162414551,
+      "tokens": 4563,
+      "seconds": 2.8,
+      "answer": "The contract is governed by the laws of the State of California and the United States. It also provides that the agreement is interpreted and defined under those laws, without regard to conflicts of law rules.",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.6791629791259766,
+      "tokens": 4248,
+      "seconds": 2.0,
+      "answer": "Yes. Either party may terminate without cause by giving sixty days\u2019 prior written notice; the clause expressly allows termination \u201cfor no reason or for any reason.\u201d",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.3285043239593506,
+      "tokens": 4553,
+      "seconds": 32.1,
+      "answer": "The clauses include a limitation of liability for certain consequential damages, but they do not impose a cap on recovery or a time limit for bringing claims. The agreement allows liability for breach-based indemnity and other relief, so there is no maximum recovery amount stated.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.587000846862793,
+      "tokens": 4404,
+      "seconds": 1.4,
+      "answer": "Yes. The assignment clause requires prior written consent before either party may assign rights or delegate obligations, and any attempted assignment without that consent is void. This means consent is required, not merely notice.",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.9794408082962036,
+      "tokens": 4749,
+      "seconds": 32.1,
+      "answer": "The clauses do not contain a general exclusive dealing commitment or a prohibition on dealing with third parties. The agreement grants mutual non-exclusive licenses and does not require either party to procure all requirements from the other or refrain from collaborating with others.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.8364124298095703,
+      "tokens": 4585,
+      "seconds": 32.4,
+      "answer": "The clauses do not contain a general non-compete or geographic/business/technology-sector restriction on either party. They only include co-branding, licensing, and a limited statement that certain products are to be eliminated because they would compete with the Nettaxi store.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.4024996757507324,
+      "tokens": 4204,
+      "seconds": 2.5,
+      "answer": "Yes. The contract gives NETTAXI audit rights to have an independent accountant inspect the counterparty\u2019s books and records to verify amounts owed, though it does not expressly mention physical locations.",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 1.9498425722122192,
+      "tokens": 4454,
+      "seconds": 2.1,
+      "answer": "The provided clauses do not contain any insurance-maintenance requirement for the benefit of the counterparty. They address confidentiality, indemnity, termination, and other miscellaneous terms, but not insurance obligations.",
+      "reason": "determination absent"
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ANSWERED",
+      "determination": "present",
+      "grounded_on_label": true,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.1572070121765137,
+      "tokens": 4380,
+      "seconds": 1.6,
+      "answer": "The agreement renews automatically for successive one-year periods after the initial one-year term expires. No separate unilateral extension right is stated beyond that automatic renewal.",
+      "reason": ""
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "NOT_FOUND",
+      "determination": "absent",
+      "grounded_on_label": false,
+      "dropped_findings": 0,
+      "top_reranker_score": 2.240285873413086,
+      "tokens": 4007,
+      "seconds": 1.9,
+      "answer": "The clauses do not provide a general right for either party to terminate this contract without cause by notice and passage of a waiting period. Termination is limited to specified events in Section 5(a), and the agreement is described as ending on the earliest of those events rather than on unilater",
+      "reason": "determination absent"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SLINGERBAGINC_05_27_2020-EX-10.7-CONSULTING AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRUENORTHENERGYCORP_02_08_2007-EX-10.1-DEVELOPMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "BizzingoInc_20120322_8-K_EX-10.17_7504499_EX-10.17_Endorsement Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "AMBASSADOREYEWEARGROUPINC_11_17_1997-EX-10.28-ENDORSEMENT AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SimplicityEsportsGamingCompany_20181130_8-K_EX-10.1_11444071_EX-10.1_Franchise Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Insurance",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement1.pdf",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "TRANSPHORM,INC_02_14_2020-EX-10.12(1)-JOINT VENTURE AGREEMENT.PDF",
+      "group": "long",
+      "category": "License Grant",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Non-Compete",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Governing Law",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Termination For Convenience",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Cap On Liability",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Exclusivity",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Non-Compete",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Audit Rights",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Insurance",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "Renewal Term",
+      "present": false,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    },
+    {
+      "file": "Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT.PDF",
+      "group": "very_long",
+      "category": "License Grant",
+      "present": true,
+      "status": "ERROR",
+      "error": "[Errno 11001] getaddrinfo failed"
+    }
+  ],
+  "seconds": 182.4
+}

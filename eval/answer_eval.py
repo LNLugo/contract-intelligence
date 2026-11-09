@@ -84,7 +84,7 @@ def main() -> None:
                     "status": "ERROR", "error": str(exc)[:300]}
         present = bool(lab["answers"])
         quotes = [c.quote for f in a.findings for c in f.citations if c.valid]
-        grounded = present and any(contains(q, ans, window=6) or contains(ans, q, window=6)
+        grounded = present and a.status == "ANSWERED" and any(contains(q, ans, window=6) or contains(ans, q, window=6)
                                    for q in quotes for ans in lab["answers"])
         return {"file": r["file"], "group": r["group"], "category": cat, "present": present,
                 "status": a.status, "determination": a.determination, "grounded_on_label": grounded, "dropped_findings": a.dropped_findings,
@@ -94,6 +94,19 @@ def main() -> None:
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         res = list(pool.map(run, tasks))
+
+    errors = [x for x in res if x["status"] == "ERROR"]
+    if len(errors) > 0.05 * len(res):
+        print(f"RUN INVALID: {len(errors)} of {len(res)} questions errored (more than 5%). No metrics reported.")
+        reasons = {}
+        for x in errors:
+            reasons[x["error"][:120]] = reasons.get(x["error"][:120], 0) + 1
+        for msg, n in sorted(reasons.items(), key=lambda kv: -kv[1])[:3]:
+            print(f"  {n:4d} x {msg}")
+        print("Successful retrievals are cached; re-run the same command to continue.")
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json.dumps(cache))
+        return
 
     def outcome(x):
         if x["status"] in ("ABSTAIN", "ERROR"):

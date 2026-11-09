@@ -19,15 +19,16 @@ function Get-MyObjectId { az ad signed-in-user show --query id -o tsv }
 
 function Grant-RoleToPrincipal($PrincipalId, $Role, $Scope) {
     # For managed identities (Function, Event Grid topic). Returns $true if a new assignment was made.
-    $existing = az role assignment list --assignee $PrincipalId --scope $Scope --role $Role --query "[].id" -o tsv
-    if ([string]::IsNullOrEmpty($existing)) {
-        az role assignment create --assignee-object-id $PrincipalId --assignee-principal-type ServicePrincipal `
-            --role $Role --scope $Scope -o none
-        Write-Host "  + $Role"
-        return $true
-    }
-    Write-Host "  = $Role (already)"
-    return $false
+    # A new identity can take a minute to replicate in Entra ID, so the existence check may fail;
+    # create by object ID (no directory lookup) and treat "already exists" as success.
+    if ([string]::IsNullOrEmpty($PrincipalId)) { throw "Grant-RoleToPrincipal: empty principal ID for role '$Role'" }
+    $existing = az role assignment list --assignee $PrincipalId --scope $Scope --role $Role --query "[].id" -o tsv 2>$null
+    if (-not [string]::IsNullOrEmpty($existing)) { Write-Host "  = $Role (already)"; return $false }
+    $out = az role assignment create --assignee-object-id $PrincipalId --assignee-principal-type ServicePrincipal `
+        --role $Role --scope $Scope -o none 2>&1
+    if ($LASTEXITCODE -ne 0 -and ($out -notmatch "RoleAssignmentExists")) { throw "Role '$Role' failed: $out" }
+    Write-Host "  + $Role"
+    return $true
 }
 
 function Grant-Role($Role, $Scope) {

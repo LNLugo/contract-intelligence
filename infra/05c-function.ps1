@@ -2,6 +2,7 @@
 # Run in Cloud Shell from the repo root: pwsh ./infra/05c-function.ps1   (safe to re-run)
 # Takes about 10 minutes: role propagation waits and a remote Python build.
 
+param([switch]$SkipDeploy)
 . "$PSScriptRoot/config.ps1"
 $PyVersion = "3.12"     # if Flex rejects it in this region, change to "3.11" and re-run
 $Repo = Split-Path $PSScriptRoot -Parent
@@ -70,6 +71,7 @@ Write-Host "Identity-based settings applied; AzureWebJobsStorage connection stri
 if ($new) { Write-Host "Waiting 120 s for new role assignments..."; Start-Sleep -Seconds 120 }
 
 # 5. Deploy the code: same pipeline library as the batch script, remote build on Azure
+if (-not $SkipDeploy) {
 Write-Host "`n== Deploy" -ForegroundColor Cyan
 # Stage only what the Function needs (Compress-Archive flattens individual files, so copy into a tree first)
 $src   = Join-Path $Repo "ingestion"
@@ -85,13 +87,17 @@ az functionapp deployment source config-zip -g $RG -n $FN --src $pkg --build-rem
 Start-Sleep -Seconds 20
 $fns = az functionapp function list -g $RG -n $FN --query "[].name" -o tsv
 Write-Host "Functions deployed: $fns   (expect $FN/ingest)"
+} else { Write-Host "`n== Deploy skipped (-SkipDeploy)" -ForegroundColor Cyan }
 
 # 6. Now that the Function uses its identity, switch shared keys off on the plumbing account
 Write-Host "`n== Disable shared keys on $FNSA" -ForegroundColor Cyan
 az storage account update -n $FNSA -g $RG --allow-shared-key-access false -o none
 Write-Host "Shared key access: $(az storage account show -n $FNSA -g $RG --query allowSharedKeyAccess -o tsv)"
 
-# 7. Event Grid system topic on the data lake, with its own identity for delivery and dead-lettering
+# 7. Event Grid system topic on the data lake, with its own identity for delivery and dead-lettering.
+#    The CLI in Cloud Shell lacks identity-delivery options for system topics, so steps 7 and 8 call
+#    the Resource Manager API directly (az rest). This is also what the phase 14 Bicep will declare.
+$EgApi = "2022-06-15"
 Write-Host "`n== Event Grid system topic $EGT" -ForegroundColor Cyan
 $topic = az eventgrid system-topic list -g $RG --query "[?source=='$lakeId'].name | [0]" -o tsv
 if ([string]::IsNullOrEmpty($topic)) {
@@ -100,31 +106,73 @@ if ([string]::IsNullOrEmpty($topic)) {
     $topic = $EGT
     Write-Host "Created"
 } else { Write-Host "Using existing topic $topic" }
-$topicPrincipal = az eventgrid system-topic show -g $RG -n $topic --query identity.principalId -o tsv
-if ([string]::IsNullOrEmpty($topicPrincipal)) {
-    az eventgrid system-topic update -g $RG -n $topic --mi-system-assigned -o none 2>$null
-    if ($LASTEXITCODE -ne 0) { az eventgrid system-topic update -g $RG -n $topic --identity systemassigned -o none }
-    $topicPrincipal = az eventgrid system-topic show -g $RG -n $topic --query identity.principalId -o tsv
+$topicId = az eventgrid system-topic show -g $RG -n $topic --query id -o tsv
+$topicUrl = "https://management.azure.com$($topicId)?api-version=$EgApi"
+
+function Invoke-Arm($Method, $Url, $BodyObject) {
+    $tmp = New-TemporaryFile
+    $BodyObject | ConvertTo-Json -Depth 20 | Set-Content $tmp
+    $out = az rest --method $Method --url $Url --body "@$tmp" --headers "Content-Type=application/json" 2>&1
+    Remove-Item $tmp
+    if ($LASTEXITCODE -ne 0) { throw "$Method $Url failed: $out" }
+    return $out
 }
+
+$topicPrincipal = az rest --method get --url $topicUrl --query identity.principalId -o tsv
+if ([string]::IsNullOrEmpty($topicPrincipal)) {
+    Invoke-Arm "patch" $topicUrl @{ identity = @{ type = "SystemAssigned" } } | Out-Null
+    for ($i = 0; $i -lt 12 -and [string]::IsNullOrEmpty($topicPrincipal); $i++) {
+        Start-Sleep -Seconds 5
+        $topicPrincipal = az rest --method get --url $topicUrl --query identity.principalId -o tsv
+    }
+}
+if ([string]::IsNullOrEmpty($topicPrincipal)) { throw "System topic identity was not created" }
 Write-Host "Topic identity: $topicPrincipal"
 $new = $false
 $new = (Grant-RoleToPrincipal $topicPrincipal "Storage Queue Data Message Sender" $fnsaId) -or $new
 $new = (Grant-RoleToPrincipal $topicPrincipal "Storage Blob Data Contributor" $lakeId) -or $new
 if ($new) { Write-Host "Waiting 120 s for topic role assignments..."; Start-Sleep -Seconds 120 }
 
-# 8. Subscription: only PDFs written to contracts-raw/inbox/, only real blob writes
+# 8. Subscription: only PDFs written to contracts-raw/inbox/, only real blob writes,
+#    delivered and dead-lettered with the topic's identity (no keys, no SAS)
 Write-Host "`n== Event subscription ingest-inbox" -ForegroundColor Cyan
-az eventgrid system-topic event-subscription create -g $RG --system-topic-name $topic -n ingest-inbox `
-    --delivery-identity systemassigned --delivery-identity-endpoint-type storagequeue `
-    --delivery-identity-endpoint "$fnsaId/queueservices/default/queues/ingest" `
-    --included-event-types Microsoft.Storage.BlobCreated `
-    --subject-begins-with "/blobServices/default/containers/contracts-raw/blobs/inbox/" `
-    --subject-ends-with ".pdf" `
-    --advanced-filter data.api StringIn PutBlob PutBlockList FlushWithClose `
-    --max-delivery-attempts 10 --event-ttl 1440 `
-    --deadletter-identity systemassigned `
-    --deadletter-identity-endpoint "$lakeId/blobServices/default/containers/deadletter" -o none
-az eventgrid system-topic event-subscription show -g $RG --system-topic-name $topic -n ingest-inbox `
-    --query "{state:provisioningState, prefix:filter.subjectBeginsWith, maxAttempts:retryPolicy.maxDeliveryAttempts}" -o table
+$sub = @{
+    properties = @{
+        deliveryWithResourceIdentity = @{
+            identity    = @{ type = "SystemAssigned" }
+            destination = @{ endpointType = "StorageQueue"
+                             properties = @{ resourceId = $fnsaId; queueName = "ingest"; queueMessageTimeToLiveInSeconds = 604800 } }
+        }
+        filter = @{
+            includedEventTypes = @("Microsoft.Storage.BlobCreated")
+            subjectBeginsWith  = "/blobServices/default/containers/contracts-raw/blobs/inbox/"
+            subjectEndsWith    = ".pdf"
+            advancedFilters    = @(@{ operatorType = "StringIn"; key = "data.api"; values = @("PutBlob", "PutBlockList", "FlushWithClose") })
+        }
+        retryPolicy = @{ maxDeliveryAttempts = 10; eventTimeToLiveInMinutes = 1440 }
+        deadLetterWithResourceIdentity = @{
+            identity              = @{ type = "SystemAssigned" }
+            deadLetterDestination = @{ endpointType = "StorageBlob"
+                                       properties = @{ resourceId = $lakeId; blobContainerName = "deadletter" } }
+        }
+        eventDeliverySchema = "EventGridSchema"
+    }
+}
+$subUrl = "https://management.azure.com$topicId/eventSubscriptions/ingest-inbox?api-version=$EgApi"
+Invoke-Arm "put" $subUrl $sub | Out-Null
+for ($i = 0; $i -lt 12; $i++) {
+    $state = az rest --method get --url $subUrl --query properties.provisioningState -o tsv
+    if ($state -in "Succeeded", "Failed") { break }
+    Start-Sleep -Seconds 5
+}
+Write-Host "Subscription state: $state   (expect Succeeded)"
+
+# 9. Verify: every role each identity should hold, read back from Azure rather than assumed
+Write-Host "`n== Verify role assignments" -ForegroundColor Cyan
+foreach ($p in @(@{ name = "Function"; id = $fnPrincipal }, @{ name = "Event Grid topic"; id = $topicPrincipal })) {
+    Write-Host "$($p.name):"
+    az role assignment list --assignee $p.id --all `
+        --query "[].{role:roleDefinitionName, scope:split(scope, '/')[-1]}" -o table
+}
 
 Write-Host "`nReady. Test from the laptop with: python ingestion/upload_to_inbox.py <pdf> --type <type> --groups grp-legal" -ForegroundColor Green

@@ -106,3 +106,13 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** The retry cost nothing because the expensive step (extraction) was cached before the step that failed (embedding). Order pipeline stages so the costly, cacheable work completes and persists first.
 **Decision impact:** ADR-0016 size estimate replaced with the measurement. ADR-0015 cost projection confirmed.
 **Spend so far:** $15.26 extraction, about $0.13 embeddings
+
+### 2026-11-09 · Phase 5c · Function deployed; Event Grid wiring failed on CLI gaps
+**Did:** Ran `infra/05c-function.ps1`: plumbing storage account, `ingest` and `ingest-poison` queues, Flex Consumption Function (Python 3.12) with Application Insights, managed identity roles, identity-based app settings, code deployed with remote build, shared keys disabled.
+**Result:** `fn-ci-dev-2416/ingest` deployed. Event Grid topic created but without an identity; subscription not created.
+**Broke:**
+1. `Cannot find user or service principal in graph database` when checking roles for the new Function identity. A new managed identity takes time to replicate in Entra ID. The check failed; creating by object ID does not need the directory lookup.
+2. My role helper printed `+ <role>` even when the assignment failed (empty principal ID for the topic). Misleading output is worse than none.
+3. `az eventgrid system-topic event-subscription create` in Cloud Shell's CLI does not accept the identity-delivery options (`--delivery-identity`, `--deadletter-identity`), and the topic identity flags also failed.
+**Fix:** The helper now refuses an empty principal and checks every result. The topic identity and the subscription are created through the Resource Manager API (`az rest`, Event Grid API 2022-06-15), and the script ends by reading every role assignment back from Azure. Added `-SkipDeploy` so a re-run does not redeploy unchanged code.
+**Learned:** The CLI lags the platform; the ARM API is the source of truth and is what Bicep (phase 14) will declare. Verify by reading state back, not by trusting your own log lines.

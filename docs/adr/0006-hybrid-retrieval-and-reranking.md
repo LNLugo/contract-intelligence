@@ -34,6 +34,9 @@ First stage: hybrid with RRF, top 20, filtered by the user's groups. Reranker: p
 - Observed fused scores were 0.0167 and 0.0164. RRF scores reflect rank positions, not relevance, so **they cannot be used as a confidence threshold for abstention** (ADR-0009). Abstention must use the reranker's score or the Evaluation Agent's confidence.
 - Phase 12: recall@20, and precision@5 per reranker (semantic ranker vs self-hosted cross-encoder), with p95 latency for each.
 
+## Slice 1 choice (2026-11-09)
+The first reranker in use is the **semantic ranker** (free plan, 1,000 queries per month): no extra hosting, and its 0 to 4 score is a usable abstention signal. The self-hosted cross-encoder is compared against it later on the same evaluation set. `eval/retrieval_eval.py` measures hybrid ranking and reranked ranking separately against CUAD labels, so the reranker's contribution is a number.
+
 ## Revisit when
 If recall@20 is low, fix retrieval (k, chunking) before touching the reranker.
 

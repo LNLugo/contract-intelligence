@@ -38,6 +38,8 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0016](docs/adr/0016-search-tier-and-vector-size.md) | AI Search Free tier, 1024-dimension vectors, vectors not stored | Accepted |
 | [0017](docs/adr/0017-pipeline-as-library.md) | Ingestion pipeline as a library with two thin callers (batch, Function) | Accepted |
 | [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function (30-second delivery window) | Accepted |
+| [0019](docs/adr/0019-vertical-slice-before-components.md) | Thin answering slice end to end before the remaining components | Accepted |
+| [0020](docs/adr/0020-deterministic-citation-check-first.md) | Deterministic citation check first; LLM judge only for entailment | Accepted |
 
 **Proposed** means the decision waits for evidence from the phase where it applies. An ADR moves to Accepted only once there is a measurement or a test result behind it.
 
@@ -51,7 +53,8 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | 3 | Embedding and chat model deployments | Done |
 | 4 | AI Search index | Done |
 | 5 | Ingestion: library, batch over eval set (50 contracts, 1,238 chunks), Event Grid → queue → Function (23 s upload to searchable; fails closed without access metadata) | Done |
-| 6 | Clause taxonomy | |
+| 6 | **Slice 1** (ADR-0019): retrieval, generation, citation check, routing, retrieval eval vs CUAD labels | In progress |
+| 6b | Then, one at a time with before/after numbers: abstention calibration, clause taxonomy, definitions lookup | |
 | 7 | Vendor system of record behind APIM | |
 | 8 | Agents: orchestrator, intent, memory, policy, plan, retrieval | |
 | 9 | Agents: generation, citation validator, evaluation, risk router | |

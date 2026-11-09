@@ -1,0 +1,7 @@
+tests/
+batch_ingest.py
+upload_to_inbox.py
+requirements-dev.txt
+.venv/
+__pycache__/
+.pytest_cache/

@@ -48,12 +48,13 @@ def analyze(pdf: bytes, poll_seconds: float = 2.0, timeout_seconds: float = 600)
     raise TimeoutError(f"Extraction did not finish in {timeout_seconds} s")
 
 
-def extract(doc_id: str, pdf: bytes, original_name: str) -> tuple[dict, bool]:
+def extract(doc_id: str, pdf: bytes, original_name: str, store_raw: bool = True) -> tuple[dict, bool]:
     """Return (analyzeResult, was_cached). Pays for extraction only on a cache miss."""
     cached = load_cached(doc_id)
     if cached is not None:
         return cached, True
-    save_raw(doc_id, pdf, original_name)
+    if store_raw:
+        save_raw(doc_id, pdf, original_name)
     result = analyze(pdf)
     _lake.get_file_client(S.extracted_fs, extraction_path(doc_id)).upload_data(
         json.dumps(result).encode(), overwrite=True)

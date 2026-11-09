@@ -1,6 +1,6 @@
 # ADR-0016: AI Search Free tier, 1024-dimension vectors, vectors not stored for retrieval
 
-- **Status:** Accepted (index size estimate to be replaced by measured size after phase 5)
+- **Status:** Accepted
 - **Date:** 2026-11-07
 - **Phase:** 4
 
@@ -38,6 +38,7 @@ Free tier. Embeddings requested at 1,024 dimensions from `text-embedding-3-large
 - A Free service cannot be upgraded in place; moving to Basic means a new service and a reindex from ADLS.
 
 ## Evidence
+- **Measured 2026-11-09:** 50 contracts, 1,526 pages, 1,238 chunks at 1,024 dimensions = **14.1 MB of 50 MB** (estimate was ~17 MB). Room remains for a second chunking variant and the review history index.
 - Phase 4: index created, smoke test passes, `servicestats` storage reported.
 - Phase 5: measured index size for the full evaluation set replaces the estimate above.
 - Phase 12: recall@20 at 1,024 vs 3,072 dimensions on a subset of the evaluation set, to put a number on what the dimension cut costs.

@@ -25,10 +25,11 @@ class Result:
     seconds: float
 
 
-def process(pdf: bytes, file_name: str, meta: dict) -> Result:
+def process(pdf: bytes, file_name: str, meta: dict, store_raw: bool = True) -> Result:
+    """store_raw=False when the PDF already sits in the lake (the Function path)."""
     t0 = time.time()
     doc_id = document_id(pdf)
-    layout, cached = extract.extract(doc_id, pdf, file_name)
+    layout, cached = extract.extract(doc_id, pdf, file_name, store_raw=store_raw)
     chunks = chunking.chunk(layout, S.chunk_tokens, S.overlap_tokens)
     if not chunks:
         raise ValueError(f"No text extracted from {file_name}")

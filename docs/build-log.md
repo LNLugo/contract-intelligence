@@ -99,3 +99,10 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** (1) Retrying into a rate limit is not a strategy; pacing under it is. (2) Extraction ran before embedding, so the two failed contracts were already extracted and cached; their retry costs no extraction. Ordering the expensive, cacheable step first made the failure cheap. (3) Added `--skip-indexed` so retrying failures does not re-embed the 48 finished contracts.
 **Decision impact:** ADR-0014 revised.
 **Spend so far:** $14.60 extraction, about $0.12 embeddings
+
+### 2026-11-09 · Phase 5b · Evaluation set complete
+**Did:** Retried the 2 failed contracts with `--skip-indexed`.
+**Result:** Both `cached` (no extraction), 55 chunks, 5.4 s. Index: **50 documents, 1,238 chunks, 14.1 MB of 50 MB.** Total extraction for the set: 1,526 pages, **$15.26**, matching the selector's projection to the cent.
+**Learned:** The retry cost nothing because the expensive step (extraction) was cached before the step that failed (embedding). Order pipeline stages so the costly, cacheable work completes and persists first.
+**Decision impact:** ADR-0016 size estimate replaced with the measurement. ADR-0015 cost projection confirmed.
+**Spend so far:** $15.26 extraction, about $0.13 embeddings

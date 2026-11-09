@@ -37,6 +37,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | [0015](docs/adr/0015-document-intelligence-tier.md) | Paid Document Intelligence tier, stratified 50-contract evaluation set extracted once | Accepted |
 | [0016](docs/adr/0016-search-tier-and-vector-size.md) | AI Search Free tier, 1024-dimension vectors, vectors not stored | Accepted |
 | [0017](docs/adr/0017-pipeline-as-library.md) | Ingestion pipeline as a library with two thin callers (batch, Function) | Accepted |
+| [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function (30-second delivery window) | Accepted |
 
 **Proposed** means the decision waits for evidence from the phase where it applies. An ADR moves to Accepted only once there is a measurement or a test result behind it.
 
@@ -49,7 +50,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | 2 | Document Intelligence extraction | Done |
 | 3 | Embedding and chat model deployments | Done |
 | 4 | AI Search index | Done |
-| 5 | Ingestion: 5a library, 5b batch over eval set, 5c Event Grid Function | In progress |
+| 5 | Ingestion: 5a library ✅, 5b batch over eval set ✅ (50 contracts, 1,238 chunks), 5c Event Grid Function | In progress |
 | 6 | Clause taxonomy | |
 | 7 | Vendor system of record behind APIM | |
 | 8 | Agents: orchestrator, intent, memory, policy, plan, retrieval | |

@@ -80,3 +80,22 @@ One entry per working session. The entries where something broke are the most va
 **Learned:** (1) Model endpoints return short-lived 404s, not only 429s; the phase 5 Function needs retry with backoff on 404, 429 and 5xx from the start. (2) RRF fused scores are rank-based and tiny (0.0167 vs 0.0164), so they are not a confidence signal; abstention needs reranker or evaluator scores. (3) `servicestats` reported the vector index quota as 0 MB on Free; to verify against real usage in phase 5.
 **Decision impact:** ADR-0006 first stage Accepted; semantic ranker added as a no-cost comparison option. ADR-0013 trimming has its first evidence.
 **Spend so far:** $0
+
+### 2026-11-08 · Phase 5a · Pipeline library, first contract end to end
+**Goal:** One code path for ingestion (ADR-0017), proven on a single contract before paying for 49 more.
+**Did:** Built `ingestion/pipeline` (extract with cache, clean, chunk, embed, push), `batch_ingest.py`, 8 unit tests for cleaning and chunking. Regenerated `eval/eval_set.csv` on the laptop after the Cloud Shell copy was lost with the session.
+**Result:** First contract (37 pages): 30 chunks, 23,410 embedding tokens, largest chunk 798 tokens against an 800 budget, 18.5 s, $0.37 extraction. Re-run: `cached`, $0.00, still 30 chunks (idempotent). Index 0.3 MB, which projects to about 12 MB for the full set (ADR-0016 estimated 17 MB). Chunk review: pages increase with overlap (1-2, 2-3, 3-5), real section headings, no page furniture or selection marks.
+**Broke:** (1) `eval_set.csv` existed only in Cloud Shell and was lost; anything produced there must be brought back to the repo immediately. (2) The selector sorted paths differently on Windows (case-insensitive) and Linux, so the "deterministic" set was only deterministic per OS; fixed by sorting on relative POSIX paths. (3) A `<doc_id>` placeholder in my instructions was parsed by PowerShell as a redirection operator.
+**Learned:** (1) Layout dropped a space in a heading (`ARTICLEI DEFINITIONS`); exact keyword match on "Article I" fails, which argues for query-time normalization (ADR-0011). (2) Contracts are self-referential: definitions live in one chunk, the clauses using them in others; top-5 retrieval can miss the definition a clause depends on. Candidate ADR for phase 8. (3) Cached runs still re-embed every chunk; negligible here, but at volume embeddings should be cached by chunk content hash.
+**Decision impact:** ADR-0004 and ADR-0005 have working evidence. ADR-0017 accepted.
+**Spend so far:** about $0.37 extraction, under $0.01 embeddings
+
+### 2026-11-09 · Phase 5b · Evaluation set ingested; rate limits broke two contracts
+**Did:** Ran `batch_ingest.py` over the 50-contract evaluation set with 3 workers.
+**Result:** 48 OK, 2 failed. 1,460 pages (1,423 extracted in this run, 37 cached), $14.23 extraction ($14.60 total with the first test), 1,183 chunks, 911,551 embedding tokens (~770 per chunk), largest chunk 800. Wall time 25,735 s (7.1 hours) against an expected 10 to 15 minutes.
+**Broke:** Both failures were HTTP 429 `RateLimitReached` on `text-embedding-3-large` after 6 retries. Each request carried 16 chunks (~13K tokens); 3 workers in flight exceeded the 50K TPM cap in one burst, and every worker backed off independently.
+**First thought:** add more retries.
+**Actual fix:** a design change. Capacity is now set per workload (ADR-0014 revision): chat stays at 50K TPM as the runaway guardrail, embeddings go to 200K TPM, and the client paces itself under the limit with a shared one-minute token budget. 429 gets 12 attempts.
+**Learned:** (1) Retrying into a rate limit is not a strategy; pacing under it is. (2) Extraction ran before embedding, so the two failed contracts were already extracted and cached; their retry costs no extraction. Ordering the expensive, cacheable step first made the failure cheap. (3) Added `--skip-indexed` so retrying failures does not re-embed the 48 finished contracts.
+**Decision impact:** ADR-0014 revised.
+**Spend so far:** $14.60 extraction, about $0.12 embeddings

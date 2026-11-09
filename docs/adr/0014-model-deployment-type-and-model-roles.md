@@ -32,6 +32,17 @@ Acceptable here because the corpus is public CUAD contracts.
 | Generation (cited findings) | `gpt-5.4-mini` | The quality-critical call; mid-tier cost |
 | Citation judge | `gpt-4.1` | Different model family from the generator, so the judge does not share the generator's blind spots |
 
+## Revision 2026-11-09: capacity per workload, not one guardrail for all
+**Evidence:** the 50-contract batch (911,551 embedding tokens, 3 workers, 16 chunks per request) failed 2 of 50 contracts with HTTP 429 after 6 retries, and took 7.1 hours of wall time. A single request was about 13K tokens; three in flight exceed a 50K-per-minute cap in one burst.
+
+**Decision:** the 50K TPM guardrail was right for the wrong deployment. It protects against a runaway agent loop, which is a risk for the chat model, not for a bounded batch job.
+- `gpt-5.4-mini` stays at 50K TPM (runaway guardrail).
+- `text-embedding-3-large` raised to 200K TPM (`infra/03b-embedding-capacity.ps1`). Capacity on GlobalStandard is a rate limit, not a reservation, so this costs nothing by itself.
+- The client paces itself under the limit: a shared one-minute token budget at 180K (`EMBED_TPM`), so parallel workers slow down together instead of all hitting 429 and backing off at random.
+- 429 gets 12 attempts; other transient errors keep 6. A rate limit means "later", not "broken".
+
+**Interview angle:** "My first guardrail was one number for every deployment, and it broke my batch: two contracts failed on 429s. The fix was to set limits per workload: keep the tight cap on the chat model, where a runaway loop is the risk, raise it on embeddings, and pace the client under the limit instead of retrying into it."
+
 ## Enterprise vs this build
 In a regulated client with residency requirements, GlobalStandard would be rejected. The choices would be a region that offers regional Standard or DataZoneStandard for the needed models, or provisioned throughput. Model availability per deployment type then becomes a region selection criterion, which is the same test run here.
 

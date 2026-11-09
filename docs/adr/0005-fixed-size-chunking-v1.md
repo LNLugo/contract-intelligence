@@ -17,6 +17,9 @@ Clauses vary from one line to several pages. Fixed-size chunks can split a claus
 ## Decision
 I will ship fixed-size overlapping chunks in v1 (starting point: about 800 tokens with 15% overlap), keep the page and section reference on each chunk for citation, and test clause-aware chunking in phase 12 as a controlled experiment.
 
+## Implementation note (2026-11-08)
+v1 fills each 800-token budget with **whole paragraphs** from the layout result rather than cutting raw token windows, because each paragraph carries its page number and citations need it. Paragraphs longer than the budget are split on sentences, then words. Overlap repeats tail paragraphs up to 120 tokens. Page headers, footers and page numbers (layout roles) are dropped as noise. The text sent to the embedding model is prefixed with the document name and section heading; the stored `content` is the clause text only.
+
 ## Consequences
 - Citations still point to a page and section because the metadata travels with each chunk.
 - Missed clauses are the expected failure mode, and the eval will count them.

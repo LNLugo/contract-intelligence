@@ -172,7 +172,7 @@ Write-Host "`n== Verify role assignments" -ForegroundColor Cyan
 foreach ($p in @(@{ name = "Function"; id = $fnPrincipal }, @{ name = "Event Grid topic"; id = $topicPrincipal })) {
     Write-Host "$($p.name):"
     az role assignment list --assignee $p.id --all `
-        --query "[].{role:roleDefinitionName, scope:split(scope, '/')[-1]}" -o table
+        --query "[].{role:roleDefinitionName, scope:scope}" -o table
 }
 
 Write-Host "`nReady. Test from the laptop with: python ingestion/upload_to_inbox.py <pdf> --type <type> --groups grp-legal" -ForegroundColor Green

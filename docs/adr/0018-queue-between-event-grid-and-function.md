@@ -34,6 +34,11 @@ Identity everywhere: Event Grid delivers and dead-letters with its system-assign
 - The queue trigger must read Event Grid's plain-JSON messages (`messageEncoding: none` in `host.json`); the Functions default expects base64.
 - The Function's storage account is separate from the data lake: application plumbing (deployment package, queue, host state) is kept apart from business data.
 
+## Revision 2026-11-09: first live message, and permanent vs transient failures
+**Evidence:** the first upload passed every hop (3 events published, 1 matched by the filter, 1 delivered, 0 dead-lettered) and then failed 5 times in the Function in 5 to 25 ms each: `json.loads` on the message body raised `JSONDecodeError` at character 0. The body was not plain JSON; the event arrived encoded (consistent with Base64), while `host.json` passed it through undecoded.
+**Fix:** `pipeline/events.py` accepts plain JSON or Base64 JSON, logs the first bytes it received, and has unit tests for both forms.
+**Design lesson:** the error was permanent, yet the queue retried it 5 times. Retries help transient failures (throttling, timeouts) and only add delay for permanent ones (malformed message, missing metadata). The poison queue is the correct backstop either way; a production version would classify errors and send permanent ones straight to poison with the reason attached.
+
 ## Enterprise vs this build
 The diagram's direct arrow is fine when handlers finish in seconds. Contracts do not. At higher volume the same queue gives backpressure, and a Service Bus queue would add sessions, scheduled retries and duplicate detection if needed.
 

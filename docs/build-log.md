@@ -116,3 +116,11 @@ One entry per working session. The entries where something broke are the most va
 3. `az eventgrid system-topic event-subscription create` in Cloud Shell's CLI does not accept the identity-delivery options (`--delivery-identity`, `--deadletter-identity`), and the topic identity flags also failed.
 **Fix:** The helper now refuses an empty principal and checks every result. The topic identity and the subscription are created through the Resource Manager API (`az rest`, Event Grid API 2022-06-15), and the script ends by reading every role assignment back from Azure. Added `-SkipDeploy` so a re-run does not redeploy unchanged code.
 **Learned:** The CLI lags the platform; the ARM API is the source of truth and is what Bicep (phase 14) will declare. Verify by reading state back, not by trusting your own log lines.
+
+### 2026-11-09 · Phase 5c · First live upload: wiring fine, message format wrong
+**Did:** Uploaded a contract outside the evaluation set to `contracts-raw/inbox/`; it was not indexed within 10 minutes. Traced each hop: Event Grid metrics (3 published, 1 matched, 1 delivered, 0 failed), queues (`ingest` 0, `ingest-poison` 1), dead-letter container empty, then Function exceptions in Application Insights.
+**Broke:** `json.loads(msg.get_body())` raised `JSONDecodeError` at character 0 on all 5 attempts; the message moved to `ingest-poison`.
+**First thought:** I assumed Event Grid writes plain JSON to the queue and set `messageEncoding: none`.
+**Actual cause:** the body arrived encoded (consistent with Base64), and the host passed it through as-is.
+**Fix:** `pipeline/events.py` decodes either form, logs what arrived, unit-tested.
+**Learned:** (1) Hop-by-hop observability (topic metrics, queue depth, dead letter, function exceptions) found the fault in one pass. (2) A permanent error retried 5 times is wasted work; classify permanent vs transient (ADR-0018 revision). (3) Cloud Shell's managed identity cannot get an Application Insights token; log queries run from the laptop.

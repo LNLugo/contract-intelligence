@@ -12,6 +12,7 @@ import azure.functions as func
 
 from pipeline import http
 from pipeline.config import SETTINGS as S
+from pipeline.events import decode_event
 from pipeline.process import as_dict, process
 
 app = func.FunctionApp()
@@ -43,7 +44,9 @@ def read_upload(blob_url: str) -> tuple[bytes, str, dict]:
 
 @app.queue_trigger(arg_name="msg", queue_name="ingest", connection="IngestQueue")
 def ingest(msg: func.QueueMessage) -> None:
-    event = json.loads(msg.get_body())
+    body = msg.get_body()
+    logging.info("message received: %d bytes, starts with %r", len(body), body[:16])
+    event = decode_event(body)
     url = event["data"]["url"]
     logging.info("ingest start: %s (dequeue count %s, event %s)", url, msg.dequeue_count, event.get("id"))
     pdf, file_name, meta = read_upload(url)

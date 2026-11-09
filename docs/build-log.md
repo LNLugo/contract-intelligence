@@ -124,3 +124,11 @@ One entry per working session. The entries where something broke are the most va
 **Actual cause:** the body arrived encoded (consistent with Base64), and the host passed it through as-is.
 **Fix:** `pipeline/events.py` decodes either form, logs what arrived, unit-tested.
 **Learned:** (1) Hop-by-hop observability (topic metrics, queue depth, dead letter, function exceptions) found the fault in one pass. (2) A permanent error retried 5 times is wasted work; classify permanent vs transient (ADR-0018 revision). (3) Cloud Shell's managed identity cannot get an Application Insights token; log queries run from the laptop.
+
+### 2026-11-09 · Phase 5c · Event-driven ingestion live; fail-closed proven
+**Test 1 (normal upload):** a contract outside the evaluation set uploaded to `contracts-raw/inbox/` with `allowed_groups=grp-legal` was **searchable 23 s after upload** (3 chunks; upper bound, polled every 10 s; includes a cold start after redeploy). Target in the architecture overview: 2 minutes.
+**Test 2 (no access metadata):** the Function refused the upload on every attempt with `MissingAccessMetadata: ... has no allowed_groups metadata; refusing to index`; the message moved to `ingest-poison`; no chunks were indexed. Fail closed, as designed (ADR-0013, ADR-0018).
+**Observed:** `ingest-poison` held 2 messages afterwards; to be traced (leftover from the decoding failure, or an at-least-once duplicate delivery).
+**Added:** `eval/check_ingestion.ps1`, a one-command hop-by-hop health check: Event Grid metrics, queue contents with the file each message refers to, dead letter, function run counts with p50 and p95 duration, and distinct failure reasons.
+**Decision impact:** ADR-0013 (trimming at ingestion), ADR-0017 (one code path) and ADR-0018 (queue) all have live evidence. Phase 5 complete.
+**Spend so far:** about $15.30 extraction, under $0.20 embeddings; Function and Event Grid within free grants.

@@ -50,7 +50,7 @@ This is a personal learning build on my own Azure subscription. It reconstructs 
 | 2 | Document Intelligence extraction | Done |
 | 3 | Embedding and chat model deployments | Done |
 | 4 | AI Search index | Done |
-| 5 | Ingestion: 5a library ✅, 5b batch over eval set ✅ (50 contracts, 1,238 chunks), 5c Event Grid Function | In progress |
+| 5 | Ingestion: library, batch over eval set (50 contracts, 1,238 chunks), Event Grid → queue → Function (23 s upload to searchable; fails closed without access metadata) | Done |
 | 6 | Clause taxonomy | |
 | 7 | Vendor system of record behind APIM | |
 | 8 | Agents: orchestrator, intent, memory, policy, plan, retrieval | |

@@ -169,3 +169,8 @@ One entry per working session. The entries where something broke are the most va
 **Hypothesis 2 (baseline 97% inflated by the routing bug): rejected.** 8 of the 10 misses were correct "Yes." answers in the baseline, all partial or limited forms the lawyers labelled present. My first comparison script also read the wrong baseline file (the 2-contract quick run) and failed on missing entries; fixed by naming the file.
 **Learned:** the baseline prompt said "address" (lenient), the determination says "contains" (strict). Narrow categories need strictness, broad ones need breadth; a global wording cannot serve both. Definitions belong per category, sourced outside the evaluation set to avoid tuning on the test. Before comparing further, measure run-to-run variance of an identical prompt.
 **Decision impact:** ADR-0021 revision 2. Default prompt set to `v3-neutral` (interim). README answers row now reports the current configuration, not the best historic number.
+
+### 2026-11-09 · Slice 1 · Noise floor measured
+**Did:** Re-ran `v3-neutral` unchanged on the same 200 questions and cached retrieval (`eval/results/noise-floor-v3.md`).
+**Result:** totals moved by about 1 (missed 10 → 11, false claims 15 → 14, found 91% → 90%); single categories by 1 to 2; abstentions by 4.
+**Learned:** every earlier comparison had assumed zero variance. The main findings survive (baseline → v3 moved missed clauses by 7 and false claims by 8), but category-level differences of 1 or 2 are noise, and abstention counts are unstable because borderline cases waver between present, absent and unclear. Added `eval/compare_runs.py`: paired, question-by-question comparison with an exact McNemar test, so future experiments get a statistical verdict instead of a read of two tables.

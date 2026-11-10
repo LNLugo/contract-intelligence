@@ -40,7 +40,16 @@ if ([string]::IsNullOrEmpty($admins)) {
     Write-Host "Entra admin set: $upn"
 } else { Write-Host "Entra admin already set: $admins" }
 
-# 3. Firewall: one client IP, nothing else (private endpoint in phase 13)
+# 3. Public network access ON, then a firewall that admits one IP (private endpoint in phase 13).
+#    "--public-access None" means "disabled" in some CLI versions, which blocks firewall rules
+#    entirely (build log 2026-11-10), so set the state explicitly instead of relying on create flags.
+Write-Host "`n== Public network access" -ForegroundColor Cyan
+$access = az postgres flexible-server show -g $RG -n $PG --query "network.publicNetworkAccess" -o tsv
+if ($access -ne "Enabled") {
+    Invoke-Az postgres flexible-server update -g $RG -n $PG --public-access Enabled -o none | Out-Null
+    Write-Host "Enabled (was $access); only firewall-listed addresses can connect"
+} else { Write-Host "Already enabled" }
+
 Write-Host "`n== Firewall" -ForegroundColor Cyan
 Invoke-Az postgres flexible-server firewall-rule create -g $RG --server-name $PG --name laptop `
     --start-ip-address $ClientIp --end-ip-address $ClientIp -o none | Out-Null

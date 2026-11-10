@@ -188,3 +188,10 @@ One entry per working session. The entries where something broke are the most va
 **Second time:** the same pattern (a native command fails, the next line prints success) happened in phase 5c with role assignments. Fixed there locally, not at the root.
 **Fix at the root:** `Invoke-Az` in `infra/config.ps1` stops the script on any non-zero exit code; `Test-AzOption` checks which option names the installed CLI supports. The PostgreSQL script uses both.
 **Learned:** fix a class of bug once, centrally, the second time you see it. In PowerShell, native commands do not throw; every script needs an explicit failure check.
+
+### 2026-11-10 · Phase 6 · Server created; firewall refused because public access was off
+**Result:** `pg-ci-dev-2416` Ready, PostgreSQL 16, B1ms, Entra auth Enabled, password auth Disabled, Entra admin set.
+**Broke:** firewall rule creation failed: "not supported for a server without public access enabled". In this CLI version `--public-access None` at create time disabled public network access entirely instead of meaning "public, no rules".
+**Worked as intended:** `Invoke-Az` stopped the script with the real error instead of printing success (yesterday's root fix).
+**Fix:** the script now reads `network.publicNetworkAccess` and sets it to Enabled explicitly before adding the one-IP firewall rule.
+**Learned:** the same CLI value can mean different things across versions; set the state you need and verify it, rather than relying on a create-time default.

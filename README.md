@@ -13,8 +13,8 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
 | **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
-| **Answers** (current configuration) | Clauses found **91%**; quote matches the lawyers' text **96%**; absent clauses reported correctly **80%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions ([run](eval/results/run-v3-neutral.md)); first configuration found 97% but reported only 70% of absent clauses correctly ([baseline](eval/results/baseline-slice1-answers.md)) |
-| **Known weakness** | One prompt wording cannot serve every clause type: strict reading fixed Termination for Convenience (false claims 8 → 2) but missed partial forms the lawyers count, such as limited exclusivity (missed 3 → 10). Next: per-category definitions from the clause taxonomy | [ADR-0021](docs/adr/0021-determination-separate-from-evidence.md), [analysis](eval/results/run-v3-neutral.md) |
+| **Answers** (current configuration) | Clauses found **90 to 91%**; quote matches the lawyers' text **96 to 98%**; absent clauses reported correctly **80 to 81%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions ([run](eval/results/run-v3-neutral.md)); first configuration found 97% but reported only 70% of absent clauses correctly ([baseline](eval/results/baseline-slice1-answers.md)) |
+| **Known weakness** | **Consistency:** the same question gets a different outcome about 1 time in 11 (9% of 200 answers changed between two identical runs, measured twice). Next: three samples per question, answer only when they agree, otherwise route to a reviewer | [A/A tests](eval/results/noise-floor-v3.md), [ADR-0022](docs/adr/0022-agreement-across-samples.md) |
 | **Spend to date** | about $16 of $100 | [Cost log](docs/cost-log.md) |
 
 ![Reference architecture](docs/architecture/reference-architecture.png)
@@ -33,6 +33,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 ## Lessons the measurements taught
 
 - **A retrieval score cannot tell you a clause is missing.** Reranker scores for present and absent clauses overlap almost completely, so absence is judged by the model reading the evidence, not by a threshold ([ADR-0009](docs/adr/0009-deterministic-rules-and-abstention.md)).
+- **Run the same thing twice before believing a difference.** Two identical runs changed 9% of answers, and one identical comparison even came out "statistically significant". That overturned two of my own earlier conclusions and exposed the real weakness: consistency ([A/A tests](eval/results/noise-floor-v3.md)).
 - **Test your own hypotheses, including the flattering ones.** I suspected the first configuration's 97% was inflated by a bug; checking each answer showed it was real, and that strict wording had cost 8 correct detections ([analysis](eval/results/run-v3-neutral.md)).
 - **Change one variable at a time, and weight errors by their cost.** Bundling a format fix with a prompt tweak cut false claims but quadrupled missed clauses, and the run could not say which change did which. A missed clause is silent; a false claim comes with a citation a reviewer can reject ([run](eval/results/run-v2-strict.md)).
 - **Read the errors before fixing them.** The 23 "false claims" were mostly the model saying "No" and citing evidence for it, which my routing counted as "yes". The fix was the output contract, not an extra model call ([ADR-0021](docs/adr/0021-determination-separate-from-evidence.md)).
@@ -47,7 +48,8 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Foundation | Subscription constraints, data lake, Document Intelligence, models, search index | Done |
 | Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
 | Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
-| Next, each with a before and after number | Clause definitions (taxonomy), definitions lookup across chunks, LLM judge for entailment, reranker comparison | |
+| **Now: Azure services** | PostgreSQL taxonomy (Entra-only auth), then API Management + Key Vault for the system-of-record tool, then Container Apps | In progress |
+| Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
 | Then | System-of-record tool behind APIM; LangGraph orchestrator with intent, memory and policy; review history | |
 | Then | API and review app with Entra sign-in; hardening with private endpoints; Bicep for everything | |
 
@@ -75,7 +77,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0008](docs/adr/0008-review-history-as-retrieval.md) | Review history retrieved from its own index, not appended to the prompt | Proposed |
 | [0009](docs/adr/0009-deterministic-rules-and-abstention.md) | Rules and routing in code; a retrieval score cannot decide absence | Accepted, revised |
 | [0010](docs/adr/0010-system-of-record-as-typed-tool.md) | Vendor system of record reached through APIM as a typed, read-only tool | Accepted |
-| [0011](docs/adr/0011-clause-taxonomy-store.md) | Where the governed clause taxonomy lives | Proposed |
+| [0011](docs/adr/0011-clause-taxonomy-store.md) | Governed clause taxonomy in PostgreSQL, Entra-only auth, versioned draft → approved | Accepted |
 | [0012](docs/adr/0012-evaluation-method.md) | Clause-level evaluation against labelled ground truth, with a calibrated LLM judge | Proposed |
 | [0013](docs/adr/0013-identity-and-security-trimming.md) | Entra identities everywhere, no keys, results filtered by the user's groups | Accepted |
 | [0014](docs/adr/0014-model-deployment-type-and-model-roles.md) | GlobalStandard deployments; capacity set per workload | Accepted, revised |
@@ -85,7 +87,8 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0018](docs/adr/0018-queue-between-event-grid-and-function.md) | Storage queue between Event Grid and the Function | Accepted, revised |
 | [0019](docs/adr/0019-vertical-slice-before-components.md) | Thin answering slice end to end before the remaining components | Accepted |
 | [0020](docs/adr/0020-deterministic-citation-check-first.md) | Deterministic citation check first; LLM judge only for entailment | Accepted |
-| [0021](docs/adr/0021-determination-separate-from-evidence.md) | Determination separate from cited evidence; code routes on it | Accepted, being measured |
+| [0021](docs/adr/0021-determination-separate-from-evidence.md) | Determination separate from cited evidence; code routes on it | Accepted (format); wording effects not established |
+| [0022](docs/adr/0022-agreement-across-samples.md) | Three samples per question; answer only on agreement, otherwise route to a reviewer | Proposed |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 
@@ -96,6 +99,7 @@ infra/       az CLI and ARM scripts, one per phase (Bicep in a later step)
 ingestion/   pipeline library, batch script, queue-triggered Function, unit tests
 agents/      retrieval agent, answering and routing, ask CLI, unit tests
 eval/        evaluation set, retrieval and answer evaluations, baselines in eval/results/
+taxonomy/    governed clause taxonomy: schema, Entra-token connection, CUAD seed
 docs/        ADRs, architecture overview, build log, cost log, interview notes
 ```
 

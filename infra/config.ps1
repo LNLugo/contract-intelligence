@@ -12,6 +12,8 @@ $EMBED_DIMS = 1024           # ADR-0016
 $FNSA = "stfncidev2416"      # Function plumbing: deployment package, ingest queue (kept apart from the lake)
 $FN   = "fn-ci-dev-2416"     # Flex Consumption ingestion Function (ADR-0018)
 $EGT  = "egst-ci-dev-2416"   # Event Grid system topic on the data lake
+$PG   = "pg-ci-dev-2416"     # PostgreSQL Flexible Server: clause taxonomy, later agent checkpoints (ADR-0011)
+$PGDB = "contracts"
 
 $ErrorActionPreference = "Stop"
 

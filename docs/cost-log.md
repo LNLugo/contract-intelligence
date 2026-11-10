@@ -3,30 +3,41 @@
 Budget: $100 Azure for Students credit (hard cap). Check the balance on the Microsoft Azure Sponsorships portal after each phase.
 
 ## Rules
-1. Anything billed hourly whether used or not (AI Search paid tiers, APIM Developer, Postgres) is created only in the phase that needs it and deleted or stopped when the session ends.
-2. Free tiers first: Document Intelligence F0, AI Search Free, Functions and Container Apps free grants.
-3. Record actual spend, not estimates, at the end of each phase.
+1. Anything billed hourly whether used or not (AI Search paid tiers, APIM Developer, Postgres) is created only in the step that needs it and deleted or stopped when the session ends.
+2. Free tiers first: AI Search Free, semantic ranker free plan, Functions and Event Grid free grants.
+3. Record actual spend, not estimates, at the end of each step.
+
+## Spend to date (2026-11-09): about $16
+
+| Item | Basis | Cost |
+|---|---|---|
+| Document Intelligence (S0, prebuilt-layout) | 1,526 pages for the evaluation set + 37-page test + 2 small live uploads | **$15.26** for the evaluation set, matching the projection; tests a few cents |
+| Embeddings (`text-embedding-3-large`) | ~950K tokens for ingestion, plus re-embeds and query embeddings | under $0.20 |
+| Chat (`gpt-5.4-mini`) | ~0.85M tokens for the answer evaluation and test questions | under $1 |
+| AI Search | Free tier; semantic ranker free plan (about 730 of 1,000 queries used this month) | $0 |
+| Functions, Event Grid, queues | Flex Consumption and Event Grid free grants | ~$0 |
+| Storage (data lake + plumbing) | Low MB | cents |
+| Application Insights | Ingestion well under the free allowance | ~$0 |
 
 ## Services
 
-| Service | Tier | Billing shape | Created | Deleted / stopped | Actual spend |
-|---|---|---|---|---|---|
-| Storage (ADLS Gen2) | Standard LRS | Per GB and per operation | | | |
-| Document Intelligence | F0 | Free page allowance per month | | | |
-| Azure OpenAI | Standard | Per token | | | |
-| AI Search | Free, Basic only for phase 13 | Hourly on paid tiers | | | |
-| Functions | Flex Consumption | Per execution, free grant | | | |
-| APIM | Consumption | Per call, free grant | | | |
-| Key Vault | Standard | Per operation | | | |
-| PostgreSQL Flexible | Burstable | Hourly while running | | | |
-| Container Apps | Consumption | Per vCPU second, scale to zero | | | |
+| Service | Tier | Billing shape | Created | Status |
+|---|---|---|---|---|
+| Storage `stcidev2416` (ADLS Gen2) | Standard LRS | Per GB and per operation | 2026-11-07 | Running |
+| Storage `stfncidev2416` (Function plumbing) | Standard LRS | Per GB and per operation | 2026-11-09 | Running |
+| Document Intelligence `di-ci-dev-2416` | S0 | Per page analyzed | 2026-11-07 (F0), S0 2026-11-07 | Running, idle cost $0 |
+| Azure OpenAI `aoai-ci-dev-2416` | GlobalStandard | Per token | 2026-11-07 | Running, idle cost $0 |
+| AI Search `srch-ci-dev-2416` | Free | Free (deleted after long inactivity) | 2026-11-08 | Running |
+| Function `fn-ci-dev-2416` | Flex Consumption | Per execution, free grant | 2026-11-09 | Running, scales to zero |
+| Event Grid `egst-ci-dev-2416` | System topic | Per operation, free grant | 2026-11-09 | Running |
+| Application Insights `fn-ci-dev-2416` | Pay as you go | Per GB ingested | 2026-11-09 | Running |
+| PostgreSQL `pg-ci-dev-2416` | Burstable B1ms, 32 GB | **Hourly compute while running**, storage always | 2026-11-09 | Stop between sessions (`infra/06b`) |
+| Chat deployment `gpt-5.4-mini-eval` | GlobalStandard 200K TPM | Per token (evaluation only) | script ready (`infra/03c`) | Not yet created |
 
-## Per-contract unit cost (filled in phase 12)
+## Unit economics (from the answer baseline)
 
-| Item | Cost per contract |
+| Item | Per unit |
 |---|---|
-| Extraction | |
-| Embeddings | |
-| Generation and judge tokens | |
-| Search and hosting (amortized) | |
-| **Total** | |
+| Extraction | $0.01 per page; median contract (11 pages) $0.11 |
+| Answering | ~4,100 tokens per question; 10 questions per contract ≈ 41K tokens |
+| Ingestion latency | 23 s upload to searchable (short contract) |

@@ -19,6 +19,23 @@ $ErrorActionPreference = "Stop"
 
 function Get-MyObjectId { az ad signed-in-user show --query id -o tsv }
 
+function Invoke-Az {
+    # Run az and STOP on failure. Native commands do not throw in PowerShell, so without this
+    # a failed step is followed by a success message (build log, 2026-11-09, twice).
+    # No param() block on purpose: an advanced function would try to bind -g, -n, -o as its own
+    # parameters. $args passes every argument through to az unchanged.
+    $azArgs = @($args)
+    $out = & az @azArgs 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "az $($azArgs[0..2] -join ' ') failed:`n$($out | Out-String)" }
+    return $out
+}
+
+function Test-AzOption($Command, $Option) {
+    # The CLI renames options between versions; check what this installation supports
+    $help = & az @($Command.Split(' ') + '--help') 2>&1 | Out-String
+    return $help -match [regex]::Escape($Option)
+}
+
 function Grant-RoleToPrincipal($PrincipalId, $Role, $Scope) {
     # For managed identities (Function, Event Grid topic). Returns $true if a new assignment was made.
     # A new identity can take a minute to replicate in Entra ID, so the existence check may fail;

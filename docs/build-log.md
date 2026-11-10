@@ -174,3 +174,17 @@ One entry per working session. The entries where something broke are the most va
 **Did:** Re-ran `v3-neutral` unchanged on the same 200 questions and cached retrieval (`eval/results/noise-floor-v3.md`).
 **Result:** totals moved by about 1 (missed 10 → 11, false claims 15 → 14, found 91% → 90%); single categories by 1 to 2; abstentions by 4.
 **Learned:** every earlier comparison had assumed zero variance. The main findings survive (baseline → v3 moved missed clauses by 7 and false claims by 8), but category-level differences of 1 or 2 are noise, and abstention counts are unstable because borderline cases waver between present, absent and unclear. Added `eval/compare_runs.py`: paired, question-by-question comparison with an exact McNemar test, so future experiments get a statistical verdict instead of a read of two tables.
+
+### 2026-11-09 · Slice 1 · A/A tests overturn my comparisons; consistency is the real weakness
+**Did:** Compared runs question by question with `eval/compare_runs.py`. Baseline → v3-neutral: 26 of 200 outcomes changed; lost detections 8 vs 1 gained (p = 0.039); false claims fixed 10 vs 3 introduced (p = 0.092). Then two A/A comparisons (v3-neutral against two identical re-runs, confirmed by the `prompt` field in each results file).
+**Result:** both A/A comparisons changed **18 of 200 outcomes (9%)**. One reported false claims fixed 0 vs introduced 6, **p = 0.031, between identical configurations.**
+**Broke (my method):** I had been reading differences between single runs as effects of my changes. At 200 questions, with 9% of outcomes flipping by chance, a single paired p-value is not reliable: an identical comparison produced one below 0.05. The conclusions "strict wording cost 8 detections" and "strict wording fixed Termination For Convenience" are withdrawn to hypotheses.
+**Also broke:** my comparison command used a wildcard that matched two repeat files and printed the usage text; fixed by naming the files.
+**Learned:** (1) run A/A before believing A/B; (2) totals hide movement (run 1 vs run 2 differ by 1 missed clause, yet 18 outcomes changed); (3) the product gives a different answer to the same question about 1 time in 11, which is an auditability problem before it is an accuracy problem.
+**Next:** ADR-0022, three samples per question with unanimity required, measured by its own A/A flip rate, on a separate evaluation deployment (`infra/03c-eval-deployment.ps1`).
+
+### 2026-11-09 · Phase 6 · PostgreSQL script failed on renamed CLI options, and reported success anyway
+**Broke:** `infra/06-postgres.ps1` failed at every step: the CLI in Cloud Shell no longer accepts `--active-directory-auth` (now `--microsoft-entra-auth`), the `ad-admin` command group (now `microsoft-entra-admin`), or `-n` for the server in firewall and database commands (now `--server-name`). Nothing was created, but the script printed "Created", "Entra admin set" and "Ready".
+**Second time:** the same pattern (a native command fails, the next line prints success) happened in phase 5c with role assignments. Fixed there locally, not at the root.
+**Fix at the root:** `Invoke-Az` in `infra/config.ps1` stops the script on any non-zero exit code; `Test-AzOption` checks which option names the installed CLI supports. The PostgreSQL script uses both.
+**Learned:** fix a class of bug once, centrally, the second time you see it. In PowerShell, native commands do not throw; every script needs an explicit failure check.

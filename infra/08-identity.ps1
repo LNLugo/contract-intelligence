@@ -32,11 +32,28 @@ $TESTS = @(
     @{ name = "norole";      role = $null }
 )
 
+function Invoke-GraphOnce($Method, $Url, $BodyObject) {
+    $tmp = New-TemporaryFile; $errFile = New-TemporaryFile
+    $azArgs = @("rest", "--method", $Method, "--url", $Url)
+    if ($null -ne $BodyObject) {
+        $BodyObject | ConvertTo-Json -Depth 20 | Set-Content $tmp
+        $azArgs += @("--body", "@$tmp", "--headers", "Content-Type=application/json")
+    }
+    $out = & az @azArgs 2>$errFile
+    $code = $LASTEXITCODE
+    $err = Get-Content $errFile -Raw
+    Remove-Item $tmp, $errFile -ErrorAction SilentlyContinue
+    if ($code -ne 0) { throw "$Method $Url failed:`n$err" }
+    return ($out | Out-String)
+}
+
 function Graph($Method, $Path, $Body = $null) {
     # New directory objects take seconds to replicate: a service principal or role assignment created
     # right after its app can fail with "does not exist". Retry those; stop on anything else.
+    # stdout and stderr are kept apart: az writes warnings to stderr, and mixing them into the
+    # response breaks JSON parsing (build log, 2026-11-11). Error text never includes the response.
     for ($i = 1; ; $i++) {
-        try { $out = Invoke-Arm $Method "$GRAPH$Path" $Body; break }
+        try { $out = Invoke-GraphOnce $Method "$GRAPH$Path" $Body; break }
         catch {
             $transient = $_.Exception.Message -match "does not exist|does not reference|ResourceNotFound|Request_BadRequest.*not found"
             if (-not $transient -or $i -ge 6) { throw }
@@ -62,6 +79,9 @@ if ($domains -notcontains $IdentityDomain) {
 }
 $IDENTITY_TENANT = $org.value[0].id
 Write-Host "Identity tenant: $IdentityDomain"
+if ($ResourceTenant -eq $IDENTITY_TENANT) {
+    throw "-ResourceTenant is the identity tenant's ID. Pass the tenant that holds the Azure resources (Key Vault): curl -s https://login.microsoftonline.com/stevens.edu/v2.0/.well-known/openid-configuration | jq -r .issuer"
+}
 
 $kvToken = az account get-access-token --tenant $ResourceTenant --resource https://vault.azure.net --query accessToken -o tsv 2>$null
 if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrEmpty($kvToken)) {

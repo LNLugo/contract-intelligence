@@ -195,3 +195,8 @@ One entry per working session. The entries where something broke are the most va
 **Worked as intended:** `Invoke-Az` stopped the script with the real error instead of printing success (yesterday's root fix).
 **Fix:** the script now reads `network.publicNetworkAccess` and sets it to Enabled explicitly before adding the one-IP firewall rule.
 **Learned:** the same CLI value can mean different things across versions; set the state you need and verify it, rather than relying on a create-time default.
+
+### 2026-11-11 · Phase 6 · PostgreSQL live, taxonomy seeded with no password anywhere
+**Result:** `infra/06-postgres.ps1` ran clean twice (idempotent): Entra auth Enabled, password auth Disabled, public access Enabled, one firewall rule (laptop IP), database `contracts`. `taxonomy/seed_from_cuad.py` connected from the laptop with an Entra access token as the password and loaded draft version `cuad-v1-draft`, 41 categories.
+**Added:** approval step (`taxonomy/approve.py`), a least-privilege database role for the Function's managed identity (`taxonomy/grant_identity.py`), runtime lookup that reads only the approved version and logs unmapped terms (`agents/taxonomy.py`).
+**Decision:** did not open the firewall to "all Azure services" so the Function could connect; the network path waits for private networking (ADR-0011, "Network path").

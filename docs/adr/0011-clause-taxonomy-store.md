@@ -22,6 +22,14 @@ Azure Database for PostgreSQL Flexible Server, Burstable B1ms, PostgreSQL 16 (`i
 - **Seeded as a draft** from CUAD's 41 published category descriptions, not from evaluation misses, so the evaluation set stays a test set. A draft is never used at runtime.
 - The same server later holds the LangGraph checkpoints (ADR-0007): one service, two jobs.
 
+## Runtime access and approval (2026-11-11)
+- Runtime code (`agents/taxonomy.py`) reads **only the approved version**. Approval (`taxonomy/approve.py`) records the approver and time and retires any previously approved version in the same transaction.
+- The ingestion Function's managed identity has its own Entra-authenticated PostgreSQL role (`taxonomy/grant_identity.py`): SELECT on the taxonomy tables, INSERT on `unmapped_term`, nothing else. No password exists for it.
+- Unresolved terms are logged to `unmapped_term`, never guessed.
+
+## Network path (deliberately deferred)
+The Function's outbound IP addresses change, so a firewall rule for it would mean enabling "allow public access from any Azure service", which admits every Azure customer's resources, not only this subscription's. That widens the attack surface of a governed data store to make a demo work. **Decision:** the database role exists now; the network path from the Function waits for private networking (VNet integration and a private endpoint, phase 13). Until then the taxonomy is read from the laptop and the evaluation harness only.
+
 ## Cost
 The first resource billed by the hour whether used or not. Stopped with `infra/06b-postgres-stop-start.ps1` between sessions (a stopped server bills storage only; Azure restarts it after 7 days).
 

@@ -19,7 +19,7 @@ def _user() -> str:
                           capture_output=True, text=True, check=True, shell=os.name == "nt").stdout.strip()
 
 
-def connect() -> psycopg.Connection:
+def connect(dbname: str = DBNAME) -> psycopg.Connection:
     token = DefaultAzureCredential(exclude_interactive_browser_credential=True).get_token(PG_SCOPE).token
-    return psycopg.connect(host=HOST, dbname=DBNAME, user=_user(), password=token, sslmode="require",
+    return psycopg.connect(host=HOST, dbname=dbname, user=_user(), password=token, sslmode="require",
                            connect_timeout=15)

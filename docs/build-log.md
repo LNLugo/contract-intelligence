@@ -212,3 +212,9 @@ One entry per working session. The entries where something broke are the most va
 **End to end from the laptop:** `python -m agents.tools.vendor V1A2B3C` returned a typed record (status active, payment terms Net 90, currency USD, country DE). Path: my Entra identity → Key Vault (subscription key) → API Management → Key Vault reference (SAP credential) → mock SAP.
 **Secrets handled:** two, both generated in memory and written straight to Key Vault; neither was printed, stored in config or committed.
 **Day summary (2026-11-11):** PostgreSQL with Entra-only auth and a governed, approved taxonomy; a least-privilege database role for a managed identity; Key Vault, API Management and Key Vault references; a typed, fail-closed system-of-record tool. 36 unit tests.
+
+### 2026-11-11 · Hardening · Entitlements: design rule and a zero-leak test
+**Question asked:** how do I make sure a user sees only what they are entitled to?
+**Gap found:** the filter is correct, but the caller supplies its own groups (`--groups`). Whoever chooses the groups chooses what they see.
+**Decision (ADR-0023):** groups come only from the validated Entra token in the API; tags mirror the source's access list with a re-tag sync; tools check the user's entitlement before acting; stored answers and history inherit their sources' tags; logs hold IDs, not text.
+**Added:** `eval/leakage_test.py`: enumerate per group, forbidden documents by ID and name, adversarial question text, injection values. Pass mark: 0 leaks; exit code 1 otherwise, so it can gate a deployment.

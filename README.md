@@ -11,7 +11,7 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Corpus** | 50 contracts, 1,526 pages, 1,238 chunks, 27 contract types | [CUAD](docs/adr/0002-cuad-as-corpus-and-ground-truth.md), stratified by length ([ADR-0015](docs/adr/0015-document-intelligence-tier.md)) |
 | **Extraction cost** | $15.26, matching the projection to the cent | Corpus measured before choosing a tier |
 | **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
-| **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
+| **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups; leakage test (enumerate, targeted, adversarial, injection probes) must find 0 leaks | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md), [ADR-0023](docs/adr/0023-entitlements-from-validated-token.md), `eval/leakage_test.py`) |
 | **System of record** | Reachable only through API Management; credentials resolved from Key Vault by managed identities; no secret in code or config | Live access tests ([ADR-0010](docs/adr/0010-system-of-record-as-typed-tool.md)) |
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
 | **Answers** (current configuration) | Clauses found **90 to 91%**; quote matches the lawyers' text **96 to 98%**; absent clauses reported correctly **80 to 81%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions ([run](eval/results/run-v3-neutral.md)); first configuration found 97% but reported only 70% of absent clauses correctly ([baseline](eval/results/baseline-slice1-answers.md)) |
@@ -91,6 +91,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0020](docs/adr/0020-deterministic-citation-check-first.md) | Deterministic citation check first; LLM judge only for entailment | Accepted |
 | [0021](docs/adr/0021-determination-separate-from-evidence.md) | Determination separate from cited evidence; code routes on it | Accepted (format); wording effects not established |
 | [0022](docs/adr/0022-agreement-across-samples.md) | Three samples per question; answer only on agreement, otherwise route to a reviewer | Proposed |
+| [0023](docs/adr/0023-entitlements-from-validated-token.md) | Entitlements come only from the validated token; leakage is a zero-tolerance regression test | Accepted |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 

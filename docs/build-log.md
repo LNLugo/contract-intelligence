@@ -218,3 +218,7 @@ One entry per working session. The entries where something broke are the most va
 **Gap found:** the filter is correct, but the caller supplies its own groups (`--groups`). Whoever chooses the groups chooses what they see.
 **Decision (ADR-0023):** groups come only from the validated Entra token in the API; tags mirror the source's access list with a re-tag sync; tools check the user's entitlement before acting; stored answers and history inherit their sources' tags; logs hold IDs, not text.
 **Added:** `eval/leakage_test.py`: enumerate per group, forbidden documents by ID and name, adversarial question text, injection values. Pass mark: 0 leaks; exit code 1 otherwise, so it can gate a deployment.
+
+### 2026-11-11 · Roadmap · Identity before agents
+**Decision:** swapped the order of the next two steps. The API with Entra token validation now comes before the LangGraph orchestrator.
+**Why:** building agents on a system that trusts the caller's own groups means every agent feature inherits that gap, and in financial services an agent that can read more than its user is a breach. With the token check in place first, every tool is checked against the user's access from day one.

@@ -1,6 +1,6 @@
 # Contract Intelligence on Azure
 
-A contract review system on Azure, measured against lawyer-labelled ground truth. The ingestion pipeline and a first answering path run end to end today: it reads contracts, finds the clauses that matter, answers with verbatim citations checked in code, and says "not found" or abstains instead of guessing. The multi-agent orchestration (intent, memory and policy agents in LangGraph) is being added next, one measured component at a time.
+A contract review system on Azure, measured against lawyer-labelled ground truth. The ingestion pipeline and a first answering path run end to end today: it reads contracts, finds the clauses that matter, answers with verbatim citations checked in code, and says "not found" or abstains instead of guessing. Next comes identity: an API that takes the user's groups only from a validated Entra ID token. The multi-agent orchestration (intent, memory and policy agents in LangGraph) follows behind that API, so no agent ever runs without a verified user.
 
 This is my own reconstruction of an enterprise architecture pattern, built on a $100 student subscription. Every tradeoff is an [architecture decision record](docs/adr/), every failure is in the [build log](docs/build-log.md), and every claim below is a measurement.
 
@@ -50,10 +50,11 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
 | Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
 | Azure services | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role); Key Vault + API Management + mock SAP with a typed, fail-closed vendor tool | Done |
-| **Next** | LangGraph orchestrator wiring retrieval, taxonomy and the vendor tool together; then Container Apps for the API and review app | |
+| Entitlements | Leakage test with a zero-leak pass mark; rule that groups come only from the validated token ([ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)) | Test written (first run pending); token check next |
+| **Next: identity first** | Minimal API in Container Apps that validates the Entra ID token, reads groups from it and calls retrieval. Tests: forged groups in the request change nothing; a token without groups is refused; leakage test passes through the API | |
+| Then | LangGraph orchestrator behind that API: retrieval, taxonomy and the vendor tool, each tool checked against the signed-in user's entitlements; abstain when the vendor system is unavailable | |
+| Then | Review app with Entra sign-in; review history carrying source access tags; leakage test as a deployment gate; private endpoints; Bicep for everything | |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
-| Then | System-of-record tool behind APIM; LangGraph orchestrator with intent, memory and policy; review history | |
-| Then | API and review app with Entra sign-in; hardening with private endpoints; Bicep for everything | |
 
 ## How to read this repo
 

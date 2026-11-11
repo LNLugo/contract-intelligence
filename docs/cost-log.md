@@ -32,6 +32,9 @@ Budget: $100 Azure for Students credit (hard cap). Check the balance on the Micr
 | Event Grid `egst-ci-dev-2416` | System topic | Per operation, free grant | 2026-11-09 | Running |
 | Application Insights `fn-ci-dev-2416` | Pay as you go | Per GB ingested | 2026-11-09 | Running |
 | PostgreSQL `pg-ci-dev-2416` | Burstable B1ms, 32 GB | **Hourly compute while running**, storage always | 2026-11-09 | Stop between sessions (`infra/06b`) |
+| Key Vault `kv-ci-dev-2416` | Standard, RBAC mode | Per 10K operations | 2026-11-11 | Running, cents |
+| API Management `apim-ci-dev-2416` | Consumption | Per call; first 1M calls/month free | 2026-11-11 | Running, scales to zero |
+| Mock SAP `fn-sapmock-2416` | Flex Consumption | Per execution, free grant | 2026-11-11 | Running, scales to zero |
 | Chat deployment `gpt-5.4-mini-eval` | GlobalStandard 200K TPM | Per token (evaluation only) | script ready (`infra/03c`) | Not yet created |
 
 ## Unit economics (from the answer baseline)

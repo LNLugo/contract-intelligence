@@ -48,7 +48,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Foundation | Subscription constraints, data lake, Document Intelligence, models, search index | Done |
 | Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
 | Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
-| **Now: Azure services** | PostgreSQL taxonomy (Entra-only auth), then API Management + Key Vault for the system-of-record tool, then Container Apps | In progress |
+| **Now: Azure services** | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role): done. API Management + Key Vault for the system-of-record tool: in progress. Then Container Apps | In progress |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
 | Then | System-of-record tool behind APIM; LangGraph orchestrator with intent, memory and policy; review history | |
 | Then | API and review app with Entra sign-in; hardening with private endpoints; Bicep for everything | |
@@ -97,9 +97,10 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 ```
 infra/       az CLI and ARM scripts, one per phase (Bicep in a later step)
 ingestion/   pipeline library, batch script, queue-triggered Function, unit tests
-agents/      retrieval agent, answering and routing, ask CLI, unit tests
+agents/      retrieval agent, answering and routing, ask CLI, taxonomy lookup, typed system-of-record tool, unit tests
 eval/        evaluation set, retrieval and answer evaluations, baselines in eval/results/
-taxonomy/    governed clause taxonomy: schema, Entra-token connection, CUAD seed
+taxonomy/    governed clause taxonomy: schema, Entra-token connection, CUAD seed, approval, identity grants
+sap-mock/    mock SAP vendor master (separate Function app behind API Management)
 docs/        ADRs, architecture overview, build log, cost log, interview notes
 ```
 

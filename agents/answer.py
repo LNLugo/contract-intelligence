@@ -8,8 +8,11 @@ evidence it cites. Routing is decided by code from both:
   ABSTAIN    determination unclear, weak retrieval, or a "present" whose citations all failed
 """
 import json
+import os
 import re
 import time
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 
 from . import _ingestion  # noqa: F401
@@ -17,7 +20,9 @@ from .retrieve import Hit, search
 from pipeline import http
 from pipeline.config import SETTINGS as S
 
-CHAT_MODEL = "gpt-5.4-mini"
+# Deployment name, not just model: evaluation runs use their own deployment with its own
+# rate limit (infra/03c), so they never compete with interactive traffic (ADR-0014).
+CHAT_MODEL = os.environ.get("CHAT_DEPLOYMENT", "gpt-5.4-mini")
 TOP_N = 5                       # chunks the model sees (ADR-0006: top 20 -> top 5)
 MIN_RERANKER_SCORE = 1.5        # floor against irrelevant retrieval only (ADR-0009 revision)
 
@@ -54,6 +59,7 @@ class Answer:
     dropped_findings: int
     tokens: int
     seconds: float
+    samples: list[str] = field(default_factory=list)   # status of each sample (ADR-0022)
 
 
 def _norm(text: str) -> str:
@@ -125,9 +131,26 @@ def route(determination: str, findings: list[Finding], dropped: int) -> tuple[st
     return "ABSTAIN", "model could not determine from the evidence (unclear): route to a reviewer"
 
 
+def _one_sample(question: str, hits: list[Hit], prompt: str):
+    raw, tokens = generate(question, hits, prompt)
+    determination = str(raw.get("determination", "unclear")).lower()
+    findings, dropped = validate(raw, hits)
+    status, reason = route(determination, findings, dropped)
+    return status, determination, raw.get("answer", ""), findings, reason, dropped, tokens
+
+
+def agree(statuses: list[str]) -> tuple[bool, str]:
+    """ADR-0022: act only when every sample reached the same outcome."""
+    counts = Counter(statuses)
+    if len(counts) == 1:
+        return True, ""
+    return False, "samples disagree (" + ", ".join(f"{k} x{v}" for k, v in counts.most_common()) + "): route to a reviewer"
+
+
 def answer(question: str, groups: list[str], doc_id: str | None = None,
-           hits: list[Hit] | None = None, prompt: str = DEFAULT_PROMPT) -> Answer:
-    """hits: pass pre-retrieved chunks to hold retrieval fixed (evaluation experiments)."""
+           hits: list[Hit] | None = None, prompt: str = DEFAULT_PROMPT, samples: int = 1) -> Answer:
+    """hits: pass pre-retrieved chunks to hold retrieval fixed (evaluation experiments).
+    samples: independent answers to draw; with more than one, disagreement abstains (ADR-0022)."""
     t0 = time.time()
     if hits is None:
         hits = search(question, groups, doc_id=doc_id, k=20, rerank=True)
@@ -139,12 +162,20 @@ def answer(question: str, groups: list[str], doc_id: str | None = None,
         return Answer("ABSTAIN", "", "", [], f"irrelevant retrieval (top reranker score {top:.2f} < {MIN_RERANKER_SCORE})",
                       top, 0, 0, round(time.time() - t0, 1))
 
-    raw, tokens = generate(question, hits, prompt)
-    determination = str(raw.get("determination", "unclear")).lower()
-    findings, dropped = validate(raw, hits)
-    status, reason = route(determination, findings, dropped)
-    return Answer(status, determination, raw.get("answer", ""), findings, reason, top, dropped, tokens,
-                  round(time.time() - t0, 1))
+    if samples == 1:
+        runs = [_one_sample(question, hits, prompt)]
+    else:
+        with ThreadPoolExecutor(max_workers=samples) as pool:
+            runs = list(pool.map(lambda _: _one_sample(question, hits, prompt), range(samples)))
+    tokens = sum(r[6] for r in runs)
+    statuses = [r[0] for r in runs]
+    ok, why = agree(statuses)
+    status, determination, text, findings, reason, dropped, _ = runs[0]
+    if not ok:
+        return Answer("ABSTAIN", determination, text, [], why, top, dropped, tokens,
+                      round(time.time() - t0, 1), statuses)
+    return Answer(status, determination, text, findings, reason, top, dropped, tokens,
+                  round(time.time() - t0, 1), statuses)
 
 
 def as_dict(a: Answer) -> dict:

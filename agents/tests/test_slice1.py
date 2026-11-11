@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 pytest.importorskip("azure.identity")
-from agents.answer import Citation, Finding, quote_in_clause, route  # noqa: E402
+from agents.answer import Citation, Finding, agree, quote_in_clause, route  # noqa: E402
 from agents.retrieve import AccessError, access_filter  # noqa: E402
 
 
@@ -70,3 +70,12 @@ def test_invented_quote_is_invalid():
 
 def test_very_short_quote_is_invalid():
     assert not quote_in_clause("twelve months", CLAUSE)
+
+
+def test_unanimous_samples_agree():
+    assert agree(["ANSWERED", "ANSWERED", "ANSWERED"]) == (True, "")
+
+
+def test_split_samples_abstain_with_reason():
+    ok, why = agree(["ANSWERED", "NOT_FOUND", "ANSWERED"])
+    assert not ok and "ANSWERED x2" in why and "NOT_FOUND x1" in why

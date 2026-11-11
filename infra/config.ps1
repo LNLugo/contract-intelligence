@@ -14,6 +14,9 @@ $FN   = "fn-ci-dev-2416"     # Flex Consumption ingestion Function (ADR-0018)
 $EGT  = "egst-ci-dev-2416"   # Event Grid system topic on the data lake
 $PG   = "pg-ci-dev-2416"     # PostgreSQL Flexible Server: clause taxonomy, later agent checkpoints (ADR-0011)
 $PGDB = "contracts"
+$KV     = "kv-ci-dev-2416"     # Key Vault: system-of-record credential, APIM subscription key (ADR-0010)
+$APIM   = "apim-ci-dev-2416"   # API Management, Consumption tier
+$SAPFN  = "fn-sapmock-2416"    # mock SAP vendor master (separate app: a different system)
 
 $ErrorActionPreference = "Stop"
 
@@ -28,6 +31,18 @@ function Invoke-Az {
     $out = & az @azArgs 2>&1
     if ($LASTEXITCODE -ne 0) { throw "az $($azArgs[0..2] -join ' ') failed:`n$($out | Out-String)" }
     return $out
+}
+
+function Invoke-Arm($Method, $Url, $BodyObject) {
+    # Resource Manager REST call with fail-fast; used where the CLI lags the platform
+    $tmp = New-TemporaryFile
+    if ($null -ne $BodyObject) { $BodyObject | ConvertTo-Json -Depth 20 | Set-Content $tmp }
+    $azArgs = @("rest", "--method", $Method, "--url", $Url)
+    if ($null -ne $BodyObject) { $azArgs += @("--body", "@$tmp", "--headers", "Content-Type=application/json") }
+    $out = & az @azArgs 2>&1
+    Remove-Item $tmp -ErrorAction SilentlyContinue
+    if ($LASTEXITCODE -ne 0) { throw "$Method $Url failed:`n$($out | Out-String)" }
+    return ($out | Out-String)
 }
 
 function Test-AzOption($Command, $Option) {

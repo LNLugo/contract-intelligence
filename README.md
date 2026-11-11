@@ -50,8 +50,8 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
 | Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
 | Azure services | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role); Key Vault + API Management + mock SAP with a typed, fail-closed vendor tool | Done |
-| Entitlements | Leakage test with a zero-leak pass mark; rule that groups come only from the validated token ([ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)) | Test written (first run pending); token check next |
-| **Next: identity first** | Minimal API in Container Apps that validates the Entra ID token, reads groups from it and calls retrieval. Tests: forged groups in the request change nothing; a token without groups is refused; leakage test passes through the API | |
+| Entitlements | Leakage test with a zero-leak pass mark; rule that groups come only from the validated token ([ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)) | Leakage test PASS (0 leaks, 260 probes); token check built ([ADR-0024](docs/adr/0024-identity-tenant-and-app-roles.md)) |
+| **Identity first** | Separate identity tenant, app roles, test clients and users (`infra/08-identity.ps1`); API that validates the Entra ID token and maps roles to groups (`api/`); 22 unit tests; end-to-end check with real tokens (`api/smoke_test.py`) | Built; deploy to Container Apps next |
 | Then | LangGraph orchestrator behind that API: retrieval, taxonomy and the vendor tool, each tool checked against the signed-in user's entitlements; abstain when the vendor system is unavailable | |
 | Then | Review app with Entra sign-in; review history carrying source access tags; leakage test as a deployment gate; private endpoints; Bicep for everything | |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
@@ -93,6 +93,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0021](docs/adr/0021-determination-separate-from-evidence.md) | Determination separate from cited evidence; code routes on it | Accepted (format); wording effects not established |
 | [0022](docs/adr/0022-agreement-across-samples.md) | Three samples per question; answer only on agreement, otherwise route to a reviewer | Proposed |
 | [0023](docs/adr/0023-entitlements-from-validated-token.md) | Entitlements come only from the validated token; leakage is a zero-tolerance regression test | Accepted |
+| [0024](docs/adr/0024-identity-tenant-and-app-roles.md) | Separate identity tenant; app roles mapped to search groups; two gates (Entra, then the API) | Accepted |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 

@@ -22,3 +22,4 @@ Each likely question points to the ADR that answers it and the number measured s
 ## Framing this project
 
 This is my own reconstruction of the architecture on my own subscription, built to work hands-on with every Azure service in it. Talk about it as separate from client delivery, and use its measured numbers only for this build.
+| How does the API know who the user is and what they may see? | 0024 | Two gates: Entra refuses a token to a caller with no role (AADSTS501051); the API validates RS256 signature, issuer, audience, tenant, expiry, maps app roles to search groups, and returns 422 if the request tries to send its own groups. 22 tests including alg none and HS256 confusion |

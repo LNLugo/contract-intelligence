@@ -231,3 +231,15 @@ One entry per working session. The entries where something broke are the most va
 **Second run:** PASS, 0 leaks in 260 probes; coverage 50/50 for legal, 16/16 for procurement. Legal sees 51 documents: the 50 in the evaluation set plus the one uploaded through the event-driven path, tagged `grp-legal`.
 **Learned:** a security test that can undercount can also miss leaks. Test the test: an exact count, checked from two directions (what a group sees, what it should see).
 **Known limit:** documents outside the evaluation set are assumed `grp-legal` only. In production the expected access comes from the source system's access list, not an assumption.
+
+### 2026-11-11 · Identity · A separate identity tenant, because the university directory is locked
+**Found:** the Stevens tenant does not let students create app registrations or security groups, and I hold no directory roles. It does allow creating a tenant.
+**Did:** created `ciidentitydev2416.onmicrosoft.com` (the Entra admin overview was blocked, the create form opened from its direct link). `infra/08-identity.ps1` created the API app with app roles `Contracts.Legal` and `Contracts.Procurement`, required role assignment, three test clients and three test users, and wrote seven secrets straight to Key Vault in the resource tenant.
+**Broke (1):** a placeholder in angle brackets in my bash instructions; bash read `<` as a file redirect. Same mistake as earlier with PowerShell. No more angle-bracket placeholders in commands.
+**Broke (2):** 401 from Key Vault: the tenant ID passed was the new identity tenant's (the login prompt showed it), not the resource tenant's. The script's write probe stopped it before anything was created. Added a guard that refuses identical tenant IDs. Found the resource tenant ID from the public OpenID configuration of `stevens.edu`.
+**Broke (3):** `ConvertFrom-Json` failed on a Graph response: the helper merged az warnings (stderr) into the output. Graph calls now keep stderr apart. Rerun was safe: existing objects reported as already present, the one client secret rotated.
+**Verified:** `python -m identity.tokens`: legal and procurement clients get v2.0 tokens with the right `roles`, audience and issuer; the client with no role is refused a token by Entra (`AADSTS501051`).
+
+### 2026-11-11 · Identity · API that takes entitlements only from the token
+**Built:** `api/` (FastAPI): validates RS256 tokens against the identity tenant's published keys (issuer, audience, tenant, expiry, required claims), maps roles to search groups through a fixed table, refuses a token with no contract role (403), and rejects request bodies with unknown fields (422) so a client cannot send its own groups. Audit log: caller, app, groups, document IDs; never text.
+**Tests:** 22 unit tests with locally signed tokens: forged body fields and headers, wrong key, expired, wrong audience, issuer or tenant, missing claims, `alg: none`, HS256 algorithm confusion, no role. `api/smoke_test.py` checks the same with real Entra tokens against a running API.

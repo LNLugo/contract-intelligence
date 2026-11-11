@@ -74,7 +74,14 @@ $pkg = Join-Path ([IO.Path]::GetTempPath()) "sapmock.zip"
 Remove-Item $pkg -ErrorAction SilentlyContinue
 Compress-Archive -Path (Join-Path $src "*") -DestinationPath $pkg
 Invoke-Az functionapp deployment source config-zip -g $RG -n $SAPFN --src $pkg --build-remote true -o none | Out-Null
-$sapHost = az functionapp show -g $RG -n $SAPFN --query defaultHostName -o tsv
+# Flex Consumption apps do not always fill defaultHostName at the top level; try every place the
+# host can live and stop if none has it (a blank host produced "https:///api", build log 2026-11-11)
+$sapHost = $null
+foreach ($q in "defaultHostName", "properties.defaultHostName", "hostNames[0]", "enabledHostNames[0]") {
+    $h = az functionapp show -g $RG -n $SAPFN --query $q -o tsv 2>$null
+    if (-not [string]::IsNullOrEmpty($h) -and $h -notmatch "\.scm\.") { $sapHost = $h; break }
+}
+if ([string]::IsNullOrEmpty($sapHost)) { throw "Could not determine the host name of $SAPFN" }
 Write-Host "Deployed: https://$sapHost/api/vendors/{id}"
 
 # ---------------------------------------------------------------- 3. API Management (Consumption)

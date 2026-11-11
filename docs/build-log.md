@@ -200,3 +200,9 @@ One entry per working session. The entries where something broke are the most va
 **Result:** `infra/06-postgres.ps1` ran clean twice (idempotent): Entra auth Enabled, password auth Disabled, public access Enabled, one firewall rule (laptop IP), database `contracts`. `taxonomy/seed_from_cuad.py` connected from the laptop with an Entra access token as the password and loaded draft version `cuad-v1-draft`, 41 categories.
 **Added:** approval step (`taxonomy/approve.py`), a least-privilege database role for the Function's managed identity (`taxonomy/grant_identity.py`), runtime lookup that reads only the approved version and logs unmapped terms (`agents/taxonomy.py`).
 **Decision:** did not open the firewall to "all Azure services" so the Function could connect; the network path waits for private networking (ADR-0011, "Network path").
+
+### 2026-11-11 · Phase 7 · API Management rejected a blank backend URL
+**Did:** Ran `infra/07-sap-apim.ps1`: Key Vault (RBAC), `sap-api-key` secret, mock SAP Function with a Key Vault reference, API Management (Consumption) with a managed identity, Key Vault-backed named value.
+**Broke:** creating the API failed: `Invalid value of the Web service URL`. The script read the mock SAP host from `defaultHostName`, which can be empty for Flex Consumption apps, so the backend URL became `https:///api`.
+**Fix:** the script tries each field the host can appear in and stops with a clear error if none has it, instead of passing a blank value on.
+**Learned:** `Invoke-Az` stops on failed commands, but not on commands that succeed and return nothing. Values that later steps depend on need their own check.

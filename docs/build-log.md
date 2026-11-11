@@ -222,3 +222,12 @@ One entry per working session. The entries where something broke are the most va
 ### 2026-11-11 · Roadmap · Identity before agents
 **Decision:** swapped the order of the next two steps. The API with Entra token validation now comes before the LangGraph orchestrator.
 **Why:** building agents on a system that trusts the caller's own groups means every agent feature inherits that gap, and in financial services an agent that can read more than its user is a breach. With the token check in place first, every tool is checked against the user's access from day one.
+
+### 2026-11-11 · Hardening · Leakage test: 0 leaks, and a probe that was miscounting
+**First run:** PASS, 0 leaks in 194 probes, but `grp-legal` appeared to see only 41 of its 50 entitled contracts.
+**First thought:** 9 contracts missing from the index, so legal users denied documents they own.
+**Actual cause:** the test. It listed documents by paging through a `*` search with `skip`, which has no stable order, so pages overlapped and skipped chunks. `grp-procurement` fit in one page, so its count was exact.
+**Fix:** enumerate with a facet on `doc_id` (one exact answer, no paging) and add a coverage probe that asks for each entitled document directly. Coverage gaps get their own exit code (2), separate from leaks (1).
+**Second run:** PASS, 0 leaks in 260 probes; coverage 50/50 for legal, 16/16 for procurement. Legal sees 51 documents: the 50 in the evaluation set plus the one uploaded through the event-driven path, tagged `grp-legal`.
+**Learned:** a security test that can undercount can also miss leaks. Test the test: an exact count, checked from two directions (what a group sees, what it should see).
+**Known limit:** documents outside the evaluation set are assumed `grp-legal` only. In production the expected access comes from the source system's access list, not an assumption.

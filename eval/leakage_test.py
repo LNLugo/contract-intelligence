@@ -2,6 +2,7 @@
 
 For each group, every document the index returns must be one that group is entitled to.
 Probes:
+  0. Coverage:    every document a group is entitled to is reachable by that group
   1. Enumerate:   wildcard search as the group, every result checked against its entitlements
   2. Targeted:    for each document a group is NOT entitled to, query that document by ID and by
                   its own name; any hit is a leak
@@ -14,7 +15,7 @@ No semantic ranker, no chat model: cheap enough to run after every change.
 
 Usage (repo root, venv active):
     python eval/leakage_test.py --cuad-root "$HOME/Documents/cuad"
-Exit code 1 on any leak, so it can gate a deployment pipeline.
+Exit code 1 on any leak, 2 on a coverage gap (entitled documents unreachable), 0 when clean.
 """
 import argparse
 import csv
@@ -44,17 +45,25 @@ ADVERSARIAL = [
 INJECTION_GROUPS = ["grp-procurement') or true or ('", "grp-legal,grp-procurement", "*", "", "grp-legal' or '1'='1"]
 
 
-def enumerate_docs(group: str) -> set[str]:
-    """Every document the index returns to this group for a wildcard query."""
+def _search(body: dict) -> dict:
     url = f"{S.search_endpoint}/indexes/{S.index}/docs/search?api-version={S.search_api}"
-    seen, skip = set(), 0
-    while True:
-        page = http.request("POST", url, http.SEARCH_SCOPE, retry_404=False, json={
-            "search": "*", "filter": access_filter([group]), "select": "doc_id", "top": 1000, "skip": skip}).json()
-        seen |= {d["doc_id"] for d in page["value"]}
-        skip += len(page["value"])
-        if len(page["value"]) < 1000:
-            return seen
+    return http.request("POST", url, http.SEARCH_SCOPE, retry_404=False, json=body).json()
+
+
+def enumerate_docs(group: str) -> set[str]:
+    """Every distinct document the index returns to this group.
+    Uses a facet on doc_id: one exact answer, no paging (a '*' search has no stable order,
+    so skip-based pages can overlap and miss documents)."""
+    page = _search({"search": "*", "filter": access_filter([group]), "top": 0,
+                    "facets": ["doc_id,count:100000"]})
+    if "@search.facets" not in page:
+        raise SystemExit("doc_id is not facetable in this index; enumerate probe cannot be exact")
+    return {f["value"] for f in page["@search.facets"]["doc_id"]}
+
+
+def visible(group: str, doc: str) -> int:
+    """Number of chunks of this document the group can retrieve."""
+    return _search({"search": "*", "filter": access_filter([group], doc), "top": 0, "count": True})["@odata.count"]
 
 
 def main() -> None:
@@ -74,7 +83,18 @@ def main() -> None:
         # Documents outside the evaluation set (live uploads) are tagged grp-legal only in this build
         return group in entitled.get(doc, {"grp-legal"})
 
-    leaks, probes = [], 0
+    leaks, probes, missing = [], 0, []
+
+    print("== 0. Coverage: every entitled document is reachable by each group entitled to it")
+    for g in GROUPS:
+        docs = [d for d in entitled if allowed(g, d)]
+        gone = [d for d in docs if visible(g, d) == 0]
+        probes += len(docs)
+        missing += [{"group": g, "doc_id": d, "name": names[d]} for d in gone]
+        print(f"  {g:16s} {len(docs) - len(gone):3d} of {len(docs)} entitled documents reachable")
+        for d in gone:
+            print(f"    not reachable: {d}  {names[d]}")
+    print()
 
     print("== 1. Enumerate: wildcard search per group")
     for g in GROUPS:
@@ -124,11 +144,13 @@ def main() -> None:
 
     verdict = "PASS" if not leaks else "FAIL"
     print(f"\n{verdict}: {len(leaks)} leaks in {probes} probes ({time.time() - t0:.0f} s)")
+    if missing:
+        print(f"COVERAGE GAP: {len(missing)} entitled documents not reachable (not a leak; users are denied what they own)")
     out = REPO / "eval" / "results" / f"leakage-{time.strftime('%Y%m%d-%H%M%S')}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"verdict": verdict, "probes": probes, "leaks": leaks}, indent=2))
+    out.write_text(json.dumps({"verdict": verdict, "probes": probes, "leaks": leaks, "coverage_gaps": missing}, indent=2))
     print(f"Results: {out}")
-    sys.exit(0 if not leaks else 1)
+    sys.exit(1 if leaks else (2 if missing else 0))
 
 
 if __name__ == "__main__":

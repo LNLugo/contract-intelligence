@@ -1,0 +1,6 @@
+{
+  "verdict": "PASS",
+  "probes": 260,
+  "leaks": [],
+  "coverage_gaps": []
+}

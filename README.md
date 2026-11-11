@@ -12,6 +12,7 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Extraction cost** | $15.26, matching the projection to the cent | Corpus measured before choosing a tier |
 | **Upload to searchable** | 23 s (short contract) | Event Grid → queue → Function ([ADR-0018](docs/adr/0018-queue-between-event-grid-and-function.md)) |
 | **Access control** | Upload without access groups refused and parked; search refuses to run without the caller's groups | Tested live and in unit tests ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md)) |
+| **System of record** | Reachable only through API Management; credentials resolved from Key Vault by managed identities; no secret in code or config | Live access tests ([ADR-0010](docs/adr/0010-system-of-record-as-typed-tool.md)) |
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
 | **Answers** (current configuration) | Clauses found **90 to 91%**; quote matches the lawyers' text **96 to 98%**; absent clauses reported correctly **80 to 81%**; fabricated quotes reaching a reviewer: **0** in every run | 200 questions ([run](eval/results/run-v3-neutral.md)); first configuration found 97% but reported only 70% of absent clauses correctly ([baseline](eval/results/baseline-slice1-answers.md)) |
 | **Known weakness** | **Consistency:** the same question gets a different outcome about 1 time in 11 (9% of 200 answers changed between two identical runs, measured twice). Next: three samples per question, answer only when they agree, otherwise route to a reviewer | [A/A tests](eval/results/noise-floor-v3.md), [ADR-0022](docs/adr/0022-agreement-across-samples.md) |
@@ -48,7 +49,8 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Foundation | Subscription constraints, data lake, Document Intelligence, models, search index | Done |
 | Ingestion | Pipeline library, batch over evaluation set, event-driven Function, health check | Done |
 | Slice 1 | Retrieval agent, cited answers, citation check, routing, retrieval and answer evaluation | Done; output-format fix being measured |
-| **Now: Azure services** | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role): done. API Management + Key Vault for the system-of-record tool: in progress. Then Container Apps | In progress |
+| Azure services | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role); Key Vault + API Management + mock SAP with a typed, fail-closed vendor tool | Done |
+| **Next** | LangGraph orchestrator wiring retrieval, taxonomy and the vendor tool together; then Container Apps for the API and review app | |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
 | Then | System-of-record tool behind APIM; LangGraph orchestrator with intent, memory and policy; review history | |
 | Then | API and review app with Entra sign-in; hardening with private endpoints; Bicep for everything | |

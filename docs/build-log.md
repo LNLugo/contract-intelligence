@@ -206,3 +206,9 @@ One entry per working session. The entries where something broke are the most va
 **Broke:** creating the API failed: `Invalid value of the Web service URL`. The script read the mock SAP host from `defaultHostName`, which can be empty for Flex Consumption apps, so the backend URL became `https:///api`.
 **Fix:** the script tries each field the host can appear in and stops with a clear error if none has it, instead of passing a blank value on.
 **Learned:** `Invoke-Az` stops on failed commands, but not on commands that succeed and return nothing. Values that later steps depend on need their own check.
+
+### 2026-11-11 · Phase 7 · System of record reachable only through the gateway, with no secret in code
+**Result:** after the host fix, `infra/07-sap-apim.ps1` completed: API `sap-vendor` (`GET /sap/vendors/{vendorId}`), rate limit 60/min, 10 s backend timeout, SAP credential injected from a Key Vault-backed named value, subscription scoped to this API with its key stored in Key Vault. The script's access tests passed (through APIM with key, refused without a key, mock SAP refused when called directly).
+**End to end from the laptop:** `python -m agents.tools.vendor V1A2B3C` returned a typed record (status active, payment terms Net 90, currency USD, country DE). Path: my Entra identity → Key Vault (subscription key) → API Management → Key Vault reference (SAP credential) → mock SAP.
+**Secrets handled:** two, both generated in memory and written straight to Key Vault; neither was printed, stored in config or committed.
+**Day summary (2026-11-11):** PostgreSQL with Entra-only auth and a governed, approved taxonomy; a least-privilege database role for a managed identity; Key Vault, API Management and Key Vault references; a typed, fail-closed system-of-record tool. 36 unit tests.

@@ -1,0 +1,48 @@
+# Build the Contracts API image and push it to the private registry (ADR-0025).
+# No stored cloud credentials: GitHub's OIDC token is exchanged for an Azure token for a managed
+# identity that trusts ONLY pushes to main of this repo and can ONLY push to this registry.
+# The API security tests must pass before an image is built.
+name: api-image
+
+on:
+  push:
+    branches: [main]
+    paths: [api/**, agents/**, identity/**, ingestion/pipeline/**, Dockerfile, .dockerignore, .github/workflows/api-image.yml]
+  workflow_dispatch:
+
+permissions:
+  id-token: write      # request the OIDC token
+  contents: read
+
+env:
+  ACR: acrcidev2416
+
+jobs:
+  test-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Security tests (token validation, forged entitlements)
+        run: |
+          pip install -r api/requirements-container.txt pytest
+          python -m pytest -q api/tests
+
+      - name: Sign in to Azure (OIDC, no secret)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push contracts-api:<commit>
+        run: |
+          TAG="${GITHUB_SHA::7}"
+          az acr login -n "$ACR"
+          docker build -t "$ACR.azurecr.io/contracts-api:$TAG" .
+          docker push "$ACR.azurecr.io/contracts-api:$TAG"
+          echo "Pushed contracts-api:$TAG" >> "$GITHUB_STEP_SUMMARY"

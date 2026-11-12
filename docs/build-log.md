@@ -248,3 +248,8 @@ One entry per working session. The entries where something broke are the most va
 **Fixed:** `06b-postgres-stop-start.ps1` printed the 7-day restart notice even when the stop failed (wrong subscription), and reported stopping an already stopped server as an error. It now checks the subscription first, uses `Invoke-Az`, and treats "already in that state" as success.
 **Added:** `Assert-ResourceSubscription` in `config.ps1`: every resource script stops if the CLI is pointed at the identity tenant.
 **Added:** `Dockerfile` (non-root, `--no-server-header`, runtime packages only), default-deny `.dockerignore`, `infra/09-container-app.ps1` (ADR-0025).
+
+### 2026-11-12 · Phase 9 · Cloud build blocked; build in GitHub Actions with no stored secret
+**Broke:** `az acr build` → `TasksOperationsNotAllowed`: ACR Tasks are not permitted on this student subscription. The default-deny `.dockerignore` worked: 21.5 KB of context uploaded.
+**Decision (ADR-0025 revised):** build in GitHub Actions and push to the same private registry. Workload identity federation: managed identity `id-ci-github-2416` trusts only GitHub OIDC tokens for `main` of this repo and holds only `AcrPush` on `acrcidev2416`. No credential stored in GitHub, only identifiers. The API security tests run before the build.
+**Changed:** `09-container-app.ps1` no longer builds; it deploys the image for the last commit that changed the API and stops if that image does not exist.

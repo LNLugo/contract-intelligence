@@ -10,7 +10,7 @@ The API validates Entra tokens and passes tested end to end on the laptop. To be
 
 ## Decision
 1. **Azure Container Apps, Consumption plan, scale to zero** (min 0, max 1 replica, 0.5 vCPU, 1 GiB). No cost while idle; first request after idle takes about 20 seconds.
-2. **Image built in the cloud with ACR Tasks** (`az acr build`), tagged with the git commit, so the tag names exactly the code that runs. The deploy script refuses to build with uncommitted API changes.
+2. **Image built in GitHub Actions, pushed with no stored secret.** ACR Tasks (cloud build) are not permitted on this subscription (`TasksOperationsNotAllowed`). The workflow signs in to Azure with workload identity federation: a user-assigned managed identity trusts only GitHub OIDC tokens for pushes to `main` of this repository, and holds only `AcrPush` on this registry. The 22 API security tests must pass before the image is built. Images are tagged with the commit, so the tag names exactly the code that runs; the deploy script refuses a commit with no image.
 3. **No registry password.** Azure Container Registry Basic with the admin user disabled; the app's system-assigned managed identity pulls with `AcrPull`.
 4. **Least privilege at runtime.** The API's identity gets `Search Index Data Reader` (read, not write) and `Cognitive Services OpenAI User` (embeddings for the query). Nothing on Key Vault, storage or PostgreSQL: the API does not use them yet, so it cannot be used to reach them.
 5. **Configuration is not secret.** Issuer, audience and tenant are read from Key Vault at deploy time and set as environment variables. The API holds no secret at all.
@@ -25,7 +25,9 @@ The API validates Entra tokens and passes tested end to end on the laptop. To be
 ## Alternatives considered
 - **App Service:** always-on plan costs more at zero traffic; no scale to zero.
 - **Azure Functions (already used for ingestion):** possible, but the API is a long-lived web service with its own dependencies and will host the orchestrator; a container keeps it portable.
-- **GitHub Container Registry with a public image:** free, but images would be pulled from outside Azure and the build would need GitHub Actions; kept as the fallback if ACR Tasks are blocked on this subscription.
+- **ACR Tasks (`az acr build`):** first choice, simplest; blocked on this subscription.
+- **GitHub Container Registry with a public image:** free (saves the registry's ~$5 a month), but the image would be public and pulled from outside Azure. Rejected for a financial-services pattern; a private registry with identity-based pull and push is the norm.
+- **A service principal secret stored in GitHub:** a long-lived credential that can leak and must be rotated. Rejected: federation needs no secret at all.
 - **Easy Auth (built-in authentication) in front of the API:** passes identity in headers; this API trusts only tokens it validates itself (ADR-0024).
 
 ## In an interview (20 seconds)

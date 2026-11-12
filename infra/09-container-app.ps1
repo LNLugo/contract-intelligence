@@ -1,23 +1,23 @@
 # Phase 9: deploy the Contracts API to Azure Container Apps (ADR-0025)
-#   pwsh ./infra/09-container-app.ps1                 # build a new image and deploy
-#   pwsh ./infra/09-container-app.ps1 -SkipBuild      # redeploy the last image (settings/roles only)
+#   pwsh ./infra/09-container-app.ps1                 # deploy the image built for the current commit
+#   pwsh ./infra/09-container-app.ps1 -Tag abc1234    # deploy a specific commit's image
 #
-# - Image built in the cloud with ACR Tasks (no local Docker), tagged with the git commit
+# - Image built by GitHub Actions (.github/workflows/api-image.yml) and tagged with the commit;
+#   ACR Tasks are not permitted on this subscription (build log, 2026-11-12)
 # - Container App with a system-assigned managed identity; pulls from ACR with that identity (AcrPull),
 #   no registry password anywhere
 # - Least privilege at runtime: Search Index Data Reader (not Contributor), Cognitive Services OpenAI User.
 #   No Key Vault, storage or PostgreSQL access: the API does not need them yet
 # - Identity settings (issuer, audience, tenant) read from Key Vault at deploy time, passed as
 #   environment variables (not secret); scale to zero when idle
-param([switch]$SkipBuild)
+param([string]$Tag = "")
 . "$PSScriptRoot/config.ps1"
 Assert-ResourceSubscription
 
 $repo = Split-Path $PSScriptRoot -Parent
-$tag = (git -C $repo rev-parse --short HEAD).Trim()
-if (-not $SkipBuild -and (git -C $repo status --porcelain -- api agents identity ingestion/pipeline Dockerfile)) {
-    throw "Uncommitted changes in the API code. Commit and push first, so the image tag names exactly what is deployed."
-}
+# Default: the last commit that changed the image (the workflow only builds when these paths change)
+if (-not $Tag) { $Tag = (git -C $repo log -1 --format=%h --abbrev=7 -- api agents identity ingestion/pipeline Dockerfile .dockerignore .github/workflows/api-image.yml).Trim() }
+$tag = $Tag
 $IMAGE = "$ACR.azurecr.io/contracts-api"
 az config set extension.use_dynamic_install=yes_without_prompt -o none 2>$null   # containerapp CLI extension
 
@@ -34,17 +34,12 @@ if ($LASTEXITCODE -ne 0) { Invoke-Az acr create -n $ACR -g $RG -l $LOC --sku Bas
 else { Write-Host "  = $ACR" }
 $acrId = (Invoke-Az acr show -n $ACR -g $RG --query id -o tsv | Out-String).Trim()
 
-if (-not $SkipBuild) {
-    Write-Host "`n== Build image $IMAGE`:$tag in ACR (cloud build)" -ForegroundColor Cyan
-    az acr build -r $ACR -t "contracts-api:$tag" -f "$repo/Dockerfile" $repo -o none
-    if ($LASTEXITCODE -ne 0) {
-        throw "ACR build failed. If the error says tasks are not allowed on this subscription, tell Claude: the fallback is building in GitHub Actions."
-    }
-    Write-Host "  + contracts-api:$tag"
-} else {
-    $tag = (Invoke-Az acr repository show-tags -n $ACR --repository contracts-api --orderby time_desc --top 1 -o tsv | Out-String).Trim()
-    Write-Host "`n== Reusing image contracts-api:$tag"
+Write-Host "`n== Image contracts-api:$tag (built by GitHub Actions)" -ForegroundColor Cyan
+$tags = @(az acr repository show-tags -n $ACR --repository contracts-api -o tsv 2>$null)
+if ($tags -notcontains $tag) {
+    throw "No image contracts-api:$tag in $ACR. Check the api-image workflow run for commit $tag in GitHub Actions (tests must pass before it builds)."
 }
+Write-Host "  = found"
 
 Write-Host "`n== Log Analytics + Container Apps environment" -ForegroundColor Cyan
 az monitor log-analytics workspace show -n $LAW -g $RG -o none 2>$null

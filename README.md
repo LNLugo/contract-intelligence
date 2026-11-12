@@ -94,6 +94,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0022](docs/adr/0022-agreement-across-samples.md) | Three samples per question; answer only on agreement, otherwise route to a reviewer | Proposed |
 | [0023](docs/adr/0023-entitlements-from-validated-token.md) | Entitlements come only from the validated token; leakage is a zero-tolerance regression test | Accepted |
 | [0024](docs/adr/0024-identity-tenant-and-app-roles.md) | Separate identity tenant; app roles mapped to search groups; two gates (Entra, then the API) | Accepted |
+| [0025](docs/adr/0025-api-on-container-apps.md) | API on Container Apps: managed identity, no registry password, read-only roles, scale to zero | Accepted |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 

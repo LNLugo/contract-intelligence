@@ -243,3 +243,8 @@ One entry per working session. The entries where something broke are the most va
 ### 2026-11-11 · Identity · API that takes entitlements only from the token
 **Built:** `api/` (FastAPI): validates RS256 tokens against the identity tenant's published keys (issuer, audience, tenant, expiry, required claims), maps roles to search groups through a fixed table, refuses a token with no contract role (403), and rejects request bodies with unknown fields (422) so a client cannot send its own groups. Audit log: caller, app, groups, document IDs; never text.
 **Tests:** 22 unit tests with locally signed tokens: forged body fields and headers, wrong key, expired, wrong audience, issuer or tenant, missing claims, `alg: none`, HS256 algorithm confusion, no role. `api/smoke_test.py` checks the same with real Entra tokens against a running API.
+
+### 2026-11-12 · Phase 9 · Fixes before deploying, and the deployment script
+**Fixed:** `06b-postgres-stop-start.ps1` printed the 7-day restart notice even when the stop failed (wrong subscription), and reported stopping an already stopped server as an error. It now checks the subscription first, uses `Invoke-Az`, and treats "already in that state" as success.
+**Added:** `Assert-ResourceSubscription` in `config.ps1`: every resource script stops if the CLI is pointed at the identity tenant.
+**Added:** `Dockerfile` (non-root, `--no-server-header`, runtime packages only), default-deny `.dockerignore`, `infra/09-container-app.ps1` (ADR-0025).

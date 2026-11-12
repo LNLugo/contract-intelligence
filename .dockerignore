@@ -1,0 +1,11 @@
+# Default deny: send nothing to the build except what the Dockerfile copies
+*
+!api/
+!agents/
+!identity/
+!ingestion/pipeline/
+**/tests/
+**/__pycache__/
+**/*.pyc
+**/.env
+**/local.settings.json

@@ -17,6 +17,10 @@ $PGDB = "contracts"
 $KV     = "kv-ci-dev-2416"     # Key Vault: system-of-record credential, APIM subscription key (ADR-0010)
 $APIM   = "apim-ci-dev-2416"   # API Management, Consumption tier
 $SAPFN  = "fn-sapmock-2416"    # mock SAP vendor master (separate app: a different system)
+$ACR    = "acrcidev2416"       # Container Registry (Basic), images pulled by managed identity (ADR-0025)
+$LAW    = "law-ci-dev-2416"    # Log Analytics for the Container Apps environment
+$CAE    = "cae-ci-dev-2416"    # Container Apps environment (Consumption)
+$CA     = "ca-ci-api-2416"     # Contracts API (ADR-0023, ADR-0024, ADR-0025)
 
 $ErrorActionPreference = "Stop"
 
@@ -76,3 +80,14 @@ function Grant-Role($Role, $Scope) {
         Write-Host "'$Role' already assigned"
     }
 }
+
+function Assert-ResourceSubscription {
+    # Two tenants are in play since Phase 8 (ADR-0024). Every resource script checks it is pointed
+    # at the subscription that holds $RG before doing anything (build log, 2026-11-11).
+    $sub = az account show --query "{name:name, tenant:tenantId}" -o json 2>$null | ConvertFrom-Json
+    az group show -n $RG -o none 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        throw "Resource group $RG not found in '$($sub.name)'. Switch back: az account set --subscription 'Azure for Students' (or az login)."
+    }
+}
+

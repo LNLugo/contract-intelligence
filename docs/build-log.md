@@ -253,3 +253,14 @@ One entry per working session. The entries where something broke are the most va
 **Broke:** `az acr build` → `TasksOperationsNotAllowed`: ACR Tasks are not permitted on this student subscription. The default-deny `.dockerignore` worked: 21.5 KB of context uploaded.
 **Decision (ADR-0025 revised):** build in GitHub Actions and push to the same private registry. Workload identity federation: managed identity `id-ci-github-2416` trusts only GitHub OIDC tokens for `main` of this repo and holds only `AcrPush` on `acrcidev2416`. No credential stored in GitHub, only identifiers. The API security tests run before the build.
 **Changed:** `09-container-app.ps1` no longer builds; it deploys the image for the last commit that changed the API and stops if that image does not exist.
+
+### 2026-11-12 · Phase 9 · Two sign-in failures in GitHub Actions
+**Broke (1):** `Not all values are present`: the three GitHub secrets had never been set (the commands were printed in Cloud Shell; they must run where `gh` is signed in). `gh secret list` showed none. Set them; the step order in my instructions was also wrong (script run before it was pushed).
+**Broke (2):** `AADSTS700213 No matching federated identity record`: GitHub presented the subject `repo:OWNER@OWNER_ID/REPO@REPO_ID:ref:refs/heads/main`, with immutable IDs, not the name-only `repo:OWNER/REPO:...` I configured.
+**Fix:** `09a` reads the owner and repository IDs from the GitHub API and sets (or updates) the subject in that form.
+**Learned:** immutable IDs in the trust are a security feature: if the account or repository were renamed and someone took the old name, a name-only trust would accept their tokens.
+
+### 2026-11-12 · Phase 9 · The environment is Express, which refuses system-assigned identities
+**Broke:** `az containerapp registry set --identity system` → `ExpressRegistrySystemIdentityNotSupported`. The CLI created the Container Apps environment as an Express environment, which supports only user-assigned managed identities (runtime and image pull).
+**Fix:** two user-assigned identities: `id-ci-api-pull-2416` (AcrPull only) pulls the image; `id-ci-api-run-2416` (Search Index Data Reader, Cognitive Services OpenAI User) is the API at runtime, selected with `AZURE_CLIENT_ID`. The first attempt's app and its system identity's role assignments are removed by the script.
+**Learned:** this is also the documented best practice: a dedicated identity for registry pulls, separate from the workload's identity, so the code's identity never needs registry access and the pull identity can do nothing else.

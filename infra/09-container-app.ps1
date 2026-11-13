@@ -4,8 +4,8 @@
 #
 # - Image built by GitHub Actions (.github/workflows/api-image.yml) and tagged with the commit;
 #   ACR Tasks are not permitted on this subscription (build log, 2026-11-12)
-# - Container App with a system-assigned managed identity; pulls from ACR with that identity (AcrPull),
-#   no registry password anywhere
+# - Two user-assigned managed identities: one pulls the image (AcrPull), one is the API at runtime;
+#   no registry password anywhere (the environment is Express: no system-assigned identities)
 # - Least privilege at runtime: Search Index Data Reader (not Contributor), Cognitive Services OpenAI User.
 #   No Key Vault, storage or PostgreSQL access: the API does not need them yet
 # - Identity settings (issuer, audience, tenant) read from Key Vault at deploy time, passed as
@@ -61,29 +61,52 @@ $envVars = @("ID_TENANT_ID=$($idcfg.tenantId)", "ID_AUDIENCE=$($idcfg.audience)"
              "AOAI=$AOAI", "SRCH=$SRCH", "INDEX=$INDEX", "EMBED_DIMS=$EMBED_DIMS")
 Write-Host "  issuer and audience set"
 
-Write-Host "`n== Container App $CA" -ForegroundColor Cyan
-az containerapp show -n $CA -g $RG -o none 2>$null
-$exists = ($LASTEXITCODE -eq 0)
-if (-not $exists) {
-    # Start from a public placeholder image: the identity must exist before it can be allowed to pull from ACR
-    Invoke-Az containerapp create -n $CA -g $RG --environment $CAE --system-assigned `
-        --image mcr.microsoft.com/k8se/quickstart:latest --target-port 80 --ingress external `
-        --min-replicas 0 --max-replicas 1 --cpu 0.5 --memory 1.0Gi -o none | Out-Null
-    Write-Host "  + $CA (placeholder image)"
-} else { Write-Host "  = $CA" }
-$principal = (Invoke-Az containerapp show -n $CA -g $RG --query identity.principalId -o tsv | Out-String).Trim()
+Write-Host "`n== Two user-assigned identities: one to pull the image, one for the running API" -ForegroundColor Cyan
+# The environment is an Express environment, which supports only user-assigned identities
+# (build log, 2026-11-12). Separate identities also separate duties: the pull identity can only
+# read the registry; the runtime identity can only read the index and call the embedding model.
+function Get-Uami($Name) {
+    az identity show -n $Name -g $RG -o none 2>$null
+    if ($LASTEXITCODE -ne 0) { Invoke-Az identity create -n $Name -g $RG -l $LOC -o none | Out-Null; Write-Host "  + $Name" }
+    else { Write-Host "  = $Name" }
+    return (Invoke-Az identity show -n $Name -g $RG -o json | Out-String) | ConvertFrom-Json
+}
+$pull = Get-Uami "id-ci-api-pull-2416"
+$run  = Get-Uami "id-ci-api-run-2416"
 
-Write-Host "`n== Roles for the API's managed identity (least privilege)" -ForegroundColor Cyan
-$new = (Grant-RoleToPrincipal $principal "AcrPull" $acrId)
-$new = (Grant-RoleToPrincipal $principal "Search Index Data Reader" (az search service show -n $SRCH -g $RG --query id -o tsv)) -or $new
-$new = (Grant-RoleToPrincipal $principal "Cognitive Services OpenAI User" (az cognitiveservices account show -n $AOAI -g $RG --query id -o tsv)) -or $new
+Write-Host "`n== Roles (least privilege)" -ForegroundColor Cyan
+$new = (Grant-RoleToPrincipal $pull.principalId "AcrPull" $acrId)
+$new = (Grant-RoleToPrincipal $run.principalId "Search Index Data Reader" (az search service show -n $SRCH -g $RG --query id -o tsv)) -or $new
+$new = (Grant-RoleToPrincipal $run.principalId "Cognitive Services OpenAI User" (az cognitiveservices account show -n $AOAI -g $RG --query id -o tsv)) -or $new
 if ($new) { Write-Host "  waiting 90 s for new role assignments to take effect..."; Start-Sleep -Seconds 90 }
 
-Write-Host "`n== Deploy contracts-api:$tag" -ForegroundColor Cyan
-Invoke-Az containerapp registry set -n $CA -g $RG --server "$ACR.azurecr.io" --identity system -o none | Out-Null
-Invoke-Az containerapp ingress update -n $CA -g $RG --target-port 8000 -o none | Out-Null
-Invoke-Az containerapp update -n $CA -g $RG --image "$IMAGE`:$tag" --set-env-vars @envVars `
-    --min-replicas 0 --max-replicas 1 -o none | Out-Null
+# DefaultAzureCredential inside the container uses the identity named by AZURE_CLIENT_ID
+$envVars += "AZURE_CLIENT_ID=$($run.clientId)"
+
+Write-Host "`n== Container App $CA" -ForegroundColor Cyan
+$app = az containerapp show -n $CA -g $RG -o json 2>$null | ConvertFrom-Json
+if ($null -ne $app -and "$($app.identity.type)" -match "SystemAssigned") {
+    # Left over from the first attempt (system-assigned identity, refused on Express). Nothing was
+    # served from it; remove its role assignments, then the app, and create it again.
+    $sp = $app.identity.principalId
+    foreach ($ra in @(az role assignment list --assignee $sp --all --query "[].id" -o tsv)) {
+        if ($ra) { Invoke-Az role assignment delete --ids $ra -o none | Out-Null }
+    }
+    Invoke-Az containerapp delete -n $CA -g $RG --yes -o none | Out-Null
+    Write-Host "  - removed first attempt (system-assigned identity and its roles)"
+    $app = $null
+}
+if ($null -eq $app) {
+    Invoke-Az containerapp create -n $CA -g $RG --environment $CAE `
+        --user-assigned $pull.id $run.id --registry-server "$ACR.azurecr.io" --registry-identity $pull.id `
+        --image "$IMAGE`:$tag" --target-port 8000 --ingress external --env-vars @envVars `
+        --min-replicas 0 --max-replicas 1 --cpu 0.5 --memory 1.0Gi -o none | Out-Null
+    Write-Host "  + $CA running contracts-api:$tag"
+} else {
+    Invoke-Az containerapp update -n $CA -g $RG --image "$IMAGE`:$tag" --set-env-vars @envVars `
+        --min-replicas 0 --max-replicas 1 -o none | Out-Null
+    Write-Host "  ~ $CA now running contracts-api:$tag"
+}
 $fqdn = (Invoke-Az containerapp show -n $CA -g $RG --query properties.configuration.ingress.fqdn -o tsv | Out-String).Trim()
 if ([string]::IsNullOrEmpty($fqdn)) { throw "No ingress hostname returned for $CA" }
 

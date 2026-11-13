@@ -52,7 +52,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Azure services | PostgreSQL taxonomy (Entra-only auth, approval, managed-identity DB role); Key Vault + API Management + mock SAP with a typed, fail-closed vendor tool | Done |
 | Entitlements | Leakage test with a zero-leak pass mark; rule that groups come only from the validated token ([ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)) | Leakage test PASS (0 leaks, 260 probes); token check built ([ADR-0024](docs/adr/0024-identity-tenant-and-app-roles.md)) |
 | **Identity first** | Separate identity tenant, app roles, test clients and users (`infra/08-identity.ps1`); API that validates the Entra ID token and maps roles to groups (`api/`); 22 unit tests; image built in GitHub Actions with OIDC (no stored secret), tests gate the build; deployed to Container Apps with separate pull and runtime identities ([ADR-0025](docs/adr/0025-api-on-container-apps.md)); smoke test with real tokens PASS against the deployed API | Done |
-| Then | LangGraph orchestrator behind that API: retrieval, taxonomy and the vendor tool, each tool checked against the signed-in user's entitlements; abstain when the vendor system is unavailable | |
+| **Orchestration** | LangGraph graph behind `/ask`: cited clause answer, taxonomy category from the approved snapshot, vendor check only for contracts the caller can see, abstain when the vendor system is down ([ADR-0026](docs/adr/0026-orchestrator-behind-the-api.md)) | In progress |
 | Then | Review app with Entra sign-in; review history carrying source access tags; leakage test as a deployment gate; private endpoints; Bicep for everything | |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
 
@@ -95,6 +95,7 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0023](docs/adr/0023-entitlements-from-validated-token.md) | Entitlements come only from the validated token; leakage is a zero-tolerance regression test | Accepted |
 | [0024](docs/adr/0024-identity-tenant-and-app-roles.md) | Separate identity tenant; app roles mapped to search groups; two gates (Entra, then the API) | Accepted |
 | [0025](docs/adr/0025-api-on-container-apps.md) | API on Container Apps: managed identity, no registry password, read-only roles, scale to zero | Accepted |
+| [0026](docs/adr/0026-orchestrator-behind-the-api.md) | LangGraph orchestrator behind the API; tools bound to the caller; vendor tool takes a contract ID; taxonomy from an approved snapshot | Accepted |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 

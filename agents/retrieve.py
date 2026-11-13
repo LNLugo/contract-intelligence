@@ -73,3 +73,14 @@ def search(query: str, groups: list[str], *, doc_id: str | None = None, k: int =
     if rerank:
         hits.sort(key=lambda h: h.reranker_score or 0, reverse=True)
     return hits
+
+
+def document_vendor(doc_id: str, groups: list[str]) -> str | None:
+    """Vendor ID of a contract, ONLY if the caller's groups can see that contract (ADR-0023:
+    tools act for the user, never beyond the user). Returns None both when the contract does not
+    exist and when the caller may not see it, so the answer does not reveal which."""
+    body = {"search": "*", "filter": access_filter(groups, doc_id), "select": "vendor_id", "top": 1}
+    url = f"{S.search_endpoint}/indexes/{S.index}/docs/search?api-version={S.search_api}"
+    rows = http.request("POST", url, http.SEARCH_SCOPE, json=body, retry_404=False).json().get("value", [])
+    return (rows[0].get("vendor_id") or None) if rows else None
+

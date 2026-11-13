@@ -4,6 +4,7 @@
 !agents/
 !identity/
 !ingestion/pipeline/
+!taxonomy/snapshots/
 **/tests/
 **/__pycache__/
 **/*.pyc

@@ -7,7 +7,7 @@ name: api-image
 on:
   push:
     branches: [main]
-    paths: [api/**, agents/**, identity/**, ingestion/pipeline/**, Dockerfile, .dockerignore, .github/workflows/api-image.yml]
+    paths: [api/**, agents/**, identity/**, ingestion/pipeline/**, taxonomy/snapshots/**, Dockerfile, .dockerignore, .github/workflows/api-image.yml]
   workflow_dispatch:
 
 permissions:
@@ -21,16 +21,16 @@ jobs:
   test-build-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - name: Security tests (token validation, forged entitlements)
+      - name: Security tests (token validation, forged entitlements, tool entitlements)
         run: |
           pip install -r api/requirements-container.txt pytest
-          python -m pytest -q api/tests
+          python -m pytest -q api/tests agents/tests/test_orchestrator.py
 
       - name: Sign in to Azure (OIDC, no secret)
         uses: azure/login@v2

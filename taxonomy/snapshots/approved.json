@@ -1,0 +1,460 @@
+{
+  "version": "cuad-v1-draft",
+  "approved_at": "2026-11-11T19:05:35.179365+00:00",
+  "approved_by_role": "Legal",
+  "exported_at": "2026-11-13T16:31:25+00:00",
+  "content_sha256_16": "7ce38e70851217c0",
+  "categories": [
+    {
+      "code": "affiliate_license_licensee",
+      "name": "Affiliate License-Licensee",
+      "definition": "Does the contract contain a license grant to a licensee (incl. sublicensor) and the affiliates of such licensee/sublicensor?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "affiliate license-licensee"
+      ]
+    },
+    {
+      "code": "affiliate_license_licensor",
+      "name": "Affiliate License-Licensor",
+      "definition": "Does the contract contain a license grant by affiliates of the licensor or that includes intellectual property of affiliates of the licensor?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "affiliate license-licensor"
+      ]
+    },
+    {
+      "code": "agreement_date",
+      "name": "Agreement Date",
+      "definition": "The date of the contract",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "agreement date"
+      ]
+    },
+    {
+      "code": "anti_assignment",
+      "name": "Anti-Assignment",
+      "definition": "Is consent or notice required of a party if the contract is assigned to a third party?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "anti-assignment"
+      ]
+    },
+    {
+      "code": "audit_rights",
+      "name": "Audit Rights",
+      "definition": "Does a party have the right to  audit the books, records, or physical locations of the counterparty to ensure compliance with the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "audit rights"
+      ]
+    },
+    {
+      "code": "cap_on_liability",
+      "name": "Cap On Liability",
+      "definition": "Does the contract include a cap on liability upon the breach of a party’s obligation? This includes time limitation for the counterparty to bring claims or maximum amount for recovery.",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "cap on liability"
+      ]
+    },
+    {
+      "code": "change_of_control",
+      "name": "Change Of Control",
+      "definition": "Does one party have the right to terminate or is consent or notice required of the counterparty if such party undergoes a change of control, such as a merger, stock sale, transfer of all or substantially all of its assets or business, or assignment by operation of law?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "change of control"
+      ]
+    },
+    {
+      "code": "competitive_restriction_exception",
+      "name": "Competitive Restriction Exception",
+      "definition": "This category includes the exceptions or carveouts to Non-Compete, Exclusivity and No-Solicit of Customers above.",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "competitive restriction exception"
+      ]
+    },
+    {
+      "code": "covenant_not_to_sue",
+      "name": "Covenant Not To Sue",
+      "definition": "Is a party restricted from contesting the validity of the counterparty’s ownership of intellectual property or otherwise bringing a claim against the counterparty for matters unrelated to the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "covenant not to sue"
+      ]
+    },
+    {
+      "code": "document_name",
+      "name": "Document Name",
+      "definition": "The name of the contract",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "document name"
+      ]
+    },
+    {
+      "code": "effective_date",
+      "name": "Effective Date",
+      "definition": "The date when the contract is effective",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "effective date"
+      ]
+    },
+    {
+      "code": "exclusivity",
+      "name": "Exclusivity",
+      "definition": "Is there an exclusive dealing  commitment with the counterparty? This includes a commitment to procure all “requirements” from one party of certain technology, goods, or services or a prohibition on licensing or selling technology, goods or services to third parties, or a prohibition on  collaborating or working with other parties), whether during the contract or  after the contract ends (or both).",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "exclusivity"
+      ]
+    },
+    {
+      "code": "expiration_date",
+      "name": "Expiration Date",
+      "definition": "On what date will the contract's initial term expire?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "expiration date"
+      ]
+    },
+    {
+      "code": "governing_law",
+      "name": "Governing Law",
+      "definition": "Which state/country's law governs the interpretation of the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "governing law"
+      ]
+    },
+    {
+      "code": "insurance",
+      "name": "Insurance",
+      "definition": "Is there a requirement for insurance that must be maintained by one party for the benefit of the counterparty?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "insurance"
+      ]
+    },
+    {
+      "code": "ip_ownership_assignment",
+      "name": "Ip Ownership Assignment",
+      "definition": "Does intellectual property created  by one party become the property of the counterparty, either per the terms of the contract or upon the occurrence of certain events?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "ip ownership assignment"
+      ]
+    },
+    {
+      "code": "irrevocable_or_perpetual_license",
+      "name": "Irrevocable Or Perpetual License",
+      "definition": "Does the contract contain a  license grant that is irrevocable or perpetual?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "irrevocable or perpetual license"
+      ]
+    },
+    {
+      "code": "joint_ip_ownership",
+      "name": "Joint Ip Ownership",
+      "definition": "Is there any clause providing for joint or shared ownership of intellectual property between the parties to the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "joint ip ownership"
+      ]
+    },
+    {
+      "code": "license_grant",
+      "name": "License Grant",
+      "definition": "Does the contract contain a license granted by one party to its counterparty?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "license grant"
+      ]
+    },
+    {
+      "code": "liquidated_damages",
+      "name": "Liquidated Damages",
+      "definition": "Does the contract contain a clause that would award either party liquidated damages for breach or a fee upon the termination of a contract (termination fee)?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "liquidated damages"
+      ]
+    },
+    {
+      "code": "minimum_commitment",
+      "name": "Minimum Commitment",
+      "definition": "Is there a minimum order size or minimum amount or units per-time period that one party must buy from the counterparty under the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "minimum commitment"
+      ]
+    },
+    {
+      "code": "most_favored_nation",
+      "name": "Most Favored Nation",
+      "definition": "Is there a clause that if a third party gets better terms on the licensing or sale of technology/goods/services described in the contract, the buyer of such technology/goods/services under the contract shall be entitled to those better terms?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "most favored nation"
+      ]
+    },
+    {
+      "code": "non_compete",
+      "name": "Non-Compete",
+      "definition": "Is there a restriction on the ability of a party to compete with the counterparty or operate in a certain geography or business or technology sector?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "non-compete"
+      ]
+    },
+    {
+      "code": "non_disparagement",
+      "name": "Non-Disparagement",
+      "definition": "Is there a requirement on a party not to disparage the counterparty?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "non-disparagement"
+      ]
+    },
+    {
+      "code": "non_transferable_license",
+      "name": "Non-Transferable License",
+      "definition": "Does the contract limit the ability of a party to transfer the license being granted to a third party?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "non-transferable license"
+      ]
+    },
+    {
+      "code": "no_solicit_of_customers",
+      "name": "No-Solicit Of Customers",
+      "definition": "Is a party restricted from contracting or soliciting customers or partners of the counterparty, whether during the contract or after the contract ends (or both)?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "no-solicit of customers"
+      ]
+    },
+    {
+      "code": "no_solicit_of_employees",
+      "name": "No-Solicit Of Employees",
+      "definition": "Is there a restriction on a party’s soliciting or hiring employees and/or contractors from the  counterparty, whether during the contract or after the contract ends (or both)?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "no-solicit of employees"
+      ]
+    },
+    {
+      "code": "notice_period_to_terminate_renewal",
+      "name": "Notice Period To Terminate Renewal",
+      "definition": "What is the notice period required to terminate renewal?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "notice period to terminate renewal"
+      ]
+    },
+    {
+      "code": "parties",
+      "name": "Parties",
+      "definition": "The two or more parties who signed the contract",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "parties"
+      ]
+    },
+    {
+      "code": "post_termination_services",
+      "name": "Post-Termination Services",
+      "definition": "Is a party subject to obligations after the termination or expiration of a contract, including any post-termination transition, payment, transfer of IP, wind-down, last-buy, or similar commitments?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "post-termination services"
+      ]
+    },
+    {
+      "code": "price_restrictions",
+      "name": "Price Restrictions",
+      "definition": "Is there a restriction on the  ability of a party to raise or reduce prices of technology, goods, or  services provided?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "price restrictions"
+      ]
+    },
+    {
+      "code": "renewal_term",
+      "name": "Renewal Term",
+      "definition": "What is the renewal term after the initial term expires? This includes automatic extensions and unilateral extensions with prior notice.",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "renewal term"
+      ]
+    },
+    {
+      "code": "revenue_profit_sharing",
+      "name": "Revenue/Profit Sharing",
+      "definition": "Is one party required to share revenue or profit with the counterparty for any technology, goods, or services?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "revenue/profit sharing"
+      ]
+    },
+    {
+      "code": "rofr_rofo_rofn",
+      "name": "Rofr/Rofo/Rofn",
+      "definition": "Is there a clause granting one party a right of first refusal, right of first offer or right of first negotiation to purchase, license, market, or distribute equity interest, technology, assets, products or services?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "rofr/rofo/rofn"
+      ]
+    },
+    {
+      "code": "source_code_escrow",
+      "name": "Source Code Escrow",
+      "definition": "Is one party required to deposit its source code into escrow with a third party, which can be released to the counterparty upon the occurrence of certain events (bankruptcy,  insolvency, etc.)?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "source code escrow"
+      ]
+    },
+    {
+      "code": "termination_for_convenience",
+      "name": "Termination For Convenience",
+      "definition": "Can a party terminate this  contract without cause (solely by giving a notice and allowing a waiting  period to expire)?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "termination for convenience"
+      ]
+    },
+    {
+      "code": "third_party_beneficiary",
+      "name": "Third Party Beneficiary",
+      "definition": "Is there a non-contracting party who is a beneficiary to some or all of the clauses in the contract and therefore can enforce its rights against a contracting party?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "third party beneficiary"
+      ]
+    },
+    {
+      "code": "uncapped_liability",
+      "name": "Uncapped Liability",
+      "definition": "Is a party’s liability uncapped upon the breach of its obligation in the contract? This also includes uncap liability for a particular type of breach such as IP infringement or breach of confidentiality obligation.",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "uncapped liability"
+      ]
+    },
+    {
+      "code": "unlimited_all_you_can_eat_license",
+      "name": "Unlimited/All-You-Can-Eat-License",
+      "definition": "Is there a clause granting one party an “enterprise,” “all you can eat” or unlimited usage license?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "unlimited/all-you-can-eat-license"
+      ]
+    },
+    {
+      "code": "volume_restriction",
+      "name": "Volume Restriction",
+      "definition": "Is there a fee increase or consent requirement, etc. if one party’s use of the product/services exceeds certain threshold?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "volume restriction"
+      ]
+    },
+    {
+      "code": "warranty_duration",
+      "name": "Warranty Duration",
+      "definition": "What is the duration of any  warranty against defects or errors in technology, products, or services  provided under the contract?",
+      "includes": [],
+      "excludes": [],
+      "owner": "Legal",
+      "terms": [
+        "warranty duration"
+      ]
+    }
+  ]
+}

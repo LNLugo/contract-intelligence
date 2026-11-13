@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "ingestion"))
-from agents import retrieve  # noqa: E402
+from agents import orchestrator, retrieve  # noqa: E402
 from api.auth import Caller, current_caller  # noqa: E402
 
 log = logging.getLogger("contracts.audit")
@@ -59,3 +59,23 @@ def search(req: SearchRequest, caller: Caller = Depends(current_caller)) -> list
              len(hits), ",".join(sorted({h.doc_id for h in hits})))
     return [HitOut(doc_id=h.doc_id, file_name=h.file_name, section_heading=h.section_heading,
                    page_start=h.page_start, page_end=h.page_end, content=h.content, score=h.score) for h in hits]
+
+
+class AskRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")       # no groups, roles or filters from the client
+    question: str = Field(min_length=1, max_length=1000)
+    doc_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{16}$")
+
+
+@app.post("/ask")
+def ask(req: AskRequest, caller: Caller = Depends(current_caller)) -> dict:
+    """Orchestrated answer (ADR-0026): cited clause answer, taxonomy category, and vendor check
+    for a contract the caller can see. Groups come only from the validated token."""
+    result = orchestrator.run(caller.groups, req.question, req.doc_id)
+    cited = {c["file_name"] for f in result["clause"]["findings"] for c in f["citations"] if c["valid"]}
+    log.info("ask subject=%s app=%s groups=%s doc_filter=%s status=%s clause=%s vendor=%s category=%s taxonomy=%s cited_files=%d",
+             caller.subject, caller.client_app, ",".join(caller.groups), req.doc_id or "-", result["status"],
+             result["clause"]["status"], result["vendor"]["status"],
+             (result["category"] or {}).get("code", "-"), result["taxonomy_version"], len(cited))
+    return result
+

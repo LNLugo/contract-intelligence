@@ -10,7 +10,7 @@
 #   No Key Vault, storage or PostgreSQL access: the API does not need them yet
 # - Identity settings (issuer, audience, tenant) read from Key Vault at deploy time, passed as
 #   environment variables (not secret); scale to zero when idle
-param([string]$Tag = "")
+param([string]$Tag = "", [ValidateSet("true", "false")][string]$Rerank = "true")
 . "$PSScriptRoot/config.ps1"
 Assert-ResourceSubscription
 
@@ -78,10 +78,16 @@ Write-Host "`n== Roles (least privilege)" -ForegroundColor Cyan
 $new = (Grant-RoleToPrincipal $pull.principalId "AcrPull" $acrId)
 $new = (Grant-RoleToPrincipal $run.principalId "Search Index Data Reader" (az search service show -n $SRCH -g $RG --query id -o tsv)) -or $new
 $new = (Grant-RoleToPrincipal $run.principalId "Cognitive Services OpenAI User" (az cognitiveservices account show -n $AOAI -g $RG --query id -o tsv)) -or $new
+# Vendor tool (ADR-0026): read ONE secret, the API Management subscription key, not the whole vault
+$kvId = (Invoke-Az keyvault show -n $KV -g $RG --query id -o tsv | Out-String).Trim()
+$new = (Grant-RoleToPrincipal $run.principalId "Key Vault Secrets User" "$kvId/secrets/apim-subscription-key") -or $new
 if ($new) { Write-Host "  waiting 90 s for new role assignments to take effect..."; Start-Sleep -Seconds 90 }
 
 # DefaultAzureCredential inside the container uses the identity named by AZURE_CLIENT_ID
 $envVars += "AZURE_CLIENT_ID=$($run.clientId)"
+$envVars += "RERANK=$Rerank"
+$envVars += "KV=$KV"
+$envVars += "APIM=$APIM"
 
 Write-Host "`n== Container App $CA" -ForegroundColor Cyan
 $app = az containerapp show -n $CA -g $RG -o json 2>$null | ConvertFrom-Json

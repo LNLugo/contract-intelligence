@@ -270,3 +270,8 @@ One entry per working session. The entries where something broke are the most va
 **Smoke test against the deployed URL with real Entra tokens:** 10 of 10 OK. No token → 401; malformed → 401; groups come from the token; procurement's forged `groups` in the body → 422; forged header ignored; client with no role refused a token by Entra.
 **Also found today:** `identity/` had never been committed; the build from the repository failed where the laptop worked. Building from the repository, not a laptop, is what caught it.
 **Day summary (2026-11-12):** five failures, each caught by a check before anything wrong was deployed: cloud build blocked, secrets missing, federated subject format, missing folder, Express identity model.
+
+### 2026-11-13 · Orchestration · Graph, tools bound to the caller, taxonomy snapshot
+**Built:** `agents/orchestrator.py` (LangGraph: plan → answer → vendor if needed → compose), `agents/taxonomy_snapshot.py`, `taxonomy/export_snapshot.py`, `retrieve.document_vendor` (vendor ID only through the caller's search filter), `/ask` endpoint, `api/ask_check.py` (real tokens, all calls through the API).
+**Decisions:** routing in code, model only writes the cited answer; the deployed API reads the approved taxonomy from a committed snapshot instead of connecting to PostgreSQL; the runtime identity can read one Key Vault secret (scoped at the secret).
+**Tests:** 11 new (vendor for a hidden contract refused without saying why, vendor system down abstains and keeps the clause answer, not-found is a fact, no vendor intent means no vendor call, graph state has no place for groups, `/ask` takes groups only from the token). CI now runs them before building the image.

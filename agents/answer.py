@@ -25,6 +25,9 @@ from pipeline.config import SETTINGS as S
 CHAT_MODEL = os.environ.get("CHAT_DEPLOYMENT", "gpt-5.4-mini")
 TOP_N = 5                       # chunks the model sees (ADR-0006: top 20 -> top 5)
 MIN_RERANKER_SCORE = 1.5        # floor against irrelevant retrieval only (ADR-0009 revision)
+# Semantic reranking has a monthly quota on the Free search tier; RERANK=false turns it off
+# (the irrelevance floor then cannot apply, and abstention relies on the model's determination)
+RERANK = os.environ.get("RERANK", "true").lower() == "true"
 
 from .prompts import DEFAULT as DEFAULT_PROMPT, PROMPTS
 
@@ -153,7 +156,7 @@ def answer(question: str, groups: list[str], doc_id: str | None = None,
     samples: independent answers to draw; with more than one, disagreement abstains (ADR-0022)."""
     t0 = time.time()
     if hits is None:
-        hits = search(question, groups, doc_id=doc_id, k=20, rerank=True)
+        hits = search(question, groups, doc_id=doc_id, k=20, rerank=RERANK)
     hits = hits[:TOP_N]
     top = hits[0].reranker_score if hits else None
     if not hits:

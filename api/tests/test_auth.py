@@ -118,3 +118,18 @@ def test_hs256_signed_with_a_guessable_secret_is_refused(wiring):
     forged = jwt.encode({"iss": ISS, "aud": AUD, "tid": TENANT, "oid": "x", "roles": ["Contracts.Legal"],
                          "exp": int(time.time()) + 600, "iat": int(time.time())}, "a" * 32, algorithm="HS256")
     assert post(forged).status_code == 401 and not wiring
+
+
+def test_ask_uses_groups_from_token_and_refuses_forged_fields(monkeypatch):
+    seen = {}
+
+    def fake_run(groups, question, doc_id=None):
+        seen["groups"] = groups
+        return {"status": "ANSWERED", "clause": {"status": "ANSWERED", "findings": []}, "vendor": {"status": "NOT_REQUESTED"},
+                "category": None, "taxonomy_version": "t"}
+    monkeypatch.setattr(main.orchestrator, "run", fake_run)
+    h = {"Authorization": f"Bearer {token(('Contracts.Procurement',))}"}
+    assert client.post("/ask", json={"question": "q"}, headers=h).status_code == 200
+    assert seen["groups"] == ("grp-procurement",)
+    assert client.post("/ask", json={"question": "q", "groups": ["grp-legal"]}, headers=h).status_code == 422
+    assert client.post("/ask", json={"question": "q"}).status_code == 401

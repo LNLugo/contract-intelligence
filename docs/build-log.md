@@ -264,3 +264,9 @@ One entry per working session. The entries where something broke are the most va
 **Broke:** `az containerapp registry set --identity system` → `ExpressRegistrySystemIdentityNotSupported`. The CLI created the Container Apps environment as an Express environment, which supports only user-assigned managed identities (runtime and image pull).
 **Fix:** two user-assigned identities: `id-ci-api-pull-2416` (AcrPull only) pulls the image; `id-ci-api-run-2416` (Search Index Data Reader, Cognitive Services OpenAI User) is the API at runtime, selected with `AZURE_CLIENT_ID`. The first attempt's app and its system identity's role assignments are removed by the script.
 **Learned:** this is also the documented best practice: a dedicated identity for registry pulls, separate from the workload's identity, so the code's identity never needs registry access and the pull identity can do nothing else.
+
+### 2026-11-12 · Phase 9 · API deployed; same checks pass in Azure as on the laptop
+**Result:** `contracts-api:8623b9a` running on Container Apps (Express environment, scale to zero), pulled by `id-ci-api-pull-2416`, running as `id-ci-api-run-2416`. No registry password, no secret in the app, none in GitHub.
+**Smoke test against the deployed URL with real Entra tokens:** 10 of 10 OK. No token → 401; malformed → 401; groups come from the token; procurement's forged `groups` in the body → 422; forged header ignored; client with no role refused a token by Entra.
+**Also found today:** `identity/` had never been committed; the build from the repository failed where the laptop worked. Building from the repository, not a laptop, is what caught it.
+**Day summary (2026-11-12):** five failures, each caught by a check before anything wrong was deployed: cloud build blocked, secrets missing, federated subject format, missing folder, Express identity model.

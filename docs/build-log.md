@@ -275,3 +275,11 @@ One entry per working session. The entries where something broke are the most va
 **Built:** `agents/orchestrator.py` (LangGraph: plan → answer → vendor if needed → compose), `agents/taxonomy_snapshot.py`, `taxonomy/export_snapshot.py`, `retrieve.document_vendor` (vendor ID only through the caller's search filter), `/ask` endpoint, `api/ask_check.py` (real tokens, all calls through the API).
 **Decisions:** routing in code, model only writes the cited answer; the deployed API reads the approved taxonomy from a committed snapshot instead of connecting to PostgreSQL; the runtime identity can read one Key Vault secret (scoped at the secret).
 **Tests:** 11 new (vendor for a hidden contract refused without saying why, vendor system down abstains and keeps the clause answer, not-found is a fact, no vendor intent means no vendor call, graph state has no place for groups, `/ask` takes groups only from the token). CI now runs them before building the image.
+
+### 2026-11-13 · Orchestration · Deployed; confused-deputy and outage checks pass live
+**`api/ask_check.py` against the deployed API, real Entra tokens, all calls through the API:**
+- legal: cited answer (ANSWERED), category `cap_on_liability`, taxonomy `cuad-v1-draft`; no vendor call (no vendor intent)
+- procurement, vendor for a contract both groups can see: OK
+- procurement, vendor for a legal-only contract: NOT_AVAILABLE, no vendor lookup, no clause evidence
+**Live outage:** stopped the mock SAP app. Vendor part ABSTAIN ("vendor system unavailable … vendor-dependent findings withheld"), overall PARTIAL, clause answer still ANSWERED. Started it again.
+**Noted:** a stopped app answers HTTP 403, not 503. Because the tool treats only 404 as "not found" and every other failure as unavailable (ADR-0010), the outage was classified correctly. Code that read 403 as "no access" or 404-like would have told the user something false.

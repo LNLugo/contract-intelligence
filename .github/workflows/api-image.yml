@@ -30,7 +30,7 @@ jobs:
       - name: Security tests (token validation, forged entitlements, tool entitlements)
         run: |
           pip install -r api/requirements-container.txt pytest
-          python -m pytest -q api/tests agents/tests/test_orchestrator.py
+          python -m pytest -q api/tests agents/tests/test_orchestrator.py agents/tests/test_agent.py
 
       - name: Sign in to Azure (OIDC, no secret)
         uses: azure/login@v2

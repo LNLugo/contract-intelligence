@@ -1,0 +1,83 @@
+{
+  "from_version": "cuad-v1-draft",
+  "to_version": "cuad-v2",
+  "source": "cuad-v1 + boundaries from the 2026-11-16 error review (first10). Revision 2: Cap On Liability include removed (contradicted held-out labels), question-phrase terms for all evaluated categories. Decide on rest30 only.",
+  "categories": {
+    "renewal_term": {
+      "includes": [
+        "automatic or evergreen renewal after a fixed initial term",
+        "an extension one party can trigger by giving notice"
+      ],
+      "excludes": [
+        "an agreement with an indefinite or unlimited term that runs until a party terminates it (there is no initial term to renew)",
+        "an extension only by mutual agreement or renegotiation (any contract can be extended that way)"
+      ],
+      "terms": [
+        "automatic renewal",
+        "renewal term"
+      ]
+    },
+    "anti_assignment": {
+      "includes": [
+        "a requirement of consent or notice before assignment",
+        "an outright prohibition on assigning or transferring the agreement or rights under it, including licensed rights that are not transferable"
+      ],
+      "excludes": [],
+      "terms": [
+        "assigned to a third party",
+        "assignment of this agreement"
+      ]
+    },
+    "cap_on_liability": {
+      "includes": [],
+      "excludes": [],
+      "terms": [
+        "cap on liability",
+        "limitation of liability"
+      ]
+    },
+    "non_compete": {
+      "includes": [
+        "a restriction on a party competing, or operating in a market, geography, business or technology sector"
+      ],
+      "excludes": [
+        "a territory clause that only defines where a party sells or earns compensation",
+        "an exclusivity commitment not to work with or grant rights to third parties in a field (that is Exclusivity)"
+      ],
+      "terms": [
+        "compete with the counterparty",
+        "non compete"
+      ]
+    },
+    "governing_law": {
+      "terms": [
+        "governing law",
+        "law governs the interpretation"
+      ]
+    },
+    "termination_for_convenience": {
+      "terms": [
+        "terminate this contract without cause",
+        "termination for convenience"
+      ]
+    },
+    "exclusivity": {
+      "terms": [
+        "exclusive dealing",
+        "exclusive dealing commitment"
+      ]
+    },
+    "audit_rights": {
+      "terms": [
+        "audit rights",
+        "right to audit"
+      ]
+    },
+    "license_grant": {
+      "terms": [
+        "license grant",
+        "license granted by one party"
+      ]
+    }
+  }
+}

@@ -106,3 +106,32 @@ def test_real_tools_pass_the_callers_groups(monkeypatch):
     with pytest.raises(orch.NotEntitled):
         orch.tools_for(("grp-procurement",)).vendor_for_contract(VISIBLE)
     assert seen["groups"] == ["grp-procurement"]
+
+
+def test_boundaries_reach_the_prompt_only_when_approved_and_enabled(tmp_path, monkeypatch):
+    snap = {"version": "cuad-v2", "categories": [
+        {"code": "anti_assignment", "name": "Anti-Assignment", "definition": "d",
+         "includes": ["an outright prohibition on assignment"], "excludes": [], "terms": ["assigned to a third party"]},
+        {"code": "audit_rights", "name": "Audit Rights", "definition": "d", "includes": [], "excludes": [], "terms": []}]}
+    f = tmp_path / "v2.json"; f.write_text(json.dumps(snap))
+    monkeypatch.setenv("TAXONOMY_SNAPSHOT", str(f))
+    tax.snapshot.cache_clear(); tax._phrases.cache_clear()
+    q = "Is consent or notice required of a party if the contract is assigned to a third party?"
+    text = tax.boundaries_text(q)
+    assert "Counts: an outright prohibition on assignment" in text and "cuad-v2" in text
+    assert tax.boundaries_text("Does a party have audit rights?") == ""      # category without boundaries
+    assert tax.boundaries_text("Who signed it?") == ""                        # no category
+    monkeypatch.setenv("BOUNDARIES", "false")
+    assert tax.boundaries_text(q) == ""                                       # switched off for A/B runs
+
+
+def test_one_word_terms_never_pick_a_category(tmp_path, monkeypatch):
+    snap = {"version": "t", "categories": [
+        {"code": "parties", "name": "Parties", "definition": "d", "terms": ["parties", "party"]},
+        {"code": "exclusivity", "name": "Exclusivity", "definition": "d", "terms": ["exclusive dealing commitment"]}]}
+    f = tmp_path / "s.json"; f.write_text(json.dumps(snap))
+    monkeypatch.setenv("TAXONOMY_SNAPSHOT", str(f))
+    tax.snapshot.cache_clear(); tax._phrases.cache_clear()
+    q = "Is there an exclusive dealing commitment with the counterparty, or a ban on working with other parties?"
+    assert tax.classify(q).code == "exclusivity"
+    assert tax.classify("Which party pays?") is None

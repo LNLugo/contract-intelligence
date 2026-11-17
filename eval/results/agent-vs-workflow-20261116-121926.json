@@ -1,0 +1,591 @@
+{
+  "rerank": "false",
+  "summary": {
+    "workflow": {
+      "found": 1.0,
+      "missed": 0,
+      "grounded": 1.0,
+      "absent_ok": 0.8666666666666667,
+      "false_claims": 2,
+      "abstain": 0,
+      "errors": 0,
+      "tokens_mean": 4129.6,
+      "p50_s": 3.05,
+      "p95_s": 32.7
+    },
+    "agent": {
+      "found": 1.0,
+      "missed": 0,
+      "grounded": 1.0,
+      "absent_ok": 1.0,
+      "false_claims": 0,
+      "abstain": 0,
+      "errors": 0,
+      "tokens_mean": 8553.5,
+      "p50_s": 32.95,
+      "p95_s": 64.9
+    }
+  },
+  "paired": {
+    "differ": 2,
+    "n": 20,
+    "workflow_only": 0,
+    "agent_only": 2,
+    "p": 0.5
+  },
+  "probes": {
+    "contracts": 10,
+    "leaks": [],
+    "refused": 10
+  },
+  "results": [
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Governing Law",
+      "present": true,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "tokens": 3941,
+        "seconds": 7.8
+      },
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5113,
+        "seconds": 3.5,
+        "reason": "",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Termination For Convenience",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4428,
+        "seconds": 7.9
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15435,
+        "seconds": 3.6,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Cap On Liability",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4266,
+        "seconds": 8.4
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15151,
+        "seconds": 5.0,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Anti-Assignment",
+      "present": false,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "tokens": 4554,
+        "seconds": 2.4
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5820,
+        "seconds": 34.2,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Exclusivity",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4127,
+        "seconds": 2.8
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5915,
+        "seconds": 33.8,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Non-Compete",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4517,
+        "seconds": 1.9
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5630,
+        "seconds": 33.3,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Audit Rights",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4109,
+        "seconds": 2.0
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14247,
+        "seconds": 36.1,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Insurance",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4457,
+        "seconds": 1.9
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15407,
+        "seconds": 36.1,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "Renewal Term",
+      "present": false,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "tokens": 4407,
+        "seconds": 2.6
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5788,
+        "seconds": 33.1,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "category": "License Grant",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4239,
+        "seconds": 32.7
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5862,
+        "seconds": 3.3,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Governing Law",
+      "present": true,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "tokens": 3795,
+        "seconds": 32.2
+      },
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4959,
+        "seconds": 3.0,
+        "reason": "",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Termination For Convenience",
+      "present": true,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "tokens": 3878,
+        "seconds": 32.1
+      },
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5021,
+        "seconds": 32.8,
+        "reason": "",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Cap On Liability",
+      "present": true,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "tokens": 4025,
+        "seconds": 2.7
+      },
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13328,
+        "seconds": 64.9,
+        "reason": "",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Anti-Assignment",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 3849,
+        "seconds": 32.0
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5129,
+        "seconds": 2.7,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Exclusivity",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 3963,
+        "seconds": 2.5
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5214,
+        "seconds": 3.9,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Non-Compete",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 3965,
+        "seconds": 33.7
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5094,
+        "seconds": 3.1,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Audit Rights",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 3936,
+        "seconds": 2.7
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5035,
+        "seconds": 33.5,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Insurance",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 3910,
+        "seconds": 3.3
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13206,
+        "seconds": 36.4,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "Renewal Term",
+      "present": false,
+      "workflow": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "tokens": 4340,
+        "seconds": 1.7
+      },
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14697,
+        "seconds": 65.0,
+        "reason": "determination absent",
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "category": "License Grant",
+      "present": true,
+      "workflow": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "tokens": 3886,
+        "seconds": 32.6
+      },
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5019,
+        "seconds": 2.2,
+        "reason": "",
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    }
+  ],
+  "seconds": 344.6
+}

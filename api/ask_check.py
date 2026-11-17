@@ -2,6 +2,7 @@
 
     python -m api.ask_check --base-url URL                       # vendor system up
     python -m api.ask_check --base-url URL --expect-vendor-down  # after stopping the mock SAP app
+    python -m api.ask_check --base-url URL --mode agent          # same checks, agent decides the steps
 
 Finds, through the API itself, one contract both groups can see and one only legal can see.
 Exit code 1 on any failure. Tokens are never printed.
@@ -18,6 +19,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--base-url", default="http://localhost:8000")
     ap.add_argument("--expect-vendor-down", action="store_true")
+    ap.add_argument("--mode", choices=["workflow", "agent"], default="workflow")
     args = ap.parse_args()
     c = httpx.Client(base_url=args.base_url.rstrip("/"), timeout=120)
     auth = {n: {"Authorization": f"Bearer {get_token(n)}"} for n in ("legal", "procurement")}
@@ -28,7 +30,7 @@ def main() -> None:
         print(f"  {'OK  ' if cond else 'FAIL'} {name}  {detail}")
 
     def ask(who, question, doc_id):
-        r = c.post("/ask", json={"question": question, "doc_id": doc_id}, headers=auth[who])
+        r = c.post("/ask", json={"question": question, "doc_id": doc_id, "mode": args.mode}, headers=auth[who])
         if r.status_code != 200:
             check(f"{who}: /ask HTTP", False, r.status_code)
             return None
@@ -53,7 +55,12 @@ def main() -> None:
         check("legal: clause answer with taxonomy", r["clause"]["status"] in ("ANSWERED", "NOT_FOUND", "ABSTAIN")
               and r["taxonomy_version"], f"clause={r['clause']['status']} category={(r['category'] or {}).get('code')} "
               f"taxonomy={r['taxonomy_version']}")
-        check("legal: no vendor call without vendor intent", r["vendor"]["status"] == "NOT_REQUESTED", r["vendor"]["status"])
+        if args.mode == "workflow":       # the agent decides for itself whether to call the vendor tool
+            check("legal: no vendor call without vendor intent", r["vendor"]["status"] == "NOT_REQUESTED", r["vendor"]["status"])
+        else:
+            u = r["usage"]
+            print(f"       agent: turns={u['model_turns']} searches={u['searches']} refused={u['refused_tool_calls']} "
+                  f"tools={','.join(s['tool'] + ':' + s['outcome'] for s in r['trace'])}")
 
     r = ask("procurement", "What are the vendor payment terms for this contract?", shared)
     if r:
@@ -66,7 +73,9 @@ def main() -> None:
 
     r = ask("procurement", "Is the vendor blocked for this contract?", legal_only)
     if r:
-        check("procurement: vendor for a legal-only contract refused", r["vendor"]["status"] == "NOT_AVAILABLE",
+        # The agent may refuse to even try once search returns nothing; either way no record comes back
+        allowed = ("NOT_AVAILABLE",) if args.mode == "workflow" else ("NOT_AVAILABLE", "NOT_REQUESTED")
+        check("procurement: no vendor record for a legal-only contract", r["vendor"]["status"] in allowed,
               r["vendor"]["status"])
         check("procurement: no clause evidence from the legal-only contract", not r["clause"]["findings"],
               f"clause={r['clause']['status']}")

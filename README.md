@@ -53,7 +53,11 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | Entitlements | Leakage test with a zero-leak pass mark; rule that groups come only from the validated token ([ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)) | Leakage test PASS (0 leaks, 260 probes); token check built ([ADR-0024](docs/adr/0024-identity-tenant-and-app-roles.md)) |
 | **Identity first** | Separate identity tenant, app roles, test clients and users (`infra/08-identity.ps1`); API that validates the Entra ID token and maps roles to groups (`api/`); 22 unit tests; image built in GitHub Actions with OIDC (no stored secret), tests gate the build; deployed to Container Apps with separate pull and runtime identities ([ADR-0025](docs/adr/0025-api-on-container-apps.md)); smoke test with real tokens PASS against the deployed API | Done |
 | **Orchestration** | LangGraph graph behind `/ask`: cited clause answer, taxonomy category from the approved snapshot, vendor check only for contracts the caller can see, abstain when the vendor system is down ([ADR-0026](docs/adr/0026-orchestrator-behind-the-api.md)); end-to-end check with real tokens PASS, including a live outage | Done |
-| Then | Review app with Entra sign-in; review history carrying source access tags; leakage test as a deployment gate; private endpoints; Bicep for everything | |
+| **Agent** | Model chooses its tools in a LangGraph loop; code keeps entitlements, search scope, citation checks and step limits. **Default on `/ask`.** Over 200 questions it was right where the workflow was wrong 24 times vs 10 (p = 0.024), with fewer missed clauses on every set and 0 leaks ([ADR-0027](docs/adr/0027-first-agent-model-chooses-tools.md)) | Done |
+| **Next: false claims** | Category boundaries in the governed taxonomy (ADR-0028): first held-out run not approved (classifier bug, one boundary contradicted the labels); revision 2 decided on `rest30`. Then a reviewer model only if false claims remain | ⏭ Now |
+| Then | **Monitoring:** alerts on abstain rate, citation drops, refused tool calls and tokens per question from the audit log (Application Insights); human corrections from the review app become new labelled examples | |
+| Then | Second model (reviewer) only if the error analysis shows false claims or wrong passages; leakage test through the deployed API as a release gate in CI | |
+| Then | Review app with Entra sign-in; review history carrying the source documents' access tags; private endpoints; Terraform for all infrastructure | |
 | Parked, ready to run | Three-sample agreement ([ADR-0022](docs/adr/0022-agreement-across-samples.md)), definitions in prompts, LLM judge, reranker comparison | |
 
 ## How to read this repo
@@ -96,6 +100,8 @@ python -m agents.ask "What law governs this agreement?" --doc bdb7d1532a642920
 | [0024](docs/adr/0024-identity-tenant-and-app-roles.md) | Separate identity tenant; app roles mapped to search groups; two gates (Entra, then the API) | Accepted |
 | [0025](docs/adr/0025-api-on-container-apps.md) | API on Container Apps: managed identity, no registry password, read-only roles, scale to zero | Accepted |
 | [0026](docs/adr/0026-orchestrator-behind-the-api.md) | LangGraph orchestrator behind the API; tools bound to the caller; vendor tool takes a contract ID; taxonomy from an approved snapshot | Accepted |
+| [0027](docs/adr/0027-first-agent-model-chooses-tools.md) | First real agent: the model chooses tools; code keeps access, citations and limits; default after beating the workflow on held-out questions with zero leaks | Accepted |
+| [0028](docs/adr/0028-category-boundaries-in-the-taxonomy.md) | Fix judgment errors with includes/excludes in the governed taxonomy; decide on held-out contracts only | Proposed |
 
 **Proposed** means the decision waits for evidence from the step where it applies. An ADR moves to Accepted only with a measurement or a test result behind it.
 

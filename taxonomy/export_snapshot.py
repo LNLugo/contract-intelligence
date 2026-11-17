@@ -5,8 +5,11 @@ it reads this file, which is committed (reviewed like code) and baked into the i
 The snapshot records its version and a content hash; every answer reports the version it used.
 
 Usage (laptop, repo root, venv active, PostgreSQL started):
-    python taxonomy/export_snapshot.py
+    python taxonomy/export_snapshot.py                                   # the approved version -> approved.json
+    python taxonomy/export_snapshot.py --version cuad-v2 --out taxonomy/snapshots/candidate-cuad-v2.json
+        # a DRAFT, for measuring before approval (TAXONOMY_SNAPSHOT=that file); never baked into the image
 """
+import argparse
 import hashlib
 import json
 import sys
@@ -20,12 +23,22 @@ OUT = Path(__file__).resolve().parent / "snapshots" / "approved.json"
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--version", default=None, help="export this version (draft allowed) instead of the approved one")
+    ap.add_argument("--out", type=Path, default=OUT)
+    args = ap.parse_args()
+    if args.version and args.out.resolve() == OUT.resolve():
+        sys.exit("A specific version goes to a candidate file (--out), never to approved.json")
     with connect() as conn, conn.cursor() as cur:
-        cur.execute("SELECT version, approved_by, approved_at FROM taxonomy_version WHERE status = 'approved'")
+        if args.version:
+            cur.execute("SELECT version, approved_by, approved_at, status FROM taxonomy_version WHERE version = %s", (args.version,))
+        else:
+            cur.execute("SELECT version, approved_by, approved_at, status FROM taxonomy_version WHERE status = 'approved'")
         row = cur.fetchone()
         if not row:
-            sys.exit("No approved taxonomy version. Approve one first: python taxonomy/approve.py --version cuad-v1-draft")
-        version, approved_by, approved_at = row
+            sys.exit("No such taxonomy version." if args.version else
+                     "No approved taxonomy version. Approve one first: python taxonomy/approve.py --version cuad-v1-draft")
+        version, approved_by, approved_at, status = row
         cur.execute("""SELECT code, name, definition, includes, excludes, owner FROM clause_category
                        WHERE version = %s ORDER BY code""", (version,))
         cats = {r[0]: {"code": r[0], "name": r[1], "definition": r[2], "includes": list(r[3]),
@@ -35,14 +48,14 @@ def main() -> None:
             cats[code]["terms"].append(term)
     categories = list(cats.values())
     digest = hashlib.sha256(json.dumps(categories, sort_keys=True).encode()).hexdigest()[:16]
-    snapshot = {"version": version, "approved_at": approved_at.isoformat() if approved_at else None,
+    snapshot = {"version": version, "status": status, "approved_at": approved_at.isoformat() if approved_at else None,
                 "approved_by_role": "Legal",       # the approver's account stays in the database, not the public repo
                 "exported_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "content_sha256_16": digest, "categories": categories}
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"Exported {version}: {len(categories)} categories, "
-          f"{sum(len(c['terms']) for c in categories)} terms, hash {digest} -> {OUT}")
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Exported {version} ({status}): {len(categories)} categories, "
+          f"{sum(len(c['terms']) for c in categories)} terms, hash {digest} -> {args.out}")
 
 
 if __name__ == "__main__":

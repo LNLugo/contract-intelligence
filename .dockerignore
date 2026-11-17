@@ -10,3 +10,4 @@
 **/*.pyc
 **/.env
 **/local.settings.json
+taxonomy/snapshots/candidate-*

@@ -283,3 +283,39 @@ One entry per working session. The entries where something broke are the most va
 - procurement, vendor for a legal-only contract: NOT_AVAILABLE, no vendor lookup, no clause evidence
 **Live outage:** stopped the mock SAP app. Vendor part ABSTAIN ("vendor system unavailable … vendor-dependent findings withheld"), overall PARTIAL, clause answer still ANSWERED. Started it again.
 **Noted:** a stopped app answers HTTP 403, not 503. Because the tool treats only 404 as "not found" and every other failure as unavailable (ADR-0010), the outage was classified correctly. Code that read 403 as "no access" or 404-like would have told the user something false.
+
+### 2026-11-16 · Agent · The first agent that decides its own steps
+**Question that started it:** "how many agents do we have?" Honest answer: none. The system was an LLM-powered workflow (code decides every step; the model writes the answer).
+**Built:** `agents/agent.py` (LangGraph `model ↔ tools` loop; tools: search, taxonomy, vendor, submit), `/ask` with `"mode": "agent"` (opt-in), `eval/agent_eval.py` (agent vs workflow on the same questions, plus entitlement probes with zero leaks as a hard gate).
+**Kept in code:** tools bound to the caller, searches pinned to the request's contract, vendor tool refuses contracts outside scope, citations only to clauses retrieved in this run, 6 turns and 3 searches maximum.
+**Tests:** 10 new (an obeyed prompt injection cannot reach another contract, citation to a clause never retrieved is dropped, answering without searching cannot be grounded, step and search limits, no tool schema accepts groups). 79 in total.
+**Roadmap:** Bicep replaced by Terraform for the infrastructure-as-code step.
+
+### 2026-11-16 · Agent · First measurement against the workflow
+**Quick check (20 questions, 3 workers, app deployment 50K TPM):** agent p50 33 s vs workflow 3 s.
+**First thought:** the agent is slow. **Actual cause:** rate limiting; the agent resends its growing conversation each turn (~8K tokens per question) and three parallel workers exceeded 50K TPM.
+**Fix:** ran `03c` (never committed before; now reads the model version from the app deployment instead of hard-coding it): evaluation deployment `gpt-5.4-mini-eval`, 200K TPM. Agent p50 dropped to 3.1 s.
+**Full comparison (100 questions):** found 91% vs 84%, missed 5 vs 9, false claims 6 vs 8, grounded 94% vs 98%, 1.8x tokens; 0 leaks, 10 refusals exercised. McNemar p = 0.077. Verdict: promising, not proven; agent stays opt-in ([results](../eval/results/agent-vs-workflow.md)).
+
+### 2026-11-16 · Agent · Before a second model: measure the first one properly
+**Decision:** no second model yet. A reviewer model fixes false claims and wrong passages, not retrieval misses, so the error types decide whether it is worth its cost and latency.
+**Added to `eval/agent_eval.py`:** `--arms agent-aa` (the agent against itself: its own noise floor), `--contracts next10 | all20` (the other half of the 20-contract set), and an error bucket for every wrong answer: retrieval (labelled text never retrieved), reasoning (retrieved but missed), false claim, other text (right answer, different quote), abstain.
+**Roadmap:** monitoring (alerts on abstain rate, citation drops, refused tool calls, tokens per question) added before the second model: today a misbehaving model is caught on every request, a wrong one only in offline evaluation.
+
+### 2026-11-16 · Agent · Agent A/A: the earlier lead was mostly noise; errors are judgment, not retrieval
+**Agent vs itself (same 100 questions):** found 86% / 88%, missed 8 / 7, false claims 5 / 5; outcomes differ on 11% (workflow: 9%). The first comparison's 91% was the lucky end; against the workflow's 84% the gap is now within noise.
+**Error buckets:** retrieval 2 / 1, reasoning 6 / 6, false claims 5 / 5, other text 2 / 1. About 11 of 13 errors happen after the labelled text was retrieved: the model misjudges evidence it has.
+**Caught before building:** "add the taxonomy definition to the prompt" would change nothing: the evaluation questions ARE the CUAD descriptions the taxonomy was seeded from. What is missing are boundaries (includes / excludes), empty since ADR-0011.
+**Next:** `eval/review_errors.py` re-asks the judgment errors and shows label vs model side by side. Classify each as model wrong, label wrong or debatable, or unclear, before writing any boundary; boundaries are checked on contracts outside the evaluation set so they are not fitted to the test.
+
+### 2026-11-16 · Agent · Reading the 11 judgment errors
+**Verdicts:** 6 model wrong (all reproduced, all boundary errors in 4 categories), 4 noise (correct on re-run, two at the same boundaries), 1 label debatable (Audit Rights).
+**Patterns:** too literal on Anti-Assignment (an outright ban "is not a consent requirement", twice) and Cap On Liability (excluding consequential damages "is not a cap"); too broad on Renewal Term (indefinite term; extension only by mutual agreement) and Non-Compete (an exclusivity commitment). Only 1 of 11 answers contradicted its own determination, so a cheap contradiction check would catch little.
+**Decision (ADR-0028):** boundaries in a new taxonomy version `cuad-v2`, shown in the prompt for the question's category; measured on `next10` (held out: none of its errors were read) before approval.
+
+### 2026-11-16 · Agent · Held-out runs: agent becomes default; first boundary draft rejected
+**next10 baseline (held out):** agent found 98% vs 89%, missed 1 vs 7, false claims 10 vs 10; 0 leaks. Pooled with first10: 24 vs 10, p = 0.024. **ADR-0027 accepted: agent is the default on `/ask`.**
+**next10 with the cuad-v2 draft:** workflow 17 → 18 errors, agent 11 → 13. Not approved.
+**Why:** only 4 of 10 categories were recognised from their CUAD questions (Non-Compete never got its boundaries; Exclusivity matched "Parties" through the one-word term "parties", a production bug too), and the Cap On Liability include doubled false claims (2 → 4) because CUAD labels disagree on damage exclusions.
+**Fix:** one-word terms never pick a category; question-phrase terms for all evaluated categories; the Cap include removed. Decision moves to `rest30`, the 30 contracts never used for development.
+**Learned:** the held-out set did its job twice in one run: it rejected a rule fitted to one example and exposed a bug the development set could not show.

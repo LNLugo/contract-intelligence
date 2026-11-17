@@ -94,11 +94,17 @@ def _context(hits: list[Hit]) -> str:
                        for i, h in enumerate(hits, 1))
 
 
+def _boundaries(question: str) -> str:
+    from .taxonomy_snapshot import boundaries_text
+    b = boundaries_text(question)
+    return f"{b}\n\n" if b else ""
+
+
 def generate(question: str, hits: list[Hit], prompt: str = DEFAULT_PROMPT) -> tuple[dict, int]:
     body = {"model": CHAT_MODEL, "response_format": {"type": "json_object"},
             "max_completion_tokens": 2000,
             "messages": [{"role": "system", "content": PROMPTS[prompt]},
-                         {"role": "user", "content": f"Question: {question}\n\nClauses:\n{_context(hits)}"}]}
+                         {"role": "user", "content": f"Question: {question}\n\n{_boundaries(question)}Clauses:\n{_context(hits)}"}]}
     resp = http.request("POST", f"{S.aoai_endpoint}/chat/completions", http.COGNITIVE_SCOPE, json=body).json()
     text = resp["choices"][0]["message"]["content"] or "{}"
     return json.loads(text), resp.get("usage", {}).get("total_tokens", 0)

@@ -1,0 +1,3900 @@
+{
+  "arms": [
+    "agent",
+    "agent#2"
+  ],
+  "contracts": "first10",
+  "rerank": "false",
+  "deployment": "gpt-5.4-mini-eval",
+  "summary": {
+    "agent": {
+      "found": 0.8571428571428571,
+      "missed": 8,
+      "grounded": 0.9583333333333334,
+      "absent_ok": 0.8863636363636364,
+      "false_claims": 5,
+      "abstain": 0,
+      "errors": 0,
+      "tokens_mean": 7314.55,
+      "p50_s": 3.4,
+      "p95_s": 5.2,
+      "buckets": {
+        "other_text": 2,
+        "false": 5,
+        "reasoning": 6,
+        "retrieval": 2
+      }
+    },
+    "agent#2": {
+      "found": 0.875,
+      "missed": 7,
+      "grounded": 0.9795918367346939,
+      "absent_ok": 0.8863636363636364,
+      "false_claims": 5,
+      "abstain": 0,
+      "errors": 0,
+      "tokens_mean": 7297.75,
+      "p50_s": 3.4,
+      "p95_s": 5.1,
+      "buckets": {
+        "other_text": 1,
+        "false": 5,
+        "reasoning": 6,
+        "retrieval": 1
+      }
+    }
+  },
+  "paired": {
+    "differ": 11,
+    "n": 100,
+    "only_agent": 5,
+    "only_agent#2": 6,
+    "p": 1.0
+  },
+  "probes": null,
+  "results": [
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5124,
+        "seconds": 8.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5127,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15567,
+        "seconds": 12.0,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15437,
+        "seconds": 4.0,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15071,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5718,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5233,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5248,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5998,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5932,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5828,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5818,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14203,
+        "seconds": 5.2,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5428,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14553,
+        "seconds": 4.8,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15422,
+        "seconds": 4.7,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15400,
+        "seconds": 4.3,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5802,
+        "seconds": 4.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5846,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5781,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4949,
+        "seconds": 2.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4938,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5095,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5032,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": "other_text",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5143,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": "other_text",
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13380,
+        "seconds": 4.8,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5040,
+        "seconds": 4.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13208,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5193,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5264,
+        "seconds": 4.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5113,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5098,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5093,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5073,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13246,
+        "seconds": 5.3,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13738,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5576,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14329,
+        "seconds": 4.3,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5078,
+        "seconds": 2.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5064,
+        "seconds": 4.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5344,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5336,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5435,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5511,
+        "seconds": 2.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5505,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14309,
+        "seconds": 5.6,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5539,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5384,
+        "seconds": 2.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5578,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14483,
+        "seconds": 5.7,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5059,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5476,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13320,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5270,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5364,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5363,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14254,
+        "seconds": 4.2,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5524,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5329,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13473,
+        "seconds": 4.6,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5467,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5459,
+        "seconds": 3.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5565,
+        "seconds": 3.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5481,
+        "seconds": 3.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5449,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5523,
+        "seconds": 3.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5351,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5326,
+        "seconds": 2.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5717,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5820,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "retrieval",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5482,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "retrieval",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5408,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5644,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5487,
+        "seconds": 3.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14695,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14652,
+        "seconds": 4.7,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5557,
+        "seconds": 2.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5535,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5505,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5521,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5399,
+        "seconds": 2.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5397,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5396,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5411,
+        "seconds": 4.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14730,
+        "seconds": 5.1,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14443,
+        "seconds": 5.9,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5646,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5692,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 6001,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 6046,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5726,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5791,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5543,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5442,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14230,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14152,
+        "seconds": 6.1,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5396,
+        "seconds": 3.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5440,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+      "group": "typical",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5769,
+        "seconds": 2.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5573,
+        "seconds": 4.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4889,
+        "seconds": 2.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4845,
+        "seconds": 2.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5036,
+        "seconds": 4.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4954,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Cap On Liability",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 12525,
+        "seconds": 3.8,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 12921,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4710,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4950,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5195,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5595,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5248,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5066,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Audit Rights",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5158,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5102,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 12442,
+        "seconds": 4.4,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4642,
+        "seconds": 4.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 4765,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5007,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+      "group": "typical",
+      "category": "License Grant",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5002,
+        "seconds": 2.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 12519,
+        "seconds": 3.9,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5475,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5477,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5410,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14283,
+        "seconds": 4.2,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5686,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14538,
+        "seconds": 4.0,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5618,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5598,
+        "seconds": 4.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": "other_text",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5827,
+        "seconds": 5.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5741,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5493,
+        "seconds": 3.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5546,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5459,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5490,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Insurance",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5663,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5628,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5427,
+        "seconds": 3.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5381,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5767,
+        "seconds": 4.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5692,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5418,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5419,
+        "seconds": 2.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5251,
+        "seconds": 4.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5146,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14738,
+        "seconds": 6.1,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5757,
+        "seconds": 3.5,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5616,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5745,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": true,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "retrieval",
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15508,
+        "seconds": 5.4,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5907,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5616,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5654,
+        "seconds": 4.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5245,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5633,
+        "seconds": 4.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Insurance",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5750,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5798,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5720,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5747,
+        "seconds": 3.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5575,
+        "seconds": 2.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5499,
+        "seconds": 3.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5384,
+        "seconds": 3.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5164,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Termination For Convenience",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5538,
+        "seconds": 2.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5526,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5115,
+        "seconds": 3.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5261,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5320,
+        "seconds": 4.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5171,
+        "seconds": 2.9,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Exclusivity",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5769,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5991,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15867,
+        "seconds": 4.3,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5983,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Audit Rights",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14877,
+        "seconds": 4.7,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15286,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13948,
+        "seconds": 4.9,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5229,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 13838,
+        "seconds": 4.2,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14258,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+      "group": "long",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 6002,
+        "seconds": 2.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5444,
+        "seconds": 33.8,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Governing Law",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5225,
+        "seconds": 2.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5404,
+        "seconds": 2.1,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Termination For Convenience",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5274,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "MISSED",
+        "grounded": false,
+        "bucket": "reasoning",
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5411,
+        "seconds": 3.2,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Cap On Liability",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14783,
+        "seconds": 4.2,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14904,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Anti-Assignment",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5523,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5601,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Exclusivity",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5895,
+        "seconds": 3.0,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 15057,
+        "seconds": 4.6,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Non-Compete",
+      "present": false,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5744,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "FALSE_CLAIM",
+        "grounded": false,
+        "bucket": "false",
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5588,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Audit Rights",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5669,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5428,
+        "seconds": 3.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Insurance",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14205,
+        "seconds": 4.5,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 3,
+        "searches": 2,
+        "refused_tool_calls": 0,
+        "tokens": 14290,
+        "seconds": 5.1,
+        "tools": [
+          "search_contract:ok",
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "Renewal Term",
+      "present": false,
+      "agent": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5313,
+        "seconds": 2.7,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "NOT_FOUND",
+        "outcome": "correct",
+        "grounded": false,
+        "bucket": null,
+        "reason": "determination absent",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5362,
+        "seconds": 3.4,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    },
+    {
+      "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+      "group": "very_long",
+      "category": "License Grant",
+      "present": true,
+      "agent": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5590,
+        "seconds": 3.3,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      },
+      "agent#2": {
+        "status": "ANSWERED",
+        "outcome": "correct",
+        "grounded": true,
+        "bucket": null,
+        "reason": "",
+        "model_turns": 2,
+        "searches": 1,
+        "refused_tool_calls": 0,
+        "tokens": 5572,
+        "seconds": 2.6,
+        "tools": [
+          "search_contract:ok",
+          "submit_answer:ok"
+        ]
+      }
+    }
+  ],
+  "seconds": 374.1
+}

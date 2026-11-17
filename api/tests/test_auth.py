@@ -123,13 +123,17 @@ def test_hs256_signed_with_a_guessable_secret_is_refused(wiring):
 def test_ask_uses_groups_from_token_and_refuses_forged_fields(monkeypatch):
     seen = {}
 
-    def fake_run(groups, question, doc_id=None):
+    def fake_run(groups, question, doc_id=None, **kw):
         seen["groups"] = groups
+        seen["mode"] = kw.get("mode")
         return {"status": "ANSWERED", "clause": {"status": "ANSWERED", "findings": []}, "vendor": {"status": "NOT_REQUESTED"},
                 "category": None, "taxonomy_version": "t"}
     monkeypatch.setattr(main.orchestrator, "run", fake_run)
     h = {"Authorization": f"Bearer {token(('Contracts.Procurement',))}"}
     assert client.post("/ask", json={"question": "q"}, headers=h).status_code == 200
-    assert seen["groups"] == ("grp-procurement",)
+    assert seen["groups"] == ("grp-procurement",) and seen["mode"] == "agent"      # agent is the default (ADR-0027)
+    assert client.post("/ask", json={"question": "q", "mode": "workflow"}, headers=h).status_code == 200
+    assert seen["mode"] == "workflow"
+    assert client.post("/ask", json={"question": "q", "mode": "admin"}, headers=h).status_code == 422
     assert client.post("/ask", json={"question": "q", "groups": ["grp-legal"]}, headers=h).status_code == 422
     assert client.post("/ask", json={"question": "q"}).status_code == 401

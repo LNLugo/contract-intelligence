@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 
 from fastapi import Depends, FastAPI
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 REPO = Path(__file__).resolve().parent.parent
@@ -65,17 +67,22 @@ class AskRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")       # no groups, roles or filters from the client
     question: str = Field(min_length=1, max_length=1000)
     doc_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{16}$")
+    mode: Literal["workflow", "agent"] = "agent"        # ADR-0027 accepted: agent by default; workflow on request
 
 
 @app.post("/ask")
 def ask(req: AskRequest, caller: Caller = Depends(current_caller)) -> dict:
     """Orchestrated answer (ADR-0026): cited clause answer, taxonomy category, and vendor check
     for a contract the caller can see. Groups come only from the validated token."""
-    result = orchestrator.run(caller.groups, req.question, req.doc_id)
+    result = orchestrator.run(caller.groups, req.question, req.doc_id, mode=req.mode)
     cited = {c["file_name"] for f in result["clause"]["findings"] for c in f["citations"] if c["valid"]}
-    log.info("ask subject=%s app=%s groups=%s doc_filter=%s status=%s clause=%s vendor=%s category=%s taxonomy=%s cited_files=%d",
-             caller.subject, caller.client_app, ",".join(caller.groups), req.doc_id or "-", result["status"],
+    log.info("ask mode=%s subject=%s app=%s groups=%s doc_filter=%s status=%s clause=%s vendor=%s category=%s taxonomy=%s cited_files=%d",
+             req.mode, caller.subject, caller.client_app, ",".join(caller.groups), req.doc_id or "-", result["status"],
              result["clause"]["status"], result["vendor"]["status"],
              (result["category"] or {}).get("code", "-"), result["taxonomy_version"], len(cited))
+    if req.mode == "agent" and "usage" in result:
+        u = result["usage"]
+        log.info("agent turns=%d searches=%d refused_tool_calls=%d tokens=%d tools=%s", u["model_turns"], u["searches"],
+                 u["refused_tool_calls"], u["tokens"], ",".join(f"{s['tool']}:{s['outcome']}" for s in result.get("trace", [])))
     return result
 

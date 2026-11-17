@@ -124,7 +124,11 @@ def build_graph(tools: CallerTools):
 
 
 def run(groups: tuple[str, ...], question: str, doc_id: str | None = None,
-        tools: CallerTools | None = None) -> dict[str, Any]:
-    """groups must come from a validated token (api.auth.Caller.groups). tools: tests only."""
+        tools: CallerTools | None = None, mode: str = "workflow") -> dict[str, Any]:
+    """groups must come from a validated token (api.auth.Caller.groups). tools: tests only.
+    mode: "workflow" (code routes, ADR-0026) or "agent" (the model chooses tools, ADR-0027)."""
+    if mode == "agent":
+        from .agent import run as agent_run
+        return agent_run(groups, question, doc_id)
     graph = build_graph(tools or tools_for(groups))
-    return graph.invoke({"question": question, "doc_id": doc_id})["result"]
+    return {"mode": "workflow", **graph.invoke({"question": question, "doc_id": doc_id})["result"]}

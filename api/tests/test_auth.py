@@ -131,9 +131,9 @@ def test_ask_uses_groups_from_token_and_refuses_forged_fields(monkeypatch):
     monkeypatch.setattr(main.orchestrator, "run", fake_run)
     h = {"Authorization": f"Bearer {token(('Contracts.Procurement',))}"}
     assert client.post("/ask", json={"question": "q"}, headers=h).status_code == 200
-    assert seen["groups"] == ("grp-procurement",) and seen["mode"] == "agent"      # agent is the default (ADR-0027)
-    assert client.post("/ask", json={"question": "q", "mode": "workflow"}, headers=h).status_code == 200
-    assert seen["mode"] == "workflow"
+    assert seen["groups"] == ("grp-procurement",) and seen["mode"] == "workflow"   # workflow is the default (ADR-0027)
+    assert client.post("/ask", json={"question": "q", "mode": "agent"}, headers=h).status_code == 200
+    assert seen["mode"] == "agent"
     assert client.post("/ask", json={"question": "q", "mode": "admin"}, headers=h).status_code == 422
     assert client.post("/ask", json={"question": "q", "groups": ["grp-legal"]}, headers=h).status_code == 422
     assert client.post("/ask", json={"question": "q"}).status_code == 401

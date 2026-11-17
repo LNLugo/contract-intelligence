@@ -67,7 +67,7 @@ class AskRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")       # no groups, roles or filters from the client
     question: str = Field(min_length=1, max_length=1000)
     doc_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{16}$")
-    mode: Literal["workflow", "agent"] = "agent"        # ADR-0027 accepted: agent by default; workflow on request
+    mode: Literal["workflow", "agent"] = "workflow"     # ADR-0027: the agent tied on the final test set; opt-in
 
 
 @app.post("/ask")

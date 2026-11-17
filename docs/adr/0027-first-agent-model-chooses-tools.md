@@ -1,6 +1,6 @@
 # ADR-0027: The first real agent: the model chooses its tools; code keeps access, citations and limits
 
-- **Status:** Accepted 2026-11-16: the agent is the default on `/ask`; the workflow stays available (`"mode": "workflow"`) and is the comparison baseline
+- **Status:** Not adopted as default (2026-11-16). The agent stays available, opt-in (`"mode": "agent"`); the workflow remains the default. Accepted briefly on 200 questions, reversed on the final test set (below)
 - **Date:** 2026-11-16
 - **Phase:** Agent
 - **Builds on:** ADR-0026 (workflow, tools bound to the caller), ADR-0020/0021 (citation check, routing), ADR-0022 (noise floor)
@@ -36,14 +36,18 @@ p50 3.1 s vs 2.3 s; 0 leaks with 10 refusals exercised. Paired McNemar p = 0.077
 grounding gate is not met, and the difference is not yet significant: **stays Proposed, opt-in.**
 Next: agent A/A test, 100 more questions, read the grounding misses.
 
-## Decision (2026-11-16, 300 questions over three runs)
+## Measurements (2026-11-16)
 | Run | Agent vs workflow, missed | False claims | Correct only in agent / only in workflow |
 |---|---|---|---|
 | first10 | 5 vs 9 | 6 vs 8 | 12 / 4 |
 | next10 (held out) | 1 vs 7 | 10 vs 10 | 12 / 6 |
 | next10 with cuad-v2 draft | 2 vs 8 | 11 vs 10 | 10 / 4 |
+| **rest30 (final test, never used for development)** | 7 vs 10 | 29 vs 27 | **24 / 22** (p = 0.88) |
+| rest30 with cuad-v2 draft | 11 vs 9 | 31 vs 29 | 22 / 24 (p = 0.88) |
 
-Over the first 200 distinct questions: 24 / 10, exact McNemar p = 0.024. Agent A/A: 11% of outcomes differ between identical runs, so the first10 figures were at the lucky end; the advantage in missed clauses repeats on every set. Zero leaks, 10 refusals exercised each time; 1.6 to 1.8x tokens; p50 about 3 s. All gates pass. Remaining weakness, shared with the workflow: false claims (the next step, ADR-0028 and possibly a reviewer).
+Over the first 200 distinct questions: 24 / 10, exact McNemar p = 0.024. **On the final 300: 24 / 22, p = 0.88. Over all 500: 48 / 32, p = 0.09.** Agent A/A: 11% of outcomes differ between identical runs, so the first10 figures were at the lucky end; the advantage in missed clauses repeats on every set. Zero leaks, 10 refusals exercised each time; 1.6 to 1.8x tokens; p50 about 3 s. On the first 200 questions all gates passed and the agent was made the default. On the final test set it did not beat the workflow: slightly fewer misses, slightly more false claims, at about twice the tokens, about twice the p95 latency, and more variation between runs (11% vs 9%). **Decision: the workflow stays the default.** The agent is kept, opt-in, as the place to test tool-choosing behaviour.
+
+**What this taught:** the first 200 questions were not a final test, because one of their halves had already shaped my reading of the agent. The decision rule needed "on a test set not used for anything else" written into it from the start.
 
 ## Consequences
 - More tokens and latency per question (several model turns instead of one).

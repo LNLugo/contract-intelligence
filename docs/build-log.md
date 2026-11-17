@@ -319,3 +319,10 @@ One entry per working session. The entries where something broke are the most va
 **Why:** only 4 of 10 categories were recognised from their CUAD questions (Non-Compete never got its boundaries; Exclusivity matched "Parties" through the one-word term "parties", a production bug too), and the Cap On Liability include doubled false claims (2 → 4) because CUAD labels disagree on damage exclusions.
 **Fix:** one-word terms never pick a category; question-phrase terms for all evaluated categories; the Cap include removed. Decision moves to `rest30`, the 30 contracts never used for development.
 **Learned:** the held-out set did its job twice in one run: it rejected a rule fitted to one example and exposed a bug the development set could not show.
+
+### 2026-11-16 · Agent · Final test set reverses the agent decision; boundaries rejected
+**rest30 (300 questions never used for development), boundaries off:** workflow vs agent 22 / 24, p = 0.88; agent missed 7 vs 10 but false claims 29 vs 27, at 2x tokens and 2x p95 latency. 0 leaks.
+**Boundaries on:** workflow 37 → 38 errors, agent 36 → 42. `cuad-v2` rejected; stays a draft.
+**Reversed:** the agent had been made the default after 200 questions (p = 0.024). The final set did not confirm it, so the workflow stays the default and the agent stays opt-in (ADR-0027). The change had not been pushed or deployed: nothing in production moved.
+**Broke on the way:** the laptop's Azure CLI sign-in expired mid-run after several hours (`AzureCliCredential.get_token failed`); `az login` and a rerun fixed it.
+**Learned:** a final test set has to be named before any results are seen and used exactly once. Two "held-out" halves that had already shaped decisions were not enough.

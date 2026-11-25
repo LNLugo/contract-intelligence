@@ -326,3 +326,9 @@ One entry per working session. The entries where something broke are the most va
 **Reversed:** the agent had been made the default after 200 questions (p = 0.024). The final set did not confirm it, so the workflow stays the default and the agent stays opt-in (ADR-0027). The change had not been pushed or deployed: nothing in production moved.
 **Broke on the way:** the laptop's Azure CLI sign-in expired mid-run after several hours (`AzureCliCredential.get_token failed`); `az login` and a rerun fixed it.
 **Learned:** a final test set has to be named before any results are seen and used exactly once. Two "held-out" halves that had already shaped decisions were not enough.
+
+### 2026-11-25 · Costs · Real spend, and where to find it
+**Tried:** `az consumption usage list` returned 292 usage records, none with a price (`pretaxCost` = None): this subscription reports usage without cost through the API. The Sponsorships portal does not cover Azure for Students.
+**Found it:** subscription Overview in the portal: **$30.59** spent, forecast $37.68 for the month. Azure OpenAI $18.11 (mostly the 2026-11-16 evaluation runs), Document Intelligence $10.30 (one-time extraction, below the $15.26 projected), Container Registry $2.09 (the only fixed cost), all else $0.10. PostgreSQL stayed within the subscription's free hours.
+**Learned:** evaluation is the biggest cost in this project, not serving; and on a sponsored subscription, cost tracking cannot be automated through the usage API. In a real tenant: Cost Management budgets and alerts per resource group.
+**Also:** README gains the as-built architecture diagram; "Known weakness" changed from consistency to false claims.

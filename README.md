@@ -16,7 +16,7 @@ This is my own reconstruction of an enterprise architecture pattern, built on a 
 | **Retrieval** | Labelled clause in the top 5: **95%** (typical 99%, long 91%, very long 84%) | 500 queries vs CUAD labels ([baseline](eval/results/baseline-slice1-retrieval.md)) |
 | **Answers** (current configuration: workflow) | On the final test set, 300 questions never used for development: clauses found **94%**; quote matches the lawyers' text **93%**; absent clauses reported correctly **80%**; fabricated quotes reaching a reviewer: **0** in every run | [Final test](eval/results/final-rest30.md); earlier 200-question runs: found 90 to 91% ([run](eval/results/run-v3-neutral.md)) |
 | **Known weakness** | **False claims:** a clause the lawyers marked absent is reported as present on about 1 question in 11 (27 of 300 on the final test, about the same for the agent). Every quote is real; the conclusion drawn from it is wrong, so the citation check cannot catch it. Consistency is the second weakness: 9% of outcomes change between identical runs. Next: a support check (does the quote support the claim?), after reading a sample of false claims for label errors | [Final test](eval/results/final-rest30.md), [A/A tests](eval/results/noise-floor-v3.md), [ADR-0028](docs/adr/0028-category-boundaries-in-the-taxonomy.md) |
-| **Spend to date** | about $16 of $100 | [Cost log](docs/cost-log.md) |
+| **Spend to date** | **$30.59 of $100** (actual, 2026-11-25): Azure OpenAI $18.11, mostly evaluation runs; Document Intelligence $10.30, one-time extraction; Container Registry $2.09, the only fixed cost; everything else $0.10 | [Cost log](docs/cost-log.md) |
 
 ![Reference architecture](docs/architecture/reference-architecture.png)
 

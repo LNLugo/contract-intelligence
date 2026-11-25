@@ -1,13 +1,27 @@
 # Cost log
 
-Budget: $100 Azure for Students credit (hard cap). Check the balance on the Microsoft Azure Sponsorships portal after each phase.
+Budget: $100 Azure for Students credit (hard cap). Check actual spend on the subscription's **Overview** page in the portal ("Spending rate and forecast", "Costs by resource"). The CLI's usage API returns usage without prices on this subscription (0 of 292 records priced), and Azure for Students is not shown on the Sponsorships portal.
 
 ## Rules
 1. Anything billed hourly whether used or not (AI Search paid tiers, APIM Developer, Postgres) is created only in the step that needs it and deleted or stopped when the session ends.
 2. Free tiers first: AI Search Free, semantic ranker free plan, Functions and Event Grid free grants.
 3. Record actual spend, not estimates, at the end of each step.
 
-## Spend to date (2026-11-09): about $16
+## Spend to date (2026-11-25): $30.59, actual (portal)
+
+Forecast for the month: $37.68. Remaining credit: about $69.
+
+| Resource | Cost | Mostly from |
+|---|---|---|
+| Azure OpenAI `aoai-ci-dev-2416` | **$18.11** | Evaluation runs on 2026-11-16: agent vs workflow, A/A, error review, held-out and final test sets (over 1,500 answered questions; the agent uses about 8K tokens a question, the workflow about 4.4K) |
+| Document Intelligence `di-ci-dev-2416` | **$10.30** | One-time extraction of the evaluation set; cached, never re-extracted. Billed less than the $15.26 projected from page counts |
+| Container Registry `acrcidev2416` | **$2.09** | The only fixed cost (Basic tier, billed daily) |
+| Everything else | $0.10 | Search Free tier, Functions, Event Grid, API Management Consumption, Container Apps scaled to zero, Key Vault, storage, logs |
+| PostgreSQL `pg-ci-dev-2416` | $0 | Within the subscription's free Burstable B1ms hours and 32 GB storage; stopping it between sessions kept it there |
+
+**Lesson:** the most expensive thing in this project is evaluation, not serving or infrastructure. A model that takes several turns (the agent) roughly doubles evaluation cost, which is one more reason the cheaper workflow stays default.
+
+## Spend at 2026-11-09 (estimate): about $16
 
 | Item | Basis | Cost |
 |---|---|---|
@@ -35,7 +49,11 @@ Budget: $100 Azure for Students credit (hard cap). Check the balance on the Micr
 | Key Vault `kv-ci-dev-2416` | Standard, RBAC mode | Per 10K operations | 2026-11-11 | Running, cents |
 | API Management `apim-ci-dev-2416` | Consumption | Per call; first 1M calls/month free | 2026-11-11 | Running, scales to zero |
 | Mock SAP `fn-sapmock-2416` | Flex Consumption | Per execution, free grant | 2026-11-11 | Running, scales to zero |
-| Chat deployment `gpt-5.4-mini-eval` | GlobalStandard 200K TPM | Per token (evaluation only) | script ready (`infra/03c`) | Not yet created |
+| Chat deployment `gpt-5.4-mini-eval` | GlobalStandard 200K TPM | Per token (evaluation only) | 2026-11-16 | Running, no cost when unused |
+| Container Registry `acrcidev2416` | Basic | **Fixed, billed daily** (about $5 a month) | 2026-11-12 | Running; the only fixed cost |
+| Container Apps `ca-ci-api-2416` | Consumption (Express environment) | Per vCPU-second and request; scales to zero | 2026-11-12 | Running, scales to zero |
+| Log Analytics `law-ci-dev-2416` | Pay as you go, 30-day retention | Per GB ingested | 2026-11-12 | Running, well under free allowance |
+| Managed identities (3) | User-assigned | Free | 2026-11-12 | Pull, runtime, GitHub OIDC |
 
 ## Unit economics (from the answer baseline)
 

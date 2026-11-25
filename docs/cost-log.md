@@ -14,10 +14,12 @@ Forecast for the month: $37.68. Remaining credit: about $69.
 | Resource | Cost | Mostly from |
 |---|---|---|
 | Azure OpenAI `aoai-ci-dev-2416` | **$18.11** | Evaluation runs on 2026-11-16: agent vs workflow, A/A, error review, held-out and final test sets (over 1,500 answered questions; the agent uses about 8K tokens a question, the workflow about 4.4K) |
-| Document Intelligence `di-ci-dev-2416` | **$10.30** | One-time extraction of the evaluation set; cached, never re-extracted. Billed less than the $15.26 projected from page counts |
+| Document Intelligence `di-ci-dev-2416` | **$10.30** | One-time extraction of the evaluation set (1,530 pages), cached, never re-extracted. The first 500 pages a month are free on this subscription, so 1,030 pages were billed at $0.01: $10.30, against $15.26 projected without the free pages. The only free limit exceeded (on 2026-11-08, the batch run), by design |
 | Container Registry `acrcidev2416` | **$2.09** | The only fixed cost (Basic tier, billed daily) |
 | Everything else | $0.10 | Search Free tier, Functions, Event Grid, API Management Consumption, Container Apps scaled to zero, Key Vault, storage, logs |
-| PostgreSQL `pg-ci-dev-2416` | $0 | Within the subscription's free Burstable B1ms hours and 32 GB storage; stopping it between sessions kept it there |
+| PostgreSQL `pg-ci-dev-2416` | $0 | Within the free allowance: 61 of 750 Burstable B1ms hours, 16 of 32 GB-months of storage this month. 750 hours covers a server running all month, so stopping it saved free hours, not money; it matters once the free year ends (2027-09-28) |
+
+Free allowances for 12 months, until 2027-09-28 (subscription Overview, "View all free services"): only Document Intelligence went over.
 
 **Lesson:** the most expensive thing in this project is evaluation, not serving or infrastructure. A model that takes several turns (the agent) roughly doubles evaluation cost, which is one more reason the cheaper workflow stays default.
 

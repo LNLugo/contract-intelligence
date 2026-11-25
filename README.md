@@ -28,6 +28,14 @@ The reference design above is what I set out to build. This is what exists and w
 
 Two places where the build deliberately differs from common reference designs: **authorization is enforced inside the search query, never after retrieval** ([ADR-0013](docs/adr/0013-identity-and-security-trimming.md), [ADR-0023](docs/adr/0023-entitlements-from-validated-token.md)), and **the default path is a workflow, not an agent**, because the agent tied it on the final test set at twice the cost ([ADR-0027](docs/adr/0027-first-agent-model-chooses-tools.md)).
 
+## How it is secured
+
+Nine layers, placed on the request path. For each one the drawing shows the controls in place, the test that proves it works, and what is still open. The rule behind all of them: **security is enforced by code at the edges, never by the prompt.** The model can be fooled; the token check, the search filter and the tools cannot, and every layer fails closed.
+
+![How the system is secured](docs/architecture/security.png)
+
+The open items are deliberate for a student subscription, not oversights. In a regulated tenant the first three to close would be private endpoints with a web application firewall, an immutable audit store with alerts on refusals, and permissions copied from the source document system instead of derived from contract type.
+
 ## What runs today
 
 **Ingestion.** A PDF uploaded to the data lake's `inbox/` raises an Event Grid event, which is written to a storage queue and processed by a Flex Consumption Function: Document Intelligence layout extraction (cached), cleaning, paragraph-filled 800-token chunks with page numbers, 1,024-dimension embeddings, and a push to AI Search with access groups on every chunk. Failures retry, then park in a poison queue. No keys anywhere: every hop uses a managed identity.

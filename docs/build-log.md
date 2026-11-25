@@ -332,3 +332,7 @@ One entry per working session. The entries where something broke are the most va
 **Found it:** subscription Overview in the portal: **$30.59** spent, forecast $37.68 for the month. Azure OpenAI $18.11 (mostly the 2026-11-16 evaluation runs), Document Intelligence $10.30 (one-time extraction, below the $15.26 projected), Container Registry $2.09 (the only fixed cost), all else $0.10. PostgreSQL stayed within the subscription's free hours.
 **Learned:** evaluation is the biggest cost in this project, not serving; and on a sponsored subscription, cost tracking cannot be automated through the usage API. In a real tenant: Cost Management budgets and alerts per resource group.
 **Also:** README gains the as-built architecture diagram; "Known weakness" changed from consistency to false claims.
+
+### 2026-11-25 · Security · One drawing for how the system is secured
+**Added:** `docs/architecture/security.png` and a README section. Nine layers (identity, token validation, entitlements, agent and tools, secrets and service identity, supply chain, network, data and audit, failing safely), each placed on the request path with its controls, the test that proves it, and what is still open.
+**Learned:** writing the "still open" column was the useful part. The controls that are missing are mostly about detection and evidence (immutable audit, alerts, image scanning), not prevention: the build stops bad requests well but would not tell anyone quickly that one was tried.

@@ -18,6 +18,7 @@ param(
     [Parameter(Mandatory)] [string] $IdentityDomain
 )
 $ErrorActionPreference = "Stop"
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 
 $GRAPH = "https://graph.microsoft.com/v1.0"

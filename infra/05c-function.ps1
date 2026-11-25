@@ -3,6 +3,7 @@
 # Takes about 10 minutes: role propagation waits and a remote Python build.
 
 param([switch]$SkipDeploy)
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 $PyVersion = "3.12"     # if Flex rejects it in this region, change to "3.11" and re-run
 $Repo = Split-Path $PSScriptRoot -Parent

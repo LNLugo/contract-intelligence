@@ -2,6 +2,7 @@
 # ADRs: 0004 (submit + poll), 0013 (no keys)
 # Run: pwsh ./infra/02-document-intelligence.ps1   (safe to re-run)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 
 # 1. Resource: F0 (free) tier. Free tier analyzes only the first 2 pages of each document.

@@ -5,6 +5,7 @@
 # Safe to re-run. Every az call stops the script on failure (Invoke-Az).
 
 param([Parameter(Mandatory = $true)][string]$ClientIp)
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 
 Write-Host "`n== Provider" -ForegroundColor Cyan

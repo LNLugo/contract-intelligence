@@ -343,3 +343,8 @@ One entry per working session. The entries where something broke are the most va
 **To edit the taxonomy:** get the laptop's IP (`Invoke-RestMethod https://api.ipify.org`), then in Cloud Shell `az postgres flexible-server firewall-rule create -g rg-ci-dev --server-name pg-ci-dev-2416 --name laptop --start-ip-address IP --end-ip-address IP`, and delete the rule afterwards with `firewall-rule delete ... --name laptop --yes`. Note the CLI flags: `--server-name` for the server, `--name` for the rule.
 **Broke on the way:** a stopped server rejects firewall changes (`InactiveServerState`): start it first.
 **Learned:** "stop it to save money" was the wrong control. The cost was already zero; the exposure was the open firewall rule.
+
+### 2026-11-25 · Infra · Scripts refuse to run outside Cloud Shell
+**Problem:** infra scripts run by mistake in Windows PowerShell on the laptop failed part-way (several times in November), against whatever subscription the laptop was signed in to.
+**Changed:** new `infra/guard.ps1`, loaded first by all 14 `infra/0*.ps1` scripts. It stops with a clear message, before any `az` command, if the script runs in Windows PowerShell or anywhere other than Azure Cloud Shell. A deliberate local run with PowerShell 7 needs `$env:CI_INFRA_LOCAL = "1"`. Not added to `config.ps1`, because `eval/check_ingestion.ps1` loads it and must run on the laptop.
+**Tested:** pwsh 7.4 outside Cloud Shell refused; with the Cloud Shell variable set and with the override, passed; `config.ps1` still loads on its own; all infra scripts parse.

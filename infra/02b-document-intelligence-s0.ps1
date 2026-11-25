@@ -1,6 +1,7 @@
 # Phase 2b: move Document Intelligence from F0 (2 pages per document) to S0 (pay per page)
 # ADR-0015. Run: pwsh ./infra/02b-document-intelligence-s0.ps1   (safe to re-run)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 
 Write-Host "`n== Current tier" -ForegroundColor Cyan

@@ -1,9 +1,10 @@
 # Phase 3: model deployments with keyless (Entra ID) access
 # ADRs: 0003 (region and hosting), 0013 (no keys), 0014 (deployment type and model roles)
-# Run in Azure Cloud Shell (PowerShell) or locally with the Azure CLI signed in.
+# Run in Azure Cloud Shell (PowerShell).
 # Safe to re-run: each step checks or overwrites rather than duplicating.
 
 $ErrorActionPreference = "Stop"
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only
 
 $RG       = "rg-ci-dev"
 $AOAI     = "aoai-ci-dev-2416"

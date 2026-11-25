@@ -5,6 +5,7 @@
 # No secret is printed, stored in config, or committed. Run in Cloud Shell:
 #   pwsh ./infra/07-sap-apim.ps1        (safe to re-run; API Management creation takes several minutes)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 $ApimApi = "2022-08-01"
 $sub = az account show --query id -o tsv

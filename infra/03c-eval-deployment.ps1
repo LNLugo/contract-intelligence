@@ -5,6 +5,7 @@
 # Run: pwsh ./infra/03c-eval-deployment.ps1   (safe to re-run)
 # Use:  $env:CHAT_DEPLOYMENT = "gpt-5.4-mini-eval"   before an evaluation run
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 Assert-ResourceSubscription
 $EvalDeployment = "gpt-5.4-mini-eval"

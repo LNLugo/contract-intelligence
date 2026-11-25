@@ -7,6 +7,7 @@
 # Fails fast on the wrong subscription; asking for the state it is already in is success.
 
 param([ValidateSet("stop", "start", "status")][string]$Action = "status")
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 Assert-ResourceSubscription
 

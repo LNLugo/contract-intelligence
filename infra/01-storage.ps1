@@ -2,6 +2,7 @@
 # ADRs: 0001 (public first, identity first), 0004 (raw and extracted kept separately), 0013 (no keys)
 # Run: pwsh ./infra/01-storage.ps1   (safe to re-run)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 
 # 1. Storage account: hierarchical namespace on (ADLS Gen2), no public blobs, no shared keys

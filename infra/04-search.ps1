@@ -2,6 +2,7 @@
 # ADRs: 0006 (hybrid retrieval), 0013 (no keys, group filter), 0016 (tier and vector size)
 # Run: pwsh ./infra/04-search.ps1   (safe to re-run; the index definition is overwritten in place)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 $SearchApi = "2024-07-01"
 

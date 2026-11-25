@@ -3,6 +3,7 @@
 # GlobalStandard capacity is a rate limit, not a reservation: raising it costs nothing by itself.
 # Run: pwsh ./infra/03b-embedding-capacity.ps1   (safe to re-run)
 
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 $EmbedCapacity = 200   # thousand tokens per minute; the pipeline paces itself at 180K (EMBED_TPM)
 

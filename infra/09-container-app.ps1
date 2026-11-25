@@ -11,6 +11,7 @@
 # - Identity settings (issuer, audience, tenant) read from Key Vault at deploy time, passed as
 #   environment variables (not secret); scale to zero when idle
 param([string]$Tag = "", [ValidateSet("true", "false")][string]$Rerank = "true")
+. "$PSScriptRoot/guard.ps1"   # Cloud Shell only: stops before any az command
 . "$PSScriptRoot/config.ps1"
 Assert-ResourceSubscription
 

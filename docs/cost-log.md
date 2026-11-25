@@ -21,6 +21,8 @@ Forecast for the month: $37.68. Remaining credit: about $69.
 
 Free allowances for 12 months, until 2027-09-28 (subscription Overview, "View all free services"): only Document Intelligence went over.
 
+**Decision (2026-11-25): PostgreSQL stays running.** Azure restarts a stopped Flexible Server after 7 days, and 750 free hours cover a full month, so stopping it saved nothing. Decide by 2027-08-28, a month before the free year ends: back up with `pg_dump` and delete it (the API reads the exported taxonomy snapshot, not the database), or pay for it.
+
 **Lesson:** the most expensive thing in this project is evaluation, not serving or infrastructure. A model that takes several turns (the agent) roughly doubles evaluation cost, which is one more reason the cheaper workflow stays default.
 
 ## Spend at 2026-11-09 (estimate): about $16

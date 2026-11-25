@@ -336,3 +336,10 @@ One entry per working session. The entries where something broke are the most va
 ### 2026-11-25 · Security · One drawing for how the system is secured
 **Added:** `docs/architecture/security.png` and a README section. Nine layers (identity, token validation, entitlements, agent and tools, secrets and service identity, supply chain, network, data and audit, failing safely), each placed on the request path with its controls, the test that proves it, and what is still open.
 **Learned:** writing the "still open" column was the useful part. The controls that are missing are mostly about detection and evidence (immutable audit, alerts, image scanning), not prevention: the build stops bad requests well but would not tell anyone quickly that one was tried.
+
+### 2026-11-25 · Security · Database closed to the internet; left running for free
+**Found:** PostgreSQL showed `Ready` although it had been stopped. Azure restarts a stopped Flexible Server after 7 days so it can apply maintenance. The free allowance (750 B1ms hours a month) covers a full month, so it stays running until the free-year decision (cost log).
+**Changed:** deleted the only firewall rule (one laptop IP). With no rules and Entra-only sign-in, nothing outside Azure can connect. The API never reads the database at runtime (it uses the exported taxonomy snapshot), so nothing broke.
+**To edit the taxonomy:** get the laptop's IP (`Invoke-RestMethod https://api.ipify.org`), then in Cloud Shell `az postgres flexible-server firewall-rule create -g rg-ci-dev --server-name pg-ci-dev-2416 --name laptop --start-ip-address IP --end-ip-address IP`, and delete the rule afterwards with `firewall-rule delete ... --name laptop --yes`. Note the CLI flags: `--server-name` for the server, `--name` for the rule.
+**Broke on the way:** a stopped server rejects firewall changes (`InactiveServerState`): start it first.
+**Learned:** "stop it to save money" was the wrong control. The cost was already zero; the exposure was the open firewall rule.

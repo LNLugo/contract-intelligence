@@ -1,0 +1,338 @@
+# Build log
+
+One entry per working session. The entries where something broke are the most valuable ones: they become interview stories.
+
+## Entry format
+
+```
+### YYYY-MM-DD · Phase N · Short title
+**Goal:**
+**Did:**
+**Broke:** exact error, what I first thought it was, what it actually was
+**Learned:**
+**Decision impact:** ADR touched, if any
+**Spend so far:** $
+```
+
+---
+
+### 2026-11-07 · Phase 0 · Scope and constraints
+**Goal:** Turn the reference architecture into a build plan that fits an Azure for Students subscription.
+**Did:** Wrote ADRs 0001 to 0013. Identified the subscription constraints: $100 credit, hard cap, allowed-regions policy, uncertain Azure OpenAI access.
+**Broke:** Nothing yet.
+**Learned:** The subscription constrains the region before any architecture choice does; region is now an input to the design, not a default.
+**Decision impact:** ADR-0003 opened as Proposed.
+**Spend so far:** $0
+
+### 2026-11-07 · Phase 0 · Region and model quota test
+**Goal:** Prove the subscription can host the models before designing around them.
+**Did:** Read the allowed-regions policy (5 regions), intersected with Azure OpenAI regions (Canada Central, France Central), created `rg-ci-dev` and `aoai-ci-dev-2416` in Canada Central, listed quota and models.
+**Broke:** Nothing, but found two constraints: one OpenAI account per region on this subscription, and models offered as GlobalStandard only in this region.
+**Learned:** A cloud service list is not one list. The policy, the service and the deployment type each narrow the region choice separately.
+**Decision impact:** ADR-0003 Accepted. ADR-0014 created.
+**Spend so far:** $0
+
+### 2026-11-07 · Phase 3 · Model deployments, keyless
+**Goal:** Deploy the embedding and generation models and call them with an Entra token, with API keys disabled.
+**Did:** Deployed `text-embedding-3-large` and `gpt-5.4-mini` (GlobalStandard, 50K TPM each), set the custom subdomain, assigned `Cognitive Services OpenAI User` to myself, disabled local auth, ran `infra/03-models.ps1` from a fresh clone in Cloud Shell.
+**Result:** Embedding returned 3072 dimensions. Chat answered in 49 tokens. Both calls used a bearer token; keys are off.
+**Broke:** Cloud Shell was in bash, which cannot execute a `.ps1` directly ("Permission denied"). Fixed by running `pwsh ./infra/03-models.ps1`. A stale folder from an earlier session blocked `git clone`; deleted and re-cloned.
+**Learned:** Entra token auth on Azure OpenAI needs a custom subdomain; key auth works without one, which is why teams drift back to keys. Script re-runs confirmed state without duplicating anything.
+**Decision impact:** ADR-0013 and ADR-0014 now have working evidence. The 3072-dimension vector size feeds the phase 4 index-size decision.
+**Spend so far:** $0 (49 tokens)
+
+### 2026-11-07 · Phases 1 and 2 · Data lake and Document Intelligence, keyless
+**Goal:** Storage that only accepts Entra identities, and a working extraction call using the async pattern the Function will use.
+**Did:** Ran `infra/01-storage.ps1` (account already existed from an earlier manual run; script verified settings) and `infra/02-document-intelligence.ps1` (created `di-ci-dev-2416` on F0, assigned `Cognitive Services User`, disabled keys).
+**Result:** Storage: shared key access false, hierarchical namespace true, write/list/delete with my identity OK. Document Intelligence: submit returned HTTP 202 with an operation URL; polling succeeded in 3 s; 1 page, 38 paragraphs, 2 tables, roles `title` and `sectionHeading` detected.
+**Broke:** Cloud Shell home directory was empty in the new session (no storage mounted), so the repo had to be cloned again. Not a bug: it confirms nothing in Cloud Shell is durable and the repo is the only source of truth.
+**Learned:** (1) `sectionHeading` roles mean clause-aware chunking has structure to split on (ADR-0005). (2) Selection marks come through as `:selected:` / `:unselected:` tokens; the chunker must strip them before embedding. (3) The free tier reads only 2 pages per document, which would silently drop most contract clauses.
+**Decision impact:** ADR-0015 opened (Document Intelligence tier).
+**Spend so far:** $0
+
+### 2026-11-07 · Phase 2 · Measuring the corpus before choosing a tier
+**Goal:** Replace a guess about contract length with a measurement, and use it to choose the Document Intelligence tier.
+**Did:** Downloaded CUAD v1 (510 PDFs) into Cloud Shell, ran `eval/page_stats.py`.
+**Result:** 9,348 pages; median 11 per contract, p90 46, max 154. The free tier would read 11% of pages. Full extraction $93.48; 50 median-length contracts $5.40.
+**Broke:** First run failed with "No such file" because the script had not been pushed and pulled yet. Same root cause as before: the repo is the only path from laptop to Cloud Shell.
+**Learned:** My own first proposal (50 median-length contracts) was the wrong sample: it would have excluded the long contracts where context overflow and missed clauses occur, making the evaluation look better than reality. A cheap sample is not a valid sample.
+**Decision impact:** ADR-0015 Accepted: S0, stratified 50-contract evaluation set, about $15.50, extracted once.
+**Spend so far:** $0
+
+### 2026-11-07 · Phase 2 · Tier upgrade and evaluation set selected
+**Did:** Moved `di-ci-dev-2416` from F0 to S0 (`infra/02b-document-intelligence-s0.ps1`); keys still disabled after the change. Ran `eval/select_eval_set.py` to pick the fixed evaluation set.
+**Result:** 50 contracts, 1,526 pages, $15.26 projected extraction cost, 27 contract types. Typical 30 (335 pages, 26 types), long 15 (607 pages), very long 5 (584 pages). Written to `eval/eval_set.csv`.
+**Learned:** A tier change on Cognitive Services keeps the identity settings (custom subdomain, keys disabled); worth verifying after every change rather than assuming.
+**Decision impact:** ADR-0015 evidence complete. Opened ADR-0016 (search tier and vector size).
+**Spend so far:** $0 (no pages analyzed yet)
+
+### 2026-11-08 · Phase 4 · Index creation failed on a valid name
+**Broke:** `PUT /indexes/...` returned `InvalidName` although the configured name `contracts-v1` is valid.
+**First thought:** a naming rule I had missed.
+**Actual cause:** PowerShell variable names are case-insensitive. `config.ps1` defines `$INDEX` (the name); the script then built the index definition in `$index`, which overwrote the name with a hashtable. The URL was sent as `/indexes/System.Collections.Hashtable`.
+**Fix:** renamed the definition to `$indexDef`; checked every script for other names that collide with `config.ps1` ignoring case.
+**Learned:** In PowerShell, shared config variables and local variables live in one case-insensitive namespace. Read the request actually sent, not the variable you think you sent.
+
+### 2026-11-08 · Phase 4 · Search index live, security trimming proven
+**Did:** Ran `infra/04-search.ps1` after the variable fix: index `contracts-v1` created, 3 synthetic chunks embedded at 1,024 dimensions, uploaded with two security groups, queried, deleted.
+**Result:** Query "cap on damages" as `grp-legal` returned the liability clause first (neither word is in it). The same query as `grp-procurement` returned only the procurement chunk: the legal chunks never came back. Semantic ranker available on Free. 1 of 3 indexes used.
+**Broke:** One run failed with `DeploymentNotFound` on the embedding call although both deployments were `Succeeded`. An isolated test of the same call (single, 1,024 dimensions, batch) passed three times, and the re-run passed. Transient.
+**Learned:** (1) Model endpoints return short-lived 404s, not only 429s; the phase 5 Function needs retry with backoff on 404, 429 and 5xx from the start. (2) RRF fused scores are rank-based and tiny (0.0167 vs 0.0164), so they are not a confidence signal; abstention needs reranker or evaluator scores. (3) `servicestats` reported the vector index quota as 0 MB on Free; to verify against real usage in phase 5.
+**Decision impact:** ADR-0006 first stage Accepted; semantic ranker added as a no-cost comparison option. ADR-0013 trimming has its first evidence.
+**Spend so far:** $0
+
+### 2026-11-08 · Phase 5a · Pipeline library, first contract end to end
+**Goal:** One code path for ingestion (ADR-0017), proven on a single contract before paying for 49 more.
+**Did:** Built `ingestion/pipeline` (extract with cache, clean, chunk, embed, push), `batch_ingest.py`, 8 unit tests for cleaning and chunking. Regenerated `eval/eval_set.csv` on the laptop after the Cloud Shell copy was lost with the session.
+**Result:** First contract (37 pages): 30 chunks, 23,410 embedding tokens, largest chunk 798 tokens against an 800 budget, 18.5 s, $0.37 extraction. Re-run: `cached`, $0.00, still 30 chunks (idempotent). Index 0.3 MB, which projects to about 12 MB for the full set (ADR-0016 estimated 17 MB). Chunk review: pages increase with overlap (1-2, 2-3, 3-5), real section headings, no page furniture or selection marks.
+**Broke:** (1) `eval_set.csv` existed only in Cloud Shell and was lost; anything produced there must be brought back to the repo immediately. (2) The selector sorted paths differently on Windows (case-insensitive) and Linux, so the "deterministic" set was only deterministic per OS; fixed by sorting on relative POSIX paths. (3) A `<doc_id>` placeholder in my instructions was parsed by PowerShell as a redirection operator.
+**Learned:** (1) Layout dropped a space in a heading (`ARTICLEI DEFINITIONS`); exact keyword match on "Article I" fails, which argues for query-time normalization (ADR-0011). (2) Contracts are self-referential: definitions live in one chunk, the clauses using them in others; top-5 retrieval can miss the definition a clause depends on. Candidate ADR for phase 8. (3) Cached runs still re-embed every chunk; negligible here, but at volume embeddings should be cached by chunk content hash.
+**Decision impact:** ADR-0004 and ADR-0005 have working evidence. ADR-0017 accepted.
+**Spend so far:** about $0.37 extraction, under $0.01 embeddings
+
+### 2026-11-09 · Phase 5b · Evaluation set ingested; rate limits broke two contracts
+**Did:** Ran `batch_ingest.py` over the 50-contract evaluation set with 3 workers.
+**Result:** 48 OK, 2 failed. 1,460 pages (1,423 extracted in this run, 37 cached), $14.23 extraction ($14.60 total with the first test), 1,183 chunks, 911,551 embedding tokens (~770 per chunk), largest chunk 800. Wall time 25,735 s (7.1 hours) against an expected 10 to 15 minutes.
+**Broke:** Both failures were HTTP 429 `RateLimitReached` on `text-embedding-3-large` after 6 retries. Each request carried 16 chunks (~13K tokens); 3 workers in flight exceeded the 50K TPM cap in one burst, and every worker backed off independently.
+**First thought:** add more retries.
+**Actual fix:** a design change. Capacity is now set per workload (ADR-0014 revision): chat stays at 50K TPM as the runaway guardrail, embeddings go to 200K TPM, and the client paces itself under the limit with a shared one-minute token budget. 429 gets 12 attempts.
+**Learned:** (1) Retrying into a rate limit is not a strategy; pacing under it is. (2) Extraction ran before embedding, so the two failed contracts were already extracted and cached; their retry costs no extraction. Ordering the expensive, cacheable step first made the failure cheap. (3) Added `--skip-indexed` so retrying failures does not re-embed the 48 finished contracts.
+**Decision impact:** ADR-0014 revised.
+**Spend so far:** $14.60 extraction, about $0.12 embeddings
+
+### 2026-11-09 · Phase 5b · Evaluation set complete
+**Did:** Retried the 2 failed contracts with `--skip-indexed`.
+**Result:** Both `cached` (no extraction), 55 chunks, 5.4 s. Index: **50 documents, 1,238 chunks, 14.1 MB of 50 MB.** Total extraction for the set: 1,526 pages, **$15.26**, matching the selector's projection to the cent.
+**Learned:** The retry cost nothing because the expensive step (extraction) was cached before the step that failed (embedding). Order pipeline stages so the costly, cacheable work completes and persists first.
+**Decision impact:** ADR-0016 size estimate replaced with the measurement. ADR-0015 cost projection confirmed.
+**Spend so far:** $15.26 extraction, about $0.13 embeddings
+
+### 2026-11-09 · Phase 5c · Function deployed; Event Grid wiring failed on CLI gaps
+**Did:** Ran `infra/05c-function.ps1`: plumbing storage account, `ingest` and `ingest-poison` queues, Flex Consumption Function (Python 3.12) with Application Insights, managed identity roles, identity-based app settings, code deployed with remote build, shared keys disabled.
+**Result:** `fn-ci-dev-2416/ingest` deployed. Event Grid topic created but without an identity; subscription not created.
+**Broke:**
+1. `Cannot find user or service principal in graph database` when checking roles for the new Function identity. A new managed identity takes time to replicate in Entra ID. The check failed; creating by object ID does not need the directory lookup.
+2. My role helper printed `+ <role>` even when the assignment failed (empty principal ID for the topic). Misleading output is worse than none.
+3. `az eventgrid system-topic event-subscription create` in Cloud Shell's CLI does not accept the identity-delivery options (`--delivery-identity`, `--deadletter-identity`), and the topic identity flags also failed.
+**Fix:** The helper now refuses an empty principal and checks every result. The topic identity and the subscription are created through the Resource Manager API (`az rest`, Event Grid API 2022-06-15), and the script ends by reading every role assignment back from Azure. Added `-SkipDeploy` so a re-run does not redeploy unchanged code.
+**Learned:** The CLI lags the platform; the ARM API is the source of truth and is what Bicep (phase 14) will declare. Verify by reading state back, not by trusting your own log lines.
+
+### 2026-11-09 · Phase 5c · First live upload: wiring fine, message format wrong
+**Did:** Uploaded a contract outside the evaluation set to `contracts-raw/inbox/`; it was not indexed within 10 minutes. Traced each hop: Event Grid metrics (3 published, 1 matched, 1 delivered, 0 failed), queues (`ingest` 0, `ingest-poison` 1), dead-letter container empty, then Function exceptions in Application Insights.
+**Broke:** `json.loads(msg.get_body())` raised `JSONDecodeError` at character 0 on all 5 attempts; the message moved to `ingest-poison`.
+**First thought:** I assumed Event Grid writes plain JSON to the queue and set `messageEncoding: none`.
+**Actual cause:** the body arrived encoded (consistent with Base64), and the host passed it through as-is.
+**Fix:** `pipeline/events.py` decodes either form, logs what arrived, unit-tested.
+**Learned:** (1) Hop-by-hop observability (topic metrics, queue depth, dead letter, function exceptions) found the fault in one pass. (2) A permanent error retried 5 times is wasted work; classify permanent vs transient (ADR-0018 revision). (3) Cloud Shell's managed identity cannot get an Application Insights token; log queries run from the laptop.
+
+### 2026-11-09 · Phase 5c · Event-driven ingestion live; fail-closed proven
+**Test 1 (normal upload):** a contract outside the evaluation set uploaded to `contracts-raw/inbox/` with `allowed_groups=grp-legal` was **searchable 23 s after upload** (3 chunks; upper bound, polled every 10 s; includes a cold start after redeploy). Target in the architecture overview: 2 minutes.
+**Test 2 (no access metadata):** the Function refused the upload on every attempt with `MissingAccessMetadata: ... has no allowed_groups metadata; refusing to index`; the message moved to `ingest-poison`; no chunks were indexed. Fail closed, as designed (ADR-0013, ADR-0018).
+**Observed:** `ingest-poison` held 2 messages afterwards; to be traced (leftover from the decoding failure, or an at-least-once duplicate delivery).
+**Added:** `eval/check_ingestion.ps1`, a one-command hop-by-hop health check: Event Grid metrics, queue contents with the file each message refers to, dead letter, function run counts with p50 and p95 duration, and distinct failure reasons.
+**Decision impact:** ADR-0013 (trimming at ingestion), ADR-0017 (one code path) and ADR-0018 (queue) all have live evidence. Phase 5 complete.
+**Spend so far:** about $15.30 extraction, under $0.20 embeddings; Function and Event Grid within free grants.
+
+### 2026-11-09 · Slice 1 · First cited answers; retrieval baseline against lawyer labels
+**Did:** Built the answering slice (ADR-0019): retrieval agent with an enforced, injection-checked access filter; generation with verbatim quotes; deterministic citation check (ADR-0020); code-based routing. Ran `eval/retrieval_eval.py`: 50 contracts × 10 CUAD categories, 500 queries.
+**First answers:** "What law governs this agreement?" → ANSWERED, Delaware, 2 valid citations (pp. 30-31), 5.3 s, 4,248 tokens. "Can either party terminate for convenience?" → NOT_FOUND: the model read strong evidence and reported only termination for cause, which is the intended distinction between an absent clause and an abstention.
+**Retrieval baseline** (`eval/results/baseline-slice1-retrieval.md`): reranked recall@5 95%, @1 75% (hybrid alone: 92%, 66%). By length @5: typical 99%, long 91%, very long 84%. Weakest: Exclusivity 79%, Non-Compete 80%. The reranker lowered Cap On Liability @5 from 92% to 86%.
+**Broke:** the results JSON was not written (`eval/results` did not exist); fixed with `mkdir`. Printed figures saved by hand as the baseline, to avoid spending another 500 semantic-ranker queries from the free monthly 1,000.
+**Learned:** (1) Recall drops with contract length; the stratified sample (ADR-0015) is what exposed it. (2) The reranker is not uniformly better. (3) Reranker scores for present and absent clauses overlap almost completely (present median 2.30, absent 1.96, absent p90 2.35), so a score threshold cannot decide whether a clause exists; absence is decided by the model reading evidence (ADR-0009 revision).
+**Next:** `eval/answer_eval.py` measures the answers themselves on 20 contracts: missed clauses, false claims, grounding against the labelled text.
+**Spend so far:** about $15.30 extraction; tokens under $0.30; semantic ranker about 530 of 1,000 free queries this month.
+
+### 2026-11-09 · Slice 1 · Answer baseline; the "false claims" were my output format
+**Did:** Ran `eval/answer_eval.py`: 20 contracts × 10 categories, 200 questions (`eval/results/baseline-slice1-answers.md`).
+**Result:** found 97% of present clauses (3 missed), 95% grounded on the lawyers' labelled text, 2 bad quotes dropped by the citation check, but only 70% of absent clauses reported correctly: 23 false claims, 8 in Termination For Convenience.
+**First thought:** the model reads clauses too generously and needs an LLM judge.
+**Actual cause (after reading the answers):** several "false claims" began "No." The model cited for-cause termination clauses to explain why the answer was no, and my routing read any valid citation as "the clause exists". The defect was the output contract, and the metric inherited it.
+**Fix:** ADR-0021: explicit `determination` (present, absent, unclear) separate from evidence; code routes on it; four routing unit tests including this bug. Evaluation now caches retrieval and reuses it, so the fix is measured with retrieval held fixed and without spending more semantic-ranker quota.
+**Learned:** read the errors before fixing them. The obvious fix (add an LLM judge) would have spent a model call per finding to patch a schema bug.
+
+### 2026-11-09 · Slice 1 · Evaluation run lost to a power outage; two evaluation fixes
+**Broke:** the first `determination-field` run reported 150 errors of 200 (the laptop lost power and connectivity mid-run), yet still printed a full metrics table from the 50 survivors. The table also showed grounding above 100%.
+**Fix:** (1) The evaluation now refuses to report metrics when more than 5% of questions error, prints the top error reasons, and keeps the retrieval cache so a re-run continues instead of starting over. (2) Grounding counted quotes from NOT_FOUND answers, which under ADR-0021 can cite explanatory evidence; it now counts only ANSWERED results.
+**Learned:** an evaluation harness needs its own validity checks. A partial run that prints a confident table is worse than one that prints nothing.
+
+### 2026-11-09 · Slice 1 · Re-measured ADR-0021: fewer false claims, four times the missed clauses
+**Did:** Re-ran the answer evaluation with the determination field (`eval/results/run-v2-strict.md`), same 200 questions, retrieval cached (no semantic-ranker quota used beyond completing the cache).
+**Result:** false claims 23 → 16 (Termination For Convenience 8 → 2); absent reported correctly 70% → 79%; **missed clauses 3 → 12**, detection 97% → 90%, concentrated in broadly defined categories (Cap On Liability, Exclusivity, Anti-Assignment, Audit Rights).
+**Broke (my experiment design):** the change bundled two variables, the output format and a prompt rule that "related provisions that do not meet the definition mean absent". The rule made the model strict everywhere. The run cannot attribute gain and loss separately.
+**Fix:** prompts are now named and versioned in `agents/prompts.py`, selectable with `--prompt`, and recorded in every result file. Next run: `v3-neutral` (same format, rule removed).
+**Learned:** (1) One variable per experiment, including prompt wording. (2) Weight errors by cost in the domain: a missed clause is silent, a false claim carries a checkable citation. Detection recall is the primary metric.
+
+### 2026-11-09 · Slice 1 · v3-neutral: two hypotheses tested, both rejected
+**Did:** Ran `v3-neutral` (determination field, strictness rule removed), same cached retrieval (`eval/results/run-v3-neutral.md`). Then compared each v3 miss with the baseline's answer to the same question.
+**Result:** found 91%, missed 10, false claims 15, absent correct 80%; nearly the same as v2-strict.
+**Hypothesis 1 (rule caused the misses): rejected.** Removing the rule moved the numbers by 1 or 2.
+**Hypothesis 2 (baseline 97% inflated by the routing bug): rejected.** 8 of the 10 misses were correct "Yes." answers in the baseline, all partial or limited forms the lawyers labelled present. My first comparison script also read the wrong baseline file (the 2-contract quick run) and failed on missing entries; fixed by naming the file.
+**Learned:** the baseline prompt said "address" (lenient), the determination says "contains" (strict). Narrow categories need strictness, broad ones need breadth; a global wording cannot serve both. Definitions belong per category, sourced outside the evaluation set to avoid tuning on the test. Before comparing further, measure run-to-run variance of an identical prompt.
+**Decision impact:** ADR-0021 revision 2. Default prompt set to `v3-neutral` (interim). README answers row now reports the current configuration, not the best historic number.
+
+### 2026-11-09 · Slice 1 · Noise floor measured
+**Did:** Re-ran `v3-neutral` unchanged on the same 200 questions and cached retrieval (`eval/results/noise-floor-v3.md`).
+**Result:** totals moved by about 1 (missed 10 → 11, false claims 15 → 14, found 91% → 90%); single categories by 1 to 2; abstentions by 4.
+**Learned:** every earlier comparison had assumed zero variance. The main findings survive (baseline → v3 moved missed clauses by 7 and false claims by 8), but category-level differences of 1 or 2 are noise, and abstention counts are unstable because borderline cases waver between present, absent and unclear. Added `eval/compare_runs.py`: paired, question-by-question comparison with an exact McNemar test, so future experiments get a statistical verdict instead of a read of two tables.
+
+### 2026-11-09 · Slice 1 · A/A tests overturn my comparisons; consistency is the real weakness
+**Did:** Compared runs question by question with `eval/compare_runs.py`. Baseline → v3-neutral: 26 of 200 outcomes changed; lost detections 8 vs 1 gained (p = 0.039); false claims fixed 10 vs 3 introduced (p = 0.092). Then two A/A comparisons (v3-neutral against two identical re-runs, confirmed by the `prompt` field in each results file).
+**Result:** both A/A comparisons changed **18 of 200 outcomes (9%)**. One reported false claims fixed 0 vs introduced 6, **p = 0.031, between identical configurations.**
+**Broke (my method):** I had been reading differences between single runs as effects of my changes. At 200 questions, with 9% of outcomes flipping by chance, a single paired p-value is not reliable: an identical comparison produced one below 0.05. The conclusions "strict wording cost 8 detections" and "strict wording fixed Termination For Convenience" are withdrawn to hypotheses.
+**Also broke:** my comparison command used a wildcard that matched two repeat files and printed the usage text; fixed by naming the files.
+**Learned:** (1) run A/A before believing A/B; (2) totals hide movement (run 1 vs run 2 differ by 1 missed clause, yet 18 outcomes changed); (3) the product gives a different answer to the same question about 1 time in 11, which is an auditability problem before it is an accuracy problem.
+**Next:** ADR-0022, three samples per question with unanimity required, measured by its own A/A flip rate, on a separate evaluation deployment (`infra/03c-eval-deployment.ps1`).
+
+### 2026-11-09 · Phase 6 · PostgreSQL script failed on renamed CLI options, and reported success anyway
+**Broke:** `infra/06-postgres.ps1` failed at every step: the CLI in Cloud Shell no longer accepts `--active-directory-auth` (now `--microsoft-entra-auth`), the `ad-admin` command group (now `microsoft-entra-admin`), or `-n` for the server in firewall and database commands (now `--server-name`). Nothing was created, but the script printed "Created", "Entra admin set" and "Ready".
+**Second time:** the same pattern (a native command fails, the next line prints success) happened in phase 5c with role assignments. Fixed there locally, not at the root.
+**Fix at the root:** `Invoke-Az` in `infra/config.ps1` stops the script on any non-zero exit code; `Test-AzOption` checks which option names the installed CLI supports. The PostgreSQL script uses both.
+**Learned:** fix a class of bug once, centrally, the second time you see it. In PowerShell, native commands do not throw; every script needs an explicit failure check.
+
+### 2026-11-10 · Phase 6 · Server created; firewall refused because public access was off
+**Result:** `pg-ci-dev-2416` Ready, PostgreSQL 16, B1ms, Entra auth Enabled, password auth Disabled, Entra admin set.
+**Broke:** firewall rule creation failed: "not supported for a server without public access enabled". In this CLI version `--public-access None` at create time disabled public network access entirely instead of meaning "public, no rules".
+**Worked as intended:** `Invoke-Az` stopped the script with the real error instead of printing success (yesterday's root fix).
+**Fix:** the script now reads `network.publicNetworkAccess` and sets it to Enabled explicitly before adding the one-IP firewall rule.
+**Learned:** the same CLI value can mean different things across versions; set the state you need and verify it, rather than relying on a create-time default.
+
+### 2026-11-11 · Phase 6 · PostgreSQL live, taxonomy seeded with no password anywhere
+**Result:** `infra/06-postgres.ps1` ran clean twice (idempotent): Entra auth Enabled, password auth Disabled, public access Enabled, one firewall rule (laptop IP), database `contracts`. `taxonomy/seed_from_cuad.py` connected from the laptop with an Entra access token as the password and loaded draft version `cuad-v1-draft`, 41 categories.
+**Added:** approval step (`taxonomy/approve.py`), a least-privilege database role for the Function's managed identity (`taxonomy/grant_identity.py`), runtime lookup that reads only the approved version and logs unmapped terms (`agents/taxonomy.py`).
+**Decision:** did not open the firewall to "all Azure services" so the Function could connect; the network path waits for private networking (ADR-0011, "Network path").
+
+### 2026-11-11 · Phase 7 · API Management rejected a blank backend URL
+**Did:** Ran `infra/07-sap-apim.ps1`: Key Vault (RBAC), `sap-api-key` secret, mock SAP Function with a Key Vault reference, API Management (Consumption) with a managed identity, Key Vault-backed named value.
+**Broke:** creating the API failed: `Invalid value of the Web service URL`. The script read the mock SAP host from `defaultHostName`, which can be empty for Flex Consumption apps, so the backend URL became `https:///api`.
+**Fix:** the script tries each field the host can appear in and stops with a clear error if none has it, instead of passing a blank value on.
+**Learned:** `Invoke-Az` stops on failed commands, but not on commands that succeed and return nothing. Values that later steps depend on need their own check.
+
+### 2026-11-11 · Phase 7 · System of record reachable only through the gateway, with no secret in code
+**Result:** after the host fix, `infra/07-sap-apim.ps1` completed: API `sap-vendor` (`GET /sap/vendors/{vendorId}`), rate limit 60/min, 10 s backend timeout, SAP credential injected from a Key Vault-backed named value, subscription scoped to this API with its key stored in Key Vault. The script's access tests passed (through APIM with key, refused without a key, mock SAP refused when called directly).
+**End to end from the laptop:** `python -m agents.tools.vendor V1A2B3C` returned a typed record (status active, payment terms Net 90, currency USD, country DE). Path: my Entra identity → Key Vault (subscription key) → API Management → Key Vault reference (SAP credential) → mock SAP.
+**Secrets handled:** two, both generated in memory and written straight to Key Vault; neither was printed, stored in config or committed.
+**Day summary (2026-11-11):** PostgreSQL with Entra-only auth and a governed, approved taxonomy; a least-privilege database role for a managed identity; Key Vault, API Management and Key Vault references; a typed, fail-closed system-of-record tool. 36 unit tests.
+
+### 2026-11-11 · Hardening · Entitlements: design rule and a zero-leak test
+**Question asked:** how do I make sure a user sees only what they are entitled to?
+**Gap found:** the filter is correct, but the caller supplies its own groups (`--groups`). Whoever chooses the groups chooses what they see.
+**Decision (ADR-0023):** groups come only from the validated Entra token in the API; tags mirror the source's access list with a re-tag sync; tools check the user's entitlement before acting; stored answers and history inherit their sources' tags; logs hold IDs, not text.
+**Added:** `eval/leakage_test.py`: enumerate per group, forbidden documents by ID and name, adversarial question text, injection values. Pass mark: 0 leaks; exit code 1 otherwise, so it can gate a deployment.
+
+### 2026-11-11 · Roadmap · Identity before agents
+**Decision:** swapped the order of the next two steps. The API with Entra token validation now comes before the LangGraph orchestrator.
+**Why:** building agents on a system that trusts the caller's own groups means every agent feature inherits that gap, and in financial services an agent that can read more than its user is a breach. With the token check in place first, every tool is checked against the user's access from day one.
+
+### 2026-11-11 · Hardening · Leakage test: 0 leaks, and a probe that was miscounting
+**First run:** PASS, 0 leaks in 194 probes, but `grp-legal` appeared to see only 41 of its 50 entitled contracts.
+**First thought:** 9 contracts missing from the index, so legal users denied documents they own.
+**Actual cause:** the test. It listed documents by paging through a `*` search with `skip`, which has no stable order, so pages overlapped and skipped chunks. `grp-procurement` fit in one page, so its count was exact.
+**Fix:** enumerate with a facet on `doc_id` (one exact answer, no paging) and add a coverage probe that asks for each entitled document directly. Coverage gaps get their own exit code (2), separate from leaks (1).
+**Second run:** PASS, 0 leaks in 260 probes; coverage 50/50 for legal, 16/16 for procurement. Legal sees 51 documents: the 50 in the evaluation set plus the one uploaded through the event-driven path, tagged `grp-legal`.
+**Learned:** a security test that can undercount can also miss leaks. Test the test: an exact count, checked from two directions (what a group sees, what it should see).
+**Known limit:** documents outside the evaluation set are assumed `grp-legal` only. In production the expected access comes from the source system's access list, not an assumption.
+
+### 2026-11-11 · Identity · A separate identity tenant, because the university directory is locked
+**Found:** the Stevens tenant does not let students create app registrations or security groups, and I hold no directory roles. It does allow creating a tenant.
+**Did:** created `ciidentitydev2416.onmicrosoft.com` (the Entra admin overview was blocked, the create form opened from its direct link). `infra/08-identity.ps1` created the API app with app roles `Contracts.Legal` and `Contracts.Procurement`, required role assignment, three test clients and three test users, and wrote seven secrets straight to Key Vault in the resource tenant.
+**Broke (1):** a placeholder in angle brackets in my bash instructions; bash read `<` as a file redirect. Same mistake as earlier with PowerShell. No more angle-bracket placeholders in commands.
+**Broke (2):** 401 from Key Vault: the tenant ID passed was the new identity tenant's (the login prompt showed it), not the resource tenant's. The script's write probe stopped it before anything was created. Added a guard that refuses identical tenant IDs. Found the resource tenant ID from the public OpenID configuration of `stevens.edu`.
+**Broke (3):** `ConvertFrom-Json` failed on a Graph response: the helper merged az warnings (stderr) into the output. Graph calls now keep stderr apart. Rerun was safe: existing objects reported as already present, the one client secret rotated.
+**Verified:** `python -m identity.tokens`: legal and procurement clients get v2.0 tokens with the right `roles`, audience and issuer; the client with no role is refused a token by Entra (`AADSTS501051`).
+
+### 2026-11-11 · Identity · API that takes entitlements only from the token
+**Built:** `api/` (FastAPI): validates RS256 tokens against the identity tenant's published keys (issuer, audience, tenant, expiry, required claims), maps roles to search groups through a fixed table, refuses a token with no contract role (403), and rejects request bodies with unknown fields (422) so a client cannot send its own groups. Audit log: caller, app, groups, document IDs; never text.
+**Tests:** 22 unit tests with locally signed tokens: forged body fields and headers, wrong key, expired, wrong audience, issuer or tenant, missing claims, `alg: none`, HS256 algorithm confusion, no role. `api/smoke_test.py` checks the same with real Entra tokens against a running API.
+
+### 2026-11-12 · Phase 9 · Fixes before deploying, and the deployment script
+**Fixed:** `06b-postgres-stop-start.ps1` printed the 7-day restart notice even when the stop failed (wrong subscription), and reported stopping an already stopped server as an error. It now checks the subscription first, uses `Invoke-Az`, and treats "already in that state" as success.
+**Added:** `Assert-ResourceSubscription` in `config.ps1`: every resource script stops if the CLI is pointed at the identity tenant.
+**Added:** `Dockerfile` (non-root, `--no-server-header`, runtime packages only), default-deny `.dockerignore`, `infra/09-container-app.ps1` (ADR-0025).
+
+### 2026-11-12 · Phase 9 · Cloud build blocked; build in GitHub Actions with no stored secret
+**Broke:** `az acr build` → `TasksOperationsNotAllowed`: ACR Tasks are not permitted on this student subscription. The default-deny `.dockerignore` worked: 21.5 KB of context uploaded.
+**Decision (ADR-0025 revised):** build in GitHub Actions and push to the same private registry. Workload identity federation: managed identity `id-ci-github-2416` trusts only GitHub OIDC tokens for `main` of this repo and holds only `AcrPush` on `acrcidev2416`. No credential stored in GitHub, only identifiers. The API security tests run before the build.
+**Changed:** `09-container-app.ps1` no longer builds; it deploys the image for the last commit that changed the API and stops if that image does not exist.
+
+### 2026-11-12 · Phase 9 · Two sign-in failures in GitHub Actions
+**Broke (1):** `Not all values are present`: the three GitHub secrets had never been set (the commands were printed in Cloud Shell; they must run where `gh` is signed in). `gh secret list` showed none. Set them; the step order in my instructions was also wrong (script run before it was pushed).
+**Broke (2):** `AADSTS700213 No matching federated identity record`: GitHub presented the subject `repo:OWNER@OWNER_ID/REPO@REPO_ID:ref:refs/heads/main`, with immutable IDs, not the name-only `repo:OWNER/REPO:...` I configured.
+**Fix:** `09a` reads the owner and repository IDs from the GitHub API and sets (or updates) the subject in that form.
+**Learned:** immutable IDs in the trust are a security feature: if the account or repository were renamed and someone took the old name, a name-only trust would accept their tokens.
+
+### 2026-11-12 · Phase 9 · The environment is Express, which refuses system-assigned identities
+**Broke:** `az containerapp registry set --identity system` → `ExpressRegistrySystemIdentityNotSupported`. The CLI created the Container Apps environment as an Express environment, which supports only user-assigned managed identities (runtime and image pull).
+**Fix:** two user-assigned identities: `id-ci-api-pull-2416` (AcrPull only) pulls the image; `id-ci-api-run-2416` (Search Index Data Reader, Cognitive Services OpenAI User) is the API at runtime, selected with `AZURE_CLIENT_ID`. The first attempt's app and its system identity's role assignments are removed by the script.
+**Learned:** this is also the documented best practice: a dedicated identity for registry pulls, separate from the workload's identity, so the code's identity never needs registry access and the pull identity can do nothing else.
+
+### 2026-11-12 · Phase 9 · API deployed; same checks pass in Azure as on the laptop
+**Result:** `contracts-api:8623b9a` running on Container Apps (Express environment, scale to zero), pulled by `id-ci-api-pull-2416`, running as `id-ci-api-run-2416`. No registry password, no secret in the app, none in GitHub.
+**Smoke test against the deployed URL with real Entra tokens:** 10 of 10 OK. No token → 401; malformed → 401; groups come from the token; procurement's forged `groups` in the body → 422; forged header ignored; client with no role refused a token by Entra.
+**Also found today:** `identity/` had never been committed; the build from the repository failed where the laptop worked. Building from the repository, not a laptop, is what caught it.
+**Day summary (2026-11-12):** five failures, each caught by a check before anything wrong was deployed: cloud build blocked, secrets missing, federated subject format, missing folder, Express identity model.
+
+### 2026-11-13 · Orchestration · Graph, tools bound to the caller, taxonomy snapshot
+**Built:** `agents/orchestrator.py` (LangGraph: plan → answer → vendor if needed → compose), `agents/taxonomy_snapshot.py`, `taxonomy/export_snapshot.py`, `retrieve.document_vendor` (vendor ID only through the caller's search filter), `/ask` endpoint, `api/ask_check.py` (real tokens, all calls through the API).
+**Decisions:** routing in code, model only writes the cited answer; the deployed API reads the approved taxonomy from a committed snapshot instead of connecting to PostgreSQL; the runtime identity can read one Key Vault secret (scoped at the secret).
+**Tests:** 11 new (vendor for a hidden contract refused without saying why, vendor system down abstains and keeps the clause answer, not-found is a fact, no vendor intent means no vendor call, graph state has no place for groups, `/ask` takes groups only from the token). CI now runs them before building the image.
+
+### 2026-11-13 · Orchestration · Deployed; confused-deputy and outage checks pass live
+**`api/ask_check.py` against the deployed API, real Entra tokens, all calls through the API:**
+- legal: cited answer (ANSWERED), category `cap_on_liability`, taxonomy `cuad-v1-draft`; no vendor call (no vendor intent)
+- procurement, vendor for a contract both groups can see: OK
+- procurement, vendor for a legal-only contract: NOT_AVAILABLE, no vendor lookup, no clause evidence
+**Live outage:** stopped the mock SAP app. Vendor part ABSTAIN ("vendor system unavailable … vendor-dependent findings withheld"), overall PARTIAL, clause answer still ANSWERED. Started it again.
+**Noted:** a stopped app answers HTTP 403, not 503. Because the tool treats only 404 as "not found" and every other failure as unavailable (ADR-0010), the outage was classified correctly. Code that read 403 as "no access" or 404-like would have told the user something false.
+
+### 2026-11-16 · Agent · The first agent that decides its own steps
+**Question that started it:** "how many agents do we have?" Honest answer: none. The system was an LLM-powered workflow (code decides every step; the model writes the answer).
+**Built:** `agents/agent.py` (LangGraph `model ↔ tools` loop; tools: search, taxonomy, vendor, submit), `/ask` with `"mode": "agent"` (opt-in), `eval/agent_eval.py` (agent vs workflow on the same questions, plus entitlement probes with zero leaks as a hard gate).
+**Kept in code:** tools bound to the caller, searches pinned to the request's contract, vendor tool refuses contracts outside scope, citations only to clauses retrieved in this run, 6 turns and 3 searches maximum.
+**Tests:** 10 new (an obeyed prompt injection cannot reach another contract, citation to a clause never retrieved is dropped, answering without searching cannot be grounded, step and search limits, no tool schema accepts groups). 79 in total.
+**Roadmap:** Bicep replaced by Terraform for the infrastructure-as-code step.
+
+### 2026-11-16 · Agent · First measurement against the workflow
+**Quick check (20 questions, 3 workers, app deployment 50K TPM):** agent p50 33 s vs workflow 3 s.
+**First thought:** the agent is slow. **Actual cause:** rate limiting; the agent resends its growing conversation each turn (~8K tokens per question) and three parallel workers exceeded 50K TPM.
+**Fix:** ran `03c` (never committed before; now reads the model version from the app deployment instead of hard-coding it): evaluation deployment `gpt-5.4-mini-eval`, 200K TPM. Agent p50 dropped to 3.1 s.
+**Full comparison (100 questions):** found 91% vs 84%, missed 5 vs 9, false claims 6 vs 8, grounded 94% vs 98%, 1.8x tokens; 0 leaks, 10 refusals exercised. McNemar p = 0.077. Verdict: promising, not proven; agent stays opt-in ([results](../eval/results/agent-vs-workflow.md)).
+
+### 2026-11-16 · Agent · Before a second model: measure the first one properly
+**Decision:** no second model yet. A reviewer model fixes false claims and wrong passages, not retrieval misses, so the error types decide whether it is worth its cost and latency.
+**Added to `eval/agent_eval.py`:** `--arms agent-aa` (the agent against itself: its own noise floor), `--contracts next10 | all20` (the other half of the 20-contract set), and an error bucket for every wrong answer: retrieval (labelled text never retrieved), reasoning (retrieved but missed), false claim, other text (right answer, different quote), abstain.
+**Roadmap:** monitoring (alerts on abstain rate, citation drops, refused tool calls, tokens per question) added before the second model: today a misbehaving model is caught on every request, a wrong one only in offline evaluation.
+
+### 2026-11-16 · Agent · Agent A/A: the earlier lead was mostly noise; errors are judgment, not retrieval
+**Agent vs itself (same 100 questions):** found 86% / 88%, missed 8 / 7, false claims 5 / 5; outcomes differ on 11% (workflow: 9%). The first comparison's 91% was the lucky end; against the workflow's 84% the gap is now within noise.
+**Error buckets:** retrieval 2 / 1, reasoning 6 / 6, false claims 5 / 5, other text 2 / 1. About 11 of 13 errors happen after the labelled text was retrieved: the model misjudges evidence it has.
+**Caught before building:** "add the taxonomy definition to the prompt" would change nothing: the evaluation questions ARE the CUAD descriptions the taxonomy was seeded from. What is missing are boundaries (includes / excludes), empty since ADR-0011.
+**Next:** `eval/review_errors.py` re-asks the judgment errors and shows label vs model side by side. Classify each as model wrong, label wrong or debatable, or unclear, before writing any boundary; boundaries are checked on contracts outside the evaluation set so they are not fitted to the test.
+
+### 2026-11-16 · Agent · Reading the 11 judgment errors
+**Verdicts:** 6 model wrong (all reproduced, all boundary errors in 4 categories), 4 noise (correct on re-run, two at the same boundaries), 1 label debatable (Audit Rights).
+**Patterns:** too literal on Anti-Assignment (an outright ban "is not a consent requirement", twice) and Cap On Liability (excluding consequential damages "is not a cap"); too broad on Renewal Term (indefinite term; extension only by mutual agreement) and Non-Compete (an exclusivity commitment). Only 1 of 11 answers contradicted its own determination, so a cheap contradiction check would catch little.
+**Decision (ADR-0028):** boundaries in a new taxonomy version `cuad-v2`, shown in the prompt for the question's category; measured on `next10` (held out: none of its errors were read) before approval.
+
+### 2026-11-16 · Agent · Held-out runs: agent becomes default; first boundary draft rejected
+**next10 baseline (held out):** agent found 98% vs 89%, missed 1 vs 7, false claims 10 vs 10; 0 leaks. Pooled with first10: 24 vs 10, p = 0.024. **ADR-0027 accepted: agent is the default on `/ask`.**
+**next10 with the cuad-v2 draft:** workflow 17 → 18 errors, agent 11 → 13. Not approved.
+**Why:** only 4 of 10 categories were recognised from their CUAD questions (Non-Compete never got its boundaries; Exclusivity matched "Parties" through the one-word term "parties", a production bug too), and the Cap On Liability include doubled false claims (2 → 4) because CUAD labels disagree on damage exclusions.
+**Fix:** one-word terms never pick a category; question-phrase terms for all evaluated categories; the Cap include removed. Decision moves to `rest30`, the 30 contracts never used for development.
+**Learned:** the held-out set did its job twice in one run: it rejected a rule fitted to one example and exposed a bug the development set could not show.
+
+### 2026-11-16 · Agent · Final test set reverses the agent decision; boundaries rejected
+**rest30 (300 questions never used for development), boundaries off:** workflow vs agent 22 / 24, p = 0.88; agent missed 7 vs 10 but false claims 29 vs 27, at 2x tokens and 2x p95 latency. 0 leaks.
+**Boundaries on:** workflow 37 → 38 errors, agent 36 → 42. `cuad-v2` rejected; stays a draft.
+**Reversed:** the agent had been made the default after 200 questions (p = 0.024). The final set did not confirm it, so the workflow stays the default and the agent stays opt-in (ADR-0027). The change had not been pushed or deployed: nothing in production moved.
+**Broke on the way:** the laptop's Azure CLI sign-in expired mid-run after several hours (`AzureCliCredential.get_token failed`); `az login` and a rerun fixed it.
+**Learned:** a final test set has to be named before any results are seen and used exactly once. Two "held-out" halves that had already shaped decisions were not enough.
+
+### 2026-11-25 · Costs · Real spend, and where to find it
+**Tried:** `az consumption usage list` returned 292 usage records, none with a price (`pretaxCost` = None): this subscription reports usage without cost through the API. The Sponsorships portal does not cover Azure for Students.
+**Found it:** subscription Overview in the portal: **$30.59** spent, forecast $37.68 for the month. Azure OpenAI $18.11 (mostly the 2026-11-16 evaluation runs), Document Intelligence $10.30 (one-time extraction, below the $15.26 projected), Container Registry $2.09 (the only fixed cost), all else $0.10. PostgreSQL stayed within the subscription's free hours.
+**Learned:** evaluation is the biggest cost in this project, not serving; and on a sponsored subscription, cost tracking cannot be automated through the usage API. In a real tenant: Cost Management budgets and alerts per resource group.
+**Also:** README gains the as-built architecture diagram; "Known weakness" changed from consistency to false claims.
+
+### 2026-11-25 · Security · One drawing for how the system is secured
+**Added:** `docs/architecture/security.png` and a README section. Nine layers (identity, token validation, entitlements, agent and tools, secrets and service identity, supply chain, network, data and audit, failing safely), each placed on the request path with its controls, the test that proves it, and what is still open.
+**Learned:** writing the "still open" column was the useful part. The controls that are missing are mostly about detection and evidence (immutable audit, alerts, image scanning), not prevention: the build stops bad requests well but would not tell anyone quickly that one was tried.

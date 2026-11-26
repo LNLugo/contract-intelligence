@@ -1,0 +1,2938 @@
+{
+ "contracts": "first10",
+ "deployment": "gpt-5.4-mini-eval",
+ "seconds": 91,
+ "results": [
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 3938,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4497,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Cap On Liability",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4268,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Anti-Assignment",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4431,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": false,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4189,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": false,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": false,
+     "new": false,
+     "kind": "not_in_clause"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 81.4,
+     "quote": "shares of PSS Common Stock received by the undersigned pursuant to the Merger can only be sold by the undersigned",
+     "clause": "4. Restrictions on Transfer. The undersigned understands and agrees that\n\nstop transfer instructions with respect to the shares of PSS Common Stock received by the undersigned pursuant to the Merger will be given to PSS's transfer agent and that there will be placed on the certificates for such shares, or shares issued in substitution thereof, a legend stating in substance:\n\n\"The shares represented by this certificate were issued pursuant to a business combination which is accounted for as a \"pooling of interests\" and may not be sold, nor may the owner thereof reduce his risks relative thereto in any way, until such time as PSS, Inc. (\"PSS\") has published the financial results covering at least 30 days of combined operations after the effective date of the merger through which the business combination was effected. In addition, the shares represented by this certificate may not be sold, transferred or otherwise disposed of except or unless (1) covered by an effective registration statement under the Securities Act of 1933, as amended, (2) in accordance with (i) Rule 145(d) (in the case of shares issued to an individual who is not an affiliate of PSS) or (ii) Rule 144 (in the ---\n\ncase of shares issued to an individual who is an affiliate of PSS) of the Rules and Regulations of such Act, or (3) in accordance with a legal opinion satisfactory to counsel for PSS that such sale or transfer is otherwise exempt from the registration requirements of such Act.\"\n\nSuch legend will also be placed on any certificate representing PSS securities issued subsequent to the original issuance of the PSS Common Stock pursuant to the Merger as a result of any transfer of such shares or any stock dividend, stock split, or other recapitalization as long as the PSS Common Stock issued to the undersigned pursuant to the Merger has not been transferred in such manner to justify the removal of the legend therefrom. Upon the request of the undersigned, PSS shall cause the certificates representing the shares of PSS Common Stock issued to the undersigned in connection with the Merger to be reissued free of any legend relating to restrictions on transfer by virtue of ASR 130 and 135 as soon as practicable after the requirements of ASR 130 and 135 have been met. In addition, if the provisions of Rules 144 and 145 are amended to eliminate restrictions applicable to the PSS Common Stock received by the undersigned pursuant to the Merger, or at the expiration of the restrictive period set forth in Rule 145 (d), PSS, upon the request of the undersigned, will cause the certificates representing the shares of PSS Common Stock issued to the undersigned in connection with the Merger to be reissued free of any legend relating to the restrictions set forth in Rules 144 and 145 (d) upon receipt by PSS of an opinion of its counsel to the effect that such legend may be removed.\n\n5. Understanding of Restrictions on Dispositions. The undersigned has\n\ncarefully read the Agreement and this Affiliate Agreement and discussed their requirements and impact upon his ability to sell, transfer, or otherwise dispose of the shares of PSS Common Stock received by the undersigned, to the extent he believes necessary, with his counsel or counsel for GSMS.\n\n6. Filing of Reports by PSS. PSS agrees, for a period of three years\n\nafter the effective date of the Merger, to file on a timely basis all reports required to be filed by it pursuant to Section 13 of the Securities Exchange Act of 1934, as amended, so that the public information provisions of Rule 145 (d) promulgated by the SEC as the same are presently in effect will be available to the undersigned in the event the undersigned desires to transfer any shares of PSS Common Stock issued to the undersigned pursuant to the Merger."
+    }
+   ]
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4482,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Audit Rights",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4082,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4474,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "present",
+   "tokens": 4449,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "GULFSOUTHMEDICALSUPPLYINC_12_24_1997-EX-4-AFFILIATE AGREEMENT.PDF",
+   "category": "License Grant",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4241,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 3797,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Termination For Convenience",
+   "present": true,
+   "determination": "present",
+   "tokens": 3931,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 3933,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Anti-Assignment",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3932,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3930,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3909,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Audit Rights",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3947,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3881,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "too_short"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "too_short",
+     "score": 0.0,
+     "quote": "\u00a7 6 Limitation of liability",
+     "clause": "consent of the receiver (s) (no spam e-mails) .\n\n(2) The Affiliate shall guarantee the above named properties of its Web sites and will pay defense costs and indemnify and keep fully indemnified the Software Publisher and element 5, its subsidiaries and its and their directors, officers, employees and agents upon demand from any and all claims, demands, costs, liabilities, losses, expenses, and damages (including reasonable attorneys' fees, costs, and expert witnesses' fees) arising out of or in connection with any breach by Affiliate of its warranty set out in this clause.\n\n$ 6 Limitation of liability\n\n(1) The parties exclude mutual liability for slightly negligent violation of obligations in connection with this agreement, with the exception of \u00a7 16 and \u00a7 5 (3) of this agreement. This includes in particular the liability exclusion for lost profit, the loss of data or interruption to or errors in the operation of the Web site of the Affiliate. The above liability exclusion also applies to the personal liability of employees, representatives and persons employed to perform the obligations of the parties to the agreement. The limitation of liability does not apply to claims arising through initial incapacity or in case of justifiable impossibility.\n\n(2) Any possible product liability claims are unaffected by the above limitations. Insofar as element 5 or the Software Publisher violates an essential obligation under the agreement, the obligation to pay restitution is limited to the damages that typically arise.\n\n(3) element 5 makes no guarantees in regard to the Software Publisher's software products offered via its Web site. Moreover, element 5 does not guarantee the Affiliate that the operation of its Web sites will be maintained without interruptions and without errors. Liability is expressly excluded for the consequences of such interruptions or errors.\n\n\u00a7 7 Agreement period / Cancellation\n\nThe term of this Agreement will begin upon acceptance of Affiliate's Program application and will end when terminated by either party of this Agreement. This Agreement is entered into for an unlimited period of time. Either party may cancel this Agreement at any time, with or without supplying a reason, through written notification or by making suitable settings in the respective Control Panel.\n\n\u00a7 8 Termination of the agreement\n\n(1) When the agreement ends, all usage rights of the Affiliate and Software Publisher accorded by this agreement with regard to the provided logos or Web site contents expire.\n\n(2) Upon termination of the relationship under this agreement, the Affiliate is obligated to undertake all of the technical measures necessary to delete from its Web site all links that refer to the Web sites of element 5 or to the Software Publisher. The same applies upon termination of Affiliate Management for links of the Software Publisher that were established in connection with the participation in Affiliate Management on its Web site.\n\n(3) element 5 is authorized to retain final payment for a reasonable time, minimum for 30 days after the end of the respective quarter, to ensure that the correct amount is paid.\n\nAffiliate is only eligible to earn the Advertising Cost Compensation on sales of Software Publishers Products occurring during the term of this Agreement and fees earned up to the date termination will remain payable only if the related orders are not cancelled or returned. If the Advertising Cost Compensation was previously paid by element 5, it can be offset or invoiced to Affiliate at element 5's own discretion.\n\n\u00a7 9 Final provisions\n\n(1) Force majeure\n\nIf a party is unable to fulfill its obligations under the agreement for reason of force majeure, it shall immediately inform the other party thereof and do everything in its power to resume normal operations as quickly as possible. In such case, the affected party shall not be deemed to be in breach of contract and cannot be held liable.\n\n(2) Provision for written form\n\nAdditional agreements, changes or additions are valid only if element 5 has confirmed them in writing. The same applies to the warranting of properties.\n\n(3) Severability clause"
+    }
+   ]
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4327,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "SouthernStarEnergyInc_20051202_SB-2A_EX-9_801890_EX-9_Affiliate Agreement.pdf",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 3814,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4044,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Termination For Convenience",
+   "present": true,
+   "determination": "present",
+   "tokens": 4258,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4388,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4303,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4481,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "present",
+   "tokens": 4351,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "absent",
+   "tokens": 4390,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 81.2,
+     "quote": "meet with the Company at least once each quarter... and the Agent will make available to the Company information concerning the Agent's sale and marketing of the Products",
+     "clause": "(d) maintain a suitable staff in the Territory to enable the Agent for the proper promotion, sale, and merchandising of the Products and for seeking to assure Customer and consumer satisfaction with the Products;\n\n(e) not solicit or accept orders for the Products other than from Customers within the Territory after the Agent Launch Date; and not knowingly, or knowingly permit others to, distribute or resell Products outside the Territory or for end use by other than duly licensed veterinarians;\n\n(f) meet with the Company at least once each quarter (starting with the quarter in which the Agent Launch Date occurs), at a mutually agreeable time and place to discuss and review the Agent's activities hereunder, at which meeting the Agent will make available to the Company information concerning the Agent's sale and marketing of the Products in the Territory during the quarter and year-to-date, such information to include details of sales efforts, Product sales volume and such other information as may be mutually agreed upon in each Business Plan;\n\n(g) at least thirty (30) days prior to use or distribution of any sales, promotion or training materials relating to the Products (other than materials provided to the Agent by the Company for such purpose) , submit such materials to the Company for review, give due consideration to any comments received from the Company with respect to such materials, and not use or distribute any such materials without the express prior written consent of the Company (which consent will not be unreasonably withheld or delayed) ; and\n\n(h) make all field sales personnel of the Agent available for at least four (4) hours, and telesales personnel available for at least one (1) hour, of initial Products sales and marketing training by the Company, and for such supplemental training by the Company as the Company may deem appropriate from time to time, in each case, at such times and locations as may be mutually agreed upon by the Company and the Agent.\n\n5\n\n(i) make all field sales representatives of the Agent available to work with field sales representatives of the Company at least two (2) full business days per agreement year.\n\n(j) maintain sales and promotion of the Company's Products so as to meet or exceed the previous years annual sales within the same competitive environment.\n\n(k) cooperate and participate in any national or area promotional program offered by the company for any Products covered by this agreement.\n\n(l) follow the Company's credit policy (See Paragraph 2.3 Payment Terms) or program terms promptly in payment of goods shipped to the Customer. Product (s) shipped to the Customer will be billed to the Agent at the price stated on a current price list or according to the current price program minus a ten (10) percent discount as outlined in Paragraph 1.5 (d) . It is the responsibility of the Agent to evaluate the credit worthiness of the Customer. Upon transmitting an order for shipment to the Company, the Agent accepts full responsibility for payment of the product from the Customer.\n\n(m) transmit all orders, taken from the Customer for Product (s), a minimum of once daily basis, by either fax, electronic mail, or other agreed upon means of transmission so as to afford the Company time to process and ship said orders in an expediant manner.\n\n(n) sell products only at the Company's current stated list or promotional price.\n\n1.5 Company Obligations. Except as otherwise expressly provided in the Business Plan, the Company will at its sole expense:"
+    }
+   ]
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Insurance",
+   "present": true,
+   "determination": "present",
+   "tokens": 4217,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4246,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "BIOPURECORP_06_30_1999-EX-10.13-AGENCY AGREEMENT.PDF",
+   "category": "License Grant",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4160,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4396,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4335,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": false,
+     "new": false,
+     "kind": "too_short"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": false,
+     "new": false,
+     "kind": "too_short"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "absent",
+   "tokens": 4498,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "unclear",
+   "tokens": 4305,
+   "old": "ABSTAIN",
+   "new": "ABSTAIN",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "present",
+   "tokens": 4663,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Non-Compete",
+   "present": true,
+   "determination": "unclear",
+   "tokens": 4394,
+   "old": "ABSTAIN",
+   "new": "ABSTAIN",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 73.0,
+     "quote": "If a majority of the equity securities of either 2TheMart or i-Escrow, Inc. ... are acquired by another company during the term of this Agreement either company may terminate this Agreement",
+     "clause": "8.2 TERMINATION FOR BREACH. In addition to other remedies that may be available to it, by providing written notice, a party may immediately terminate this Agreement: (a) if the other party materially breaches this Agreement and fails to cure that breach within sixty (60) days after receiving written notice of the breach, or (b) as provided in Sections 2.2 [INITIAL INFORMATION TRANSFER MECHANISM DEVELOPMENT], 2.4 [RESTRICTIONS ON COMMUNICATIONS], or 12.4.\n\n8.3 TERMINATION FOR CHANGE IN COMPANY STRUCTURE. If a majority of the equity securities of either 2TheMart or i-Escrow, Inc. (except that i-Escrow may sell all or a majority of its equity securities or voting interests to i-Escrow. com, and i-Escrow. com may sell all or a majority of its equity securities or voting interests to i-Escrow's existing shareholders, without triggering the foregoing) are acquired by another company during the term of this Agreement either company may terminate this Agreement, without liability, by giving a thirty (30) days written notice to the other party.\n\n8. 4 TERMINATION FOR BANKRUPTCY. Either party may terminate or suspend this Agreement effective immediately and without liability upon written notice to the other party if any one of the following events occurs:\n\n(a) the other party files a voluntary petition in bankruptcy or otherwise seeks protection under any law for the protection of debtors;\n\n(b) a proceeding is instituted against the other party under any provision of any bankruptcy laws which is not dismissed within ninety (90) days;\n\n(c) the other party is adjudged bankrupt;\n\n(d) a court assumes jurisdiction of all or a substantial portion of the assets of the other party under a reorganization law;\n\n(e) a trustee or receiver is appointed by a court for all or a substantial portion of the assets of the other party;\n\n(f) the other party becomes insolvent, ceases or suspends all or substantially all of its business; or\n\n(g) the other party makes an assignment of the majority of its assets for the benefit of its creditors.\n\n8.5 EFFECTS OF TERMINATION. Upon expiration or termination of this Agreement for any reason: (a) all rights granted herein shall terminate, (b) i-Escrow shall pay all amounts owed to 2TheMart within six (6) weeks of termination, and (c) each party shall remove the other party's content and Marks from their servers. Notwithstanding the foregoing, unless this Agreement was terminated for a material breach, all provisions of this Agreement shall survive to the extent necessary for i-Escrow to complete any Customer transactions which are pending at the time of expiration or termination. Sections 1, 7, 8.5 [EFFECTS OF TERMINATION], 9, 10, 11 and 12 shall survive expiration or termination of this Agreement."
+    }
+   ]
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "present",
+   "tokens": 4508,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4504,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 73.0,
+     "quote": "If a majority of the equity securities of either 2TheMart or i-Escrow, Inc. ... are acquired by another company during the term of this Agreement either company may terminate this Agreement",
+     "clause": "8.2 TERMINATION FOR BREACH. In addition to other remedies that may be available to it, by providing written notice, a party may immediately terminate this Agreement: (a) if the other party materially breaches this Agreement and fails to cure that breach within sixty (60) days after receiving written notice of the breach, or (b) as provided in Sections 2.2 [INITIAL INFORMATION TRANSFER MECHANISM DEVELOPMENT], 2.4 [RESTRICTIONS ON COMMUNICATIONS], or 12.4.\n\n8.3 TERMINATION FOR CHANGE IN COMPANY STRUCTURE. If a majority of the equity securities of either 2TheMart or i-Escrow, Inc. (except that i-Escrow may sell all or a majority of its equity securities or voting interests to i-Escrow. com, and i-Escrow. com may sell all or a majority of its equity securities or voting interests to i-Escrow's existing shareholders, without triggering the foregoing) are acquired by another company during the term of this Agreement either company may terminate this Agreement, without liability, by giving a thirty (30) days written notice to the other party.\n\n8. 4 TERMINATION FOR BANKRUPTCY. Either party may terminate or suspend this Agreement effective immediately and without liability upon written notice to the other party if any one of the following events occurs:\n\n(a) the other party files a voluntary petition in bankruptcy or otherwise seeks protection under any law for the protection of debtors;\n\n(b) a proceeding is instituted against the other party under any provision of any bankruptcy laws which is not dismissed within ninety (90) days;\n\n(c) the other party is adjudged bankrupt;\n\n(d) a court assumes jurisdiction of all or a substantial portion of the assets of the other party under a reorganization law;\n\n(e) a trustee or receiver is appointed by a court for all or a substantial portion of the assets of the other party;\n\n(f) the other party becomes insolvent, ceases or suspends all or substantially all of its business; or\n\n(g) the other party makes an assignment of the majority of its assets for the benefit of its creditors.\n\n8.5 EFFECTS OF TERMINATION. Upon expiration or termination of this Agreement for any reason: (a) all rights granted herein shall terminate, (b) i-Escrow shall pay all amounts owed to 2TheMart within six (6) weeks of termination, and (c) each party shall remove the other party's content and Marks from their servers. Notwithstanding the foregoing, unless this Agreement was terminated for a material breach, all provisions of this Agreement shall survive to the extent necessary for i-Escrow to complete any Customer transactions which are pending at the time of expiration or termination. Sections 1, 7, 8.5 [EFFECTS OF TERMINATION], 9, 10, 11 and 12 shall survive expiration or termination of this Agreement."
+    }
+   ]
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "Renewal Term",
+   "present": true,
+   "determination": "present",
+   "tokens": 4487,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4388,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4350,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Termination For Convenience",
+   "present": true,
+   "determination": "present",
+   "tokens": 4300,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4364,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4384,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4657,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Non-Compete",
+   "present": true,
+   "determination": "absent",
+   "tokens": 4471,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": false,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "present",
+   "tokens": 4370,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4310,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "Renewal Term",
+   "present": true,
+   "determination": "present",
+   "tokens": 4171,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "RaeSystemsInc_20001114_10-Q_EX-10.57_2631790_EX-10.57_Co-Branding Agreement.pdf",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4514,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 3817,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4017,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Cap On Liability",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3884,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "absent",
+   "tokens": 3905,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4149,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 85.0,
+     "quote": "The Company and the ValueAct Group shall work together in good faith to fill such vacancy or replace such nominee",
+     "clause": "(d) At all times while serving as a member of the Board, the ValueAct Designee shall comply with all policies, procedures, processes, codes, rules, standards and guidelines applicable to Board members, including the Company's Code of Business Conduct, Insider Trading Policy, Executive Stock Ownership Policy as in effect on the date hereof, and Corporate Governance Guidelines, and (except as permitted by the Confidentiality Agreement (as defined in Section 7 below)) preserve the confidentiality of Company business and information, including discussions or matters considered in meetings of the Board or Board committees to the extent not disclosed publicly by the Company.\n\n(e) So long as the ValueAct Group collectively beneficially owns, in the aggregate, at least 7.5% of the outstanding Common Stock, if, during the Covered Period, a vacancy on the Board is created as a result of the ValueAct Designee's death, resignation, disqualification or removal, then the ValueAct Group and the Company (acting through the Board) shall work together in good faith to fill such vacancy or replace such nominee with an individual who (A) meets the Conditions, (B) meets the historical standards and criteria applied by the Company in nominating and appointing directors, and (C) is otherwise mutually acceptable (in each of their sole discretion) to the ValueAct Group and the Company, and thereafter such individual shall serve and/or be nominated as the \"ValueAct Designee\" under this Agreement.\n\n(f) The Company's obligations hereunder shall terminate immediately, and the ValueAct Designee shall promptly offer to resign from the Board, and any committee of the Board on which he then sits (and, if requested by the Company, promptly deliver his written resignation to the Board (which shall provide for his immediate resignation) it being understood that it shall be in the Board's sole discretion whether to accept or reject such resignation) if: (i) members of the ValueAct Group, collectively, cease to beneficially own at least 7.5% of the Company's outstanding Common Stock; (ii) the ValueAct Designee ceases to satisfy the conditions set forth in clauses (c)-(d) above; (iii) a member of the ValueAct Group, including the ValueAct Designee, otherwise ceases to comply or breaches any of the terms of this Agreement or the Confidentiality Agreement; or (iv) the employment of the ValueAct Designee with the ValueAct Group is terminated for any reason. The ValueAct Group agrees to cause the ValueAct Designee to resign from the Board if the ValueAct Designee fails to resign if and when requested pursuant to this Section 1(f). Notwithstanding the foregoing, in the event of the occurrence of an event set forth in subsection (ii) or (iv) above, the provisions of Section 1(e) must be complied with before the Company's obligations hereunder may terminate.\n\n(g) The percentage thresholds set forth in clauses (e) and (f) above shall not be deemed unsatisfied to the extent a failure to maintain the specified ownership thresholds is the result of share issuances or similar Company actions that increase the number of outstanding shares of Common Stock.\n\n2. Standstill."
+    }
+   ]
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4144,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Audit Rights",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3729,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3578,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3586,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ALLISONTRANSMISSIONHOLDINGSINC_12_15_2014-EX-99.1-COOPERATION AGREEMENT.PDF",
+   "category": "License Grant",
+   "present": false,
+   "determination": "absent",
+   "tokens": 3849,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4140,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4325,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 71.5,
+     "quote": "if: (a) The other Party breaches any material provision of this Agreement... and fails to cure such breach within thirty (30) days",
+     "clause": "ARTICLE VIII TERM AND TERMINATION\n\nSection 8.1 Term. Unless earlier terminated as provided below, the term of this Agreement shall begin on the Effective Date and shall continue for a period of five (5) years from the Effective Date (the \"Initial Term\") after which this Agreement may be extended on mutual agreement of the parties (a \"Renewal Term,\" and together with the Initial Term, the \"Term\"). If either party wishes to extend the Initial Term it shall provide notice to the other not later than 180 days, nor sooner than 270 days, before the end of the Initial Term. The parties shall then engage in discussions regarding renewal for a period of 30 days. If no agreement is reached during that 30-day period, then neither party shall have any obligation to extend this Agreement beyond the Initial Term.\n\nSection 8.2 Termination by Either Party. Either Party may terminate this Agreement, immediately, by giving written notice of termination to the other, and without prejudice to any other rights or remedies the terminating party may have, if:\n\n(a) The other Party breaches any material provision of this Agreement, other than any provision of Section 14.8 or Articles V or XIII, and fails to cure such breach within thirty (30) days after receipt from the terminating party of written notice of the breach.\n\n(b) The other Party breaches any provision of Section or 14.8 or Articles V or XIII, and, to the extent such breach is susceptible to cure, fails to cure such breach within five (5) days after receipt from the terminating party of written notice of the breach. Notwithstanding anything else to the contrary herein, if the breach is not susceptible to cure, this Agreement will terminate immediately as of such breach, with or without any notice from the terminating party.\n\n(c) (i) A voluntary petition is commenced by the other Party under the United States Bankruptcy Code, as amended, 11 U.S.C. \u00a7 101 et seq., (ii) the other Party has an involuntary petition commenced against it under the Bankruptcy Code and such petition is not dismissed within sixty (60) days after filing, (iii) the other Party becomes insolvent, (iv) any substantial part of the other Party's property becomes subject to any levy, seizure, assignment, application, or sale for or by any creditor or governmental agency, or (v) the other Party liquidates or otherwise discontinues all or most of that portion of its business operations which are related to this Agreement.\n\nSection 8.3 Termination by NCM. NCM may terminate this Agreement upon thirty (30) days written notice to Network Affiliate in the event that distribution of the Service to all of the Theatres listed on Exhibit B is permanently discontinued.\n\nSection 8.4 Survival. Sections 2.3, 5.2, 5.3, 5.4, 8.4, 8.5, 11.1, 11.2, 11.3 and 11.6 and Articles VII, IX, X, XII, and XV shall survive any expiration or termination of this Agreement."
+    }
+   ]
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4473,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4505,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Exclusivity",
+   "present": true,
+   "determination": "present",
+   "tokens": 4559,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Non-Compete",
+   "present": true,
+   "determination": "present",
+   "tokens": 4269,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "present",
+   "tokens": 4318,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Insurance",
+   "present": true,
+   "determination": "present",
+   "tokens": 4409,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "unclear",
+   "tokens": 4371,
+   "old": "ABSTAIN",
+   "new": "ABSTAIN",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "DigitalCinemaDestinationsCorp_20111220_S-1_EX-10.10_7346719_EX-10.10_Affiliate Agreement.pdf",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4550,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4372,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4091,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "not_in_clause",
+     "score": 78.6,
+     "quote": "If the AS Parties reasonably determine... that any of MusclePharm's products are harmful to the human body or unsafe.",
+     "clause": "(iv) If the AS Parties reasonably determine (based either on (A) internal MusclePharm information; (B) reports or other credible information produced by established medical or scientific experts; or (C) multiple adverse events reported to MusclePharm or in the media) that any of MusclePharm's products are harmful to the human body or unsafe.\n\n(v) In the event Musclepharm is in material breach or default of this Agreement, the AS Parties may give written notice to Musclepharm of intent to terminate, and such notice shall set forth in reasonable detail the facts, circumstances or events causing the alleged breach or default (\"MusclePharm Events of Default\"). Musclepharm shall have thirty (30) days' notice in which to cure the MusclePharm Events of Default to the reasonable and objective satisfaction of the terminating party. If Musclepharm fails, refuses or is unable for any reason to cure the MusclePharm Events of Default to the reasonable and objective satisfaction of the terminating party, then the the AS Parties may terminate this Agreement by giving a written termination notice which shall be effective on third calendar day after the date of the termination notice"
+    }
+   ]
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4540,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4700,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Exclusivity",
+   "present": true,
+   "determination": "absent",
+   "tokens": 4508,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Non-Compete",
+   "present": true,
+   "determination": "present",
+   "tokens": 4317,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "present",
+   "tokens": 4305,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Insurance",
+   "present": true,
+   "determination": "present",
+   "tokens": 4434,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "Renewal Term",
+   "present": true,
+   "determination": "present",
+   "tokens": 4544,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "MusclepharmCorp_20170208_10-KA_EX-10.38_9893581_EX-10.38_Co-Branding Agreement.pdf",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4257,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4213,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Termination For Convenience",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4460,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4526,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4220,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Exclusivity",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4580,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "present",
+   "tokens": 4592,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Audit Rights",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4304,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "fuzzy"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": false,
+     "kind": "too_short"
+    }
+   ],
+   "disagree": [
+    {
+     "old": true,
+     "new": false,
+     "kind": "too_short",
+     "score": 0.0,
+     "quote": "The supplier declares herewith:",
+     "clause": ". Existing exclusivity arrangements between Accuray and Third Parties;\n\n. Prior and current contact with the proposed purchaser by either Party;\n\n. Other commercial relationships that either Party may have with the proposed purchaser;\n\n. Bona fide concerns about the suitability of the proposed purchaser; and\n\n. Whether Accuray or any of its distributors have obtained any required regulatory clearances and/or import licenses required in connection with the proposed purchase.\n\nEXHIBIT A DISTRIBUTOR DISCOUNTS ON PRODUCTS AND SERVICES\n\nDiscount Type\n\nList Price Range USD\n\nVolume Discount\n\nDistributor Discount*\n\nVolume Discounts - Tier # 1\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 2\n\n*****\n\n***** )\n\n*****\n\nVolume Discounts - Tier # 3\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 4\n\n*****\n\n***** )\n\n*****\n\nVolume Discounts - Tier # 5\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 6\n\n*****\n\n***** )\n\n***** )\n\nVolume Discounts - Tier # 7\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 8\n\n*****\n\n***** )\n\n*****\n\nVolume Discounts - Tier # 9\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 10\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 11\n\n*****\n\n*****\n\n*****\n\nVolume Discounts - Tier # 12\n\n*****\n\n***** )\n\n*****\n\n* Siemens distributor channel discount.\n\nSiemens Bundled Sales Price= (List Price (1-(Volume Discount + Distributor Discount))\n\nEXHIBIT B SIEMENS CODE OF CONDUCT\n\nSIEMENS\n\nCode of Conduct for Siemens Suppliers\n\nThis Code of Conduct defines the basic requirements placed on Siemens' suppliers of goods and services concerning their responsibilities towards their stakeholders and the environment. Siemens reserves the right to reasonably change the requirements of this Code of Conduct due to changes of the Siemens Compliance Program. In such event Siemens expects the supplier to accept such reasonable changes.\n\nThe supplier declares herewith:\n\n\u00b7 Legal compliance\n\n. to comply with the laws of the applicable legal system(s).\n\n. Prohibition of corruption and bribery\n\n. to tolerate no form of and not to engage in any form of corruption or bribery, including any payment or other form of benefit conferred on any government official for the purpose of influencing decision making in violation of law.\n\n. Respect for the basic human rights of employees\n\n\u00b7 to promote equal opportunities for and treatment of its employees irrespective of skin color, race, nationality, social background, disabilities, sexual orientation, political or religious conviction, sex or age;\n\n. to respect the personal dignity, privacy and rights of each individual;\n\n. to refuse to employ or make anyone work against his will;\n\n\u00b7 to refuse to tolerate any unacceptable treatment of employees, such as mental cruelty, sexual harassment or discrimination;\n\n\u00b7 to prohibit behavior including gestures, language and physical contact, that is sexual, coercive, threatening, abusive or exploitative;\n\n\u00b7 to provide fair remuneration and to guarantee the applicable national statutory minimum wage;\n\n. to comply with the maximum number of working hours laid down in the applicable laws;\n\n. to recognize, as far as legally possible, the right of free association of employees and to neither favor nor discriminate against members of employee organizations or trade unions.\n\n. Prohibition of child labor\n\n. to employ no workers under the age of 15 or, in those countries subject to the developing country exception of the ILO Convention 138, to employ no workers under the age of 14.\n\n. Health and safety of employees\n\n. to take responsibility for the health and safety of its employees;\n\n\u00b7 to control hazards and take the best reasonably possible precautionary measures against accidents and occupational diseases;\n\n. to provide training and ensure that employees are educated in health and safety issues;\n\n\u00b7 to set up or use a reasonable occupational health & safety management system(1)\n\n\u00b7 Environmental protection\n\n\u00b7 to act in accordance with the applicable statutory and international standards regarding environmental protection;\n\n\u00b7 to minimize environmental pollution and make continuous improvements in environmental protection;\n\n\u00b7 to set up or use a reasonable environmental management system(1)\n\n\u00b7 Supply chain\n\n. to use reasonable efforts to promote among its suppliers compliance with this Code of Conduct;"
+    }
+   ]
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4247,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "present",
+   "tokens": 4310,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "ACCURAYINC_09_01_2010-EX-10.31-DISTRIBUTOR AGREEMENT.PDF",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4570,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Governing Law",
+   "present": true,
+   "determination": "present",
+   "tokens": 4170,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Termination For Convenience",
+   "present": true,
+   "determination": "absent",
+   "tokens": 4345,
+   "old": "MISSED",
+   "new": "MISSED",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Cap On Liability",
+   "present": true,
+   "determination": "present",
+   "tokens": 4503,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Anti-Assignment",
+   "present": true,
+   "determination": "present",
+   "tokens": 4510,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Exclusivity",
+   "present": true,
+   "determination": "present",
+   "tokens": 4583,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Non-Compete",
+   "present": false,
+   "determination": "present",
+   "tokens": 4401,
+   "old": "FALSE_CLAIM",
+   "new": "FALSE_CLAIM",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Audit Rights",
+   "present": true,
+   "determination": "present",
+   "tokens": 4269,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Insurance",
+   "present": false,
+   "determination": "absent",
+   "tokens": 4381,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "Renewal Term",
+   "present": false,
+   "determination": "unclear",
+   "tokens": 4438,
+   "old": "ABSTAIN",
+   "new": "ABSTAIN",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  },
+  {
+   "file": "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement.PDF",
+   "category": "License Grant",
+   "present": true,
+   "determination": "present",
+   "tokens": 4358,
+   "old": "correct",
+   "new": "correct",
+   "citations": [
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    },
+    {
+     "old": true,
+     "new": true,
+     "kind": "exact"
+    }
+   ],
+   "disagree": []
+  }
+ ]
+}

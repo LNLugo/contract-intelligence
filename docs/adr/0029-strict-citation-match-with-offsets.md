@@ -26,6 +26,9 @@ Three things were also missing: the citation could not be highlighted in the sou
 5. Each citation records `match` (exact or fuzzy), the failure `reason`, and `start`/`end` character offsets into the original clause text, so a reviewer can highlight the exact span.
 6. Each answer carries `citation_checks` (counts of exact, fuzzy and each failure reason). The audit log records these counts, never the quote text.
 
+## Measured (eval/results/citation-ab-first10.md)
+Paired test on 100 development questions, both rules judging the same answers: the new rule rejected 9 citations the old rule passed (5 elided with "...", 2 section headings, 1 spliced from two passages, 1 with a qualifier dropped). All 9 were correct rejections; **no outcome changed**. Elided quotes now fail with their own reason, `elided`.
+
 ## Consequences
 - Measured on the inserted-"not" case: partial_ratio scored it **97**. A fuzzy threshold alone would have accepted it; the meaning guard rejects it. Unit test `test_inserted_not_fails_even_if_almost_identical`.
 - Matching is now case-sensitive and stricter, so some quotes that passed before will fail and their findings will be dropped. Expect a small rise in abstentions; confirm on the next evaluation run before comparing against earlier results.

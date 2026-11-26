@@ -10,7 +10,9 @@ Rules, applied identically to the workflow and the agent:
      partial_ratio >= FUZZY_MIN against the clause, AND the quote and the matched span contain
      the same negations and the same numbers. A fuzzy match may never add, drop or change
      "not", "no", "unless", a number or an amount: those are the words that change a contract's meaning.
-  5. Anything else fails, with a reason. Passing citations carry character offsets into the
+  5. A quote with "..." that is not an exact match fails as "elided": the omitted text is where an
+     "unless" or "subject to" would hide, so a citation must show the full text it relies on.
+  6. Anything else fails, with a reason. Passing citations carry character offsets into the
      ORIGINAL clause text, so a reviewer can highlight the exact span.
 
 No model call, no cost, deterministic.
@@ -38,7 +40,7 @@ _WORD = re.compile(r"[a-z]+|\d+(?:[.,]\d+)*")
 class QuoteCheck:
     valid: bool
     match: str          # "exact" | "fuzzy" | ""
-    reason: str         # "" when valid; else too_short | not_in_clause | fuzzy_changed_meaning | no_clause
+    reason: str         # "" when valid; else too_short | elided | not_in_clause | fuzzy_changed_meaning | no_clause
     start: int = -1     # offsets into the ORIGINAL clause text (end exclusive)
     end: int = -1
     score: float = 0.0
@@ -90,6 +92,8 @@ def check_quote(quote: str, clause: str | None) -> QuoteCheck:
     pos = c.find(q)
     if pos >= 0:
         return QuoteCheck(True, "exact", "", cmap[pos], cmap[pos + len(q) - 1] + 1, 100.0)
+    if "..." in q or "\u2026" in quote:
+        return QuoteCheck(False, "", "elided")
     al = fuzz.partial_ratio_alignment(q, c)
     if al is None or al.score < FUZZY_MIN:
         return QuoteCheck(False, "", "not_in_clause", score=al.score if al else 0.0)

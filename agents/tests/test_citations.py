@@ -76,3 +76,19 @@ def test_missing_clause_fails():
 def test_is_verbatim_helper():
     assert is_verbatim(CLAUSE, "aggregate liability under this Agreement shall exceed")
     assert not is_verbatim(CLAUSE, "aggregate liability under this Agreement shall not exceed")
+
+
+def test_elided_quote_fails_with_its_own_reason():
+    clause = ("If the other Party breaches any material provision of this Agreement, other than a payment "
+              "obligation disputed in good faith, and fails to cure such breach within thirty (30) days")
+    r = check_quote("If the other Party breaches any material provision of this Agreement... and fails to cure "
+                    "such breach within thirty (30) days", clause)
+    assert not r.valid and r.reason == "elided"
+
+
+def test_dropped_qualifier_fails():
+    clause = ("then the ValueAct Group and the Company (acting through the Board) shall work together in good "
+              "faith to fill such vacancy or replace such nominee")
+    r = check_quote("The Company and the ValueAct Group shall work together in good faith to fill such vacancy "
+                    "or replace such nominee", clause)
+    assert not r.valid

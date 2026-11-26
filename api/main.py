@@ -76,10 +76,12 @@ def ask(req: AskRequest, caller: Caller = Depends(current_caller)) -> dict:
     for a contract the caller can see. Groups come only from the validated token."""
     result = orchestrator.run(caller.groups, req.question, req.doc_id, mode=req.mode)
     cited = {c["file_name"] for f in result["clause"]["findings"] for c in f["citations"] if c["valid"]}
-    log.info("ask mode=%s subject=%s app=%s groups=%s doc_filter=%s status=%s clause=%s vendor=%s category=%s taxonomy=%s cited_files=%d",
+    checks = result["clause"].get("citation_checks") or {}
+    log.info("ask mode=%s subject=%s app=%s groups=%s doc_filter=%s status=%s clause=%s vendor=%s category=%s taxonomy=%s cited_files=%d citations=%s",
              req.mode, caller.subject, caller.client_app, ",".join(caller.groups), req.doc_id or "-", result["status"],
              result["clause"]["status"], result["vendor"]["status"],
-             (result["category"] or {}).get("code", "-"), result["taxonomy_version"], len(cited))
+             (result["category"] or {}).get("code", "-"), result["taxonomy_version"], len(cited),
+             ",".join(f"{k}:{v}" for k, v in sorted(checks.items())) or "-")   # counts only, never quote text (ADR-0029)
     if req.mode == "agent" and "usage" in result:
         u = result["usage"]
         log.info("agent turns=%d searches=%d refused_tool_calls=%d tokens=%d tools=%s", u["model_turns"], u["searches"],

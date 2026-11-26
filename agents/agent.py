@@ -25,7 +25,7 @@ from typing import Any, TypedDict
 from langgraph.graph import END, START, StateGraph
 
 from . import _ingestion  # noqa: F401
-from .answer import CHAT_MODEL, RERANK, Answer, Citation, Finding, quote_in_clause, route
+from .answer import CHAT_MODEL, RERANK, Answer, Finding, route, validate_with
 from .orchestrator import NotEntitled
 from .retrieve import AccessError, document_vendor, search
 from .taxonomy_snapshot import boundaries_text, classify, version as taxonomy_version
@@ -181,22 +181,9 @@ def _chat(messages: list[dict]) -> tuple[dict, int]:
     return resp["choices"][0]["message"], resp.get("usage", {}).get("total_tokens", 0)
 
 
-def _validate(raw: dict, clauses: dict) -> tuple[list[Finding], int]:
-    """Same rule as the workflow (ADR-0020), but against the clauses retrieved in this run."""
-    findings, dropped = [], 0
-    for f in raw.get("findings", []) or []:
-        cites = []
-        for c in f.get("citations", []) or []:
-            cid = str(c.get("clause", "")).upper().strip()
-            hit = clauses.get(cid)
-            cites.append(Citation(cid, c.get("quote", ""), bool(hit) and quote_in_clause(c.get("quote", ""), hit.content),
-                                  hit.file_name if hit else "", f"{hit.page_start}-{hit.page_end}" if hit else ""))
-        finding = Finding(f.get("statement", ""), cites)
-        if finding.supported:
-            findings.append(finding)
-        else:
-            dropped += 1
-    return findings, dropped
+def _validate(raw: dict, clauses: dict) -> tuple[list[Finding], int, dict]:
+    """Same rule as the workflow (ADR-0020, ADR-0029), but against the clauses retrieved in this run."""
+    return validate_with(raw, clauses.get)
 
 
 def build_agent(box: Toolbox, chat=_chat):
@@ -261,10 +248,10 @@ def run(groups: tuple[str, ...], question: str, doc_id: str | None = None, chat=
                    None, 0, state.get("tokens", 0), round(time.time() - t0, 1))
     else:
         determination = str(raw.get("determination", "unclear")).lower()
-        findings, dropped = _validate(raw, box.clauses)
+        findings, dropped, checks = _validate(raw, box.clauses)
         status, reason = route(determination, findings, dropped)
         a = Answer(status, determination, str(raw.get("answer", "")), findings, reason, None, dropped,
-                   state.get("tokens", 0), round(time.time() - t0, 1))
+                   state.get("tokens", 0), round(time.time() - t0, 1), citation_checks=checks)
 
     overall = a.status
     if box.vendor["status"] in ("ABSTAIN", "NOT_AVAILABLE") and a.status == "ANSWERED":
@@ -273,7 +260,7 @@ def run(groups: tuple[str, ...], question: str, doc_id: str | None = None, chat=
     return {
         "mode": "agent",
         "status": overall,
-        "clause": {k: v for k, v in asdict(a).items() if k in ("status", "determination", "answer", "findings", "reason")},
+        "clause": {k: v for k, v in asdict(a).items() if k in ("status", "determination", "answer", "findings", "reason", "citation_checks")},
         "vendor": box.vendor,
         "category": asdict(cat) if cat else None,
         "taxonomy_version": taxonomy_version(),

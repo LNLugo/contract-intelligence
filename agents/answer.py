@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 
 from . import _ingestion  # noqa: F401
+from .citations import check_quote
 from .retrieve import Hit, search
 from pipeline import http
 from pipeline.config import SETTINGS as S
@@ -39,6 +40,10 @@ class Citation:
     valid: bool
     file_name: str = ""
     pages: str = ""
+    match: str = ""        # exact | fuzzy | "" (ADR-0029)
+    reason: str = ""       # why it failed: too_short | not_in_clause | fuzzy_changed_meaning | no_clause
+    start: int = -1        # character offsets into the cited clause's text, for highlighting
+    end: int = -1
 
 
 @dataclass
@@ -63,30 +68,12 @@ class Answer:
     tokens: int
     seconds: float
     samples: list[str] = field(default_factory=list)   # status of each sample (ADR-0022)
-
-
-def _norm(text: str) -> str:
-    text = text.lower().replace("’", "'").replace("“", '"').replace("”", '"')
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+    citation_checks: dict = field(default_factory=dict) # counts of exact / fuzzy / each failure reason (ADR-0029)
 
 
 def quote_in_clause(quote: str, clause: str) -> bool:
-    """Deterministic citation check (ADR-0020): the quote must appear in the clause.
-    Exact match after normalization, or 90% of the quote's words in order within the clause."""
-    q, c = _norm(quote), _norm(clause)
-    if len(q.split()) < 4:
-        return False
-    if q in c:
-        return True
-    words, pos, matched = q.split(), 0, 0
-    c_words = c.split()
-    for w in words:
-        try:
-            pos = c_words.index(w, pos) + 1
-            matched += 1
-        except ValueError:
-            continue
-    return matched / len(words) >= 0.9
+    """Kept for callers and tests that only need yes or no. The rule lives in citations.py."""
+    return check_quote(quote, clause).valid
 
 
 def _context(hits: list[Hit]) -> str:
@@ -110,23 +97,34 @@ def generate(question: str, hits: list[Hit], prompt: str = DEFAULT_PROMPT) -> tu
     return json.loads(text), resp.get("usage", {}).get("total_tokens", 0)
 
 
-def validate(raw: dict, hits: list[Hit]) -> tuple[list[Finding], int]:
-    """Keep findings with at least one citation whose quote is really in the cited clause."""
-    findings, dropped = [], 0
+def validate_with(raw: dict, lookup) -> tuple[list[Finding], int, dict]:
+    """Keep findings with at least one citation whose quote is really in the clause it cites
+    (ADR-0020, ADR-0029). lookup(clause_id) returns the cited Hit or None. Same rule for the
+    workflow and the agent. Returns (findings kept, findings dropped, citation check counts)."""
+    findings, dropped, checks = [], 0, Counter()
     for f in raw.get("findings", []) or []:
         cites = []
         for c in f.get("citations", []) or []:
-            idx = str(c.get("clause", "")).lstrip("Cc")
-            hit = hits[int(idx) - 1] if idx.isdigit() and 1 <= int(idx) <= len(hits) else None
-            cites.append(Citation(str(c.get("clause", "")), c.get("quote", ""),
-                                  bool(hit) and quote_in_clause(c.get("quote", ""), hit.content),
-                                  hit.file_name if hit else "", f"{hit.page_start}-{hit.page_end}" if hit else ""))
+            cid = str(c.get("clause", "")).upper().strip()
+            hit = lookup(cid)
+            quote = str(c.get("quote", ""))
+            r = check_quote(quote, hit.content if hit else None)
+            checks[r.match or r.reason] += 1
+            cites.append(Citation(cid, quote, r.valid, hit.file_name if hit else "",
+                                  f"{hit.page_start}-{hit.page_end}" if hit else "", r.match, r.reason, r.start, r.end))
         finding = Finding(f.get("statement", ""), cites)
         if finding.supported:
             findings.append(finding)
         else:
             dropped += 1
-    return findings, dropped
+    return findings, dropped, dict(checks)
+
+
+def validate(raw: dict, hits: list[Hit]) -> tuple[list[Finding], int, dict]:
+    def lookup(cid: str):
+        idx = cid.lstrip("C")
+        return hits[int(idx) - 1] if idx.isdigit() and 1 <= int(idx) <= len(hits) else None
+    return validate_with(raw, lookup)
 
 
 def route(determination: str, findings: list[Finding], dropped: int) -> tuple[str, str]:
@@ -143,9 +141,9 @@ def route(determination: str, findings: list[Finding], dropped: int) -> tuple[st
 def _one_sample(question: str, hits: list[Hit], prompt: str):
     raw, tokens = generate(question, hits, prompt)
     determination = str(raw.get("determination", "unclear")).lower()
-    findings, dropped = validate(raw, hits)
+    findings, dropped, checks = validate(raw, hits)
     status, reason = route(determination, findings, dropped)
-    return status, determination, raw.get("answer", ""), findings, reason, dropped, tokens
+    return status, determination, raw.get("answer", ""), findings, reason, dropped, tokens, checks
 
 
 def agree(statuses: list[str]) -> tuple[bool, str]:
@@ -179,12 +177,12 @@ def answer(question: str, groups: list[str], doc_id: str | None = None,
     tokens = sum(r[6] for r in runs)
     statuses = [r[0] for r in runs]
     ok, why = agree(statuses)
-    status, determination, text, findings, reason, dropped, _ = runs[0]
+    status, determination, text, findings, reason, dropped, _, checks = runs[0]
     if not ok:
         return Answer("ABSTAIN", determination, text, [], why, top, dropped, tokens,
-                      round(time.time() - t0, 1), statuses)
+                      round(time.time() - t0, 1), statuses, checks)
     return Answer(status, determination, text, findings, reason, top, dropped, tokens,
-                  round(time.time() - t0, 1), statuses)
+                  round(time.time() - t0, 1), statuses, checks)
 
 
 def as_dict(a: Answer) -> dict:

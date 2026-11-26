@@ -103,7 +103,7 @@ def build_graph(tools: CallerTools):
             overall = "PARTIAL" if a["status"] == "ANSWERED" else a["status"]
         return {"result": {
             "status": overall,
-            "clause": {k: a[k] for k in ("status", "determination", "answer", "findings", "reason")},
+            "clause": {k: a[k] for k in ("status", "determination", "answer", "findings", "reason", "citation_checks")},
             "vendor": vendor,
             "category": s.get("category"),
             "taxonomy_version": taxonomy_version(),

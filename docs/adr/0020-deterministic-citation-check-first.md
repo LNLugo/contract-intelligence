@@ -1,6 +1,6 @@
 # ADR-0020: Validate citations deterministically first; use an LLM judge only for what code cannot check
 
-- **Status:** Accepted (LLM judge to be added later and measured against this baseline)
+- **Status:** Accepted; matching rule superseded by [ADR-0029](0029-strict-citation-match-with-offsets.md) (the 90%-of-words fallback could accept an inserted "not")
 - **Date:** 2026-11-09
 - **Phase:** Slice 1
 
